@@ -6,9 +6,11 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/10/27 03:25:03 by lmartin          ###   ########.fr        #
+#    Updated: 2019/10/29 05:43:17 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+$(DIR_HEADERS) = ./includes/
 
 $(NAME) = miniRT
 

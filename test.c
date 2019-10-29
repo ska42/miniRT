@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:40:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 02:04:34 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/10/29 06:50:27 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,37 @@
 
 typedef struct 	t_pos
 {
-	double		x;
-	double		y;
-	double		z;
+	float		x;
+	float		y;
+	float		z;
 }				s_pos;
 
 typedef struct	t_pos2d
 {
-	int		x;
-	int		y;
+	float		x;
+	float		y;
 }				s_pos2d;
 
 typedef	struct	t_canvas
 {
-	double	width;
-	double	height;
-	double	distance;
+	float	width;
+	float	height;
+	float	distance;
 }				s_canvas;
 
 typedef	struct	t_sphere
 {
-	int		radius;
+	float	radius;
 	int		color;
 	s_pos	*position;
 }				s_sphere;
+
+typedef struct	t_light
+{
+	int		type;
+	float	intensity;
+	s_pos	*position;
+}				s_light;
 
 typedef struct	t_lstobject
 {
@@ -59,7 +66,7 @@ s_lstobject		*create_obj(int t, void *o)
 	return (obj);
 }
 
-s_pos			*create_pos(double x, double y, double z)
+s_pos			*create_pos(float x, float y, float z)
 {
 	s_pos	*position;
 
@@ -80,11 +87,22 @@ s_pos2d			*create_pos2d(int x, int y)
 	return (position);
 }
 
-void			set_pos(s_pos *position, int x, int y, int z)
+void			set_pos(s_pos *position, float x, float y, float z)
 {
 	position->x = x;
 	position->y = y;
 	position->z = z;
+}
+
+s_light			*create_light(int t, float i)
+{
+	s_light		*light;
+
+	light = malloc(sizeof(s_light));
+	light->type = t;
+	light->intensity = i;
+	light->position = create_pos(0, 0, 0);
+	return (light);
 }
 
 s_sphere		*create_sphere(int r, int color)
@@ -109,61 +127,59 @@ s_canvas		*create_canvas(int w, int h, int d)
 	return (canvas);
 }
 
-double	dot_product(s_pos pos1, s_pos pos2)
+float	dot_product(s_pos pos1, s_pos pos2)
 {
 	return (pos1.x * pos2.x + pos1.y * pos2.y + pos1.z * pos2.z);
 }
 
-int		ft_sqrt(int x)
+float	ft_sqrt(const float x)
 {
-	int i;
-	int result;
+	int	i;
+	float j;
 
-    if (x == 0 || x == 1)
-    	return (x);
-    i = 1;
-	result = 1;
-    while (result <= x)
-    {
-      i++;
-      result = i * i;
-    }
-    return (i - 1);
+	j = x;
+	i = (1 << 29) + (i >> 1) - (1 << 22);
+	j = 0.5f * (j + x/j);
+	j = 0.5f * (j + x/j);
+	return (j);
 }
 
-s_pos2d		*intersect(s_pos origin, s_pos pixel, void *s)
+float	intersect(s_pos origin, s_pos direction, void *s)
 {
 	s_pos	*difference;
-	double	k[3];
-	double	discriminant;
+	float	k[3];
+	float	discriminant;
 	s_sphere sphere;
-	s_pos2d	*ret;
+	float t1;
+	float t2;
 
 	sphere = *(s_sphere *)(s);
 	//printf("sphere pos x : %f\n", sphere.position->x);
 	//printf("sphere pos y : %f\n", sphere.position->y);
 	//printf("sphere pos z : %f\n", sphere.position->z);
-	//printf("pixel pos x : %f\n", pixel.x);
-	//printf("pixel pos y : %f\n", pixel.y);
-	//printf("pixel pos z : %f\n", pixel.z);
+	//printf("direction pos x : %f\n", direction.x);
+	//printf("direction pos y : %f\n", direction.y);
+	//printf("direction pos z : %f\n", direction.z);
 	difference = create_pos(origin.x - sphere.position->x, origin.y - sphere.position->y, origin.z - sphere.position->z);
 	//printf("difference pos x : %f\n", difference->x);
 	//printf("difference pos y : %f\n", difference->y);
 	//printf("difference pos z : %f\n", difference->z);
-	k[0] = dot_product(pixel, pixel);
-	k[1] = 2 * dot_product(*difference, pixel);
+	k[0] = dot_product(direction, direction);
+	k[1] = 2 * dot_product(*difference, direction);
 	k[2] = dot_product(*difference, *difference) - (sphere.radius * sphere.radius);
 	//printf("k[0] : %f\n", k[0]);
 	//printf("k[1] : %f\n", k[1]);
 	//printf("k[2] : %f\n", k[2]);
 	discriminant = k[1] * k[1] - 4 * k[0] * k[2];
-	//printf("discriminant : %f\n", discriminant);
 	if (discriminant < 0)
-		return (NULL);
+		return (0);
 	//printf("sqrt(discriminant) : %d\n", ft_sqrt(discriminant));
-	ret = create_pos2d((-k[1] + ft_sqrt(discriminant)) / (2 * k[0]), (-k[1] - ft_sqrt(discriminant)) / (2 * k[0]));
+	t1 = (- k[1] + ft_sqrt(discriminant)) / (2 * k[0]);
+	t2 = (- k[1] - ft_sqrt(discriminant)) / (2 * k[0]);
 	free(difference);
-	return (ret);
+	if (t1 < t2)
+		return (t1);
+	return (t2);
 }
 
 int				main(void)
@@ -171,27 +187,33 @@ int				main(void)
 	void		*mlx_ptr;
 	void		*win_ptr;
 	s_pos		*obs_pos;
-	s_pos		*pixel;
-	s_pos2d		*pos2d;
+	s_pos		*direction;
 	s_canvas	*viewport;
 	s_sphere	*sphere;
 	s_lstobject *lstobj;
 	s_lstobject *begin;
+	s_light		*light;
 	int			x;
 	int			y;
 	int			printed;
+	float		n_dot_l;
+	float		intensity;
+	float		ts;
+	int			color;
 
 	mlx_ptr = mlx_init();
 	viewport = create_canvas(500, 500, 1);
 	win_ptr = mlx_new_window(mlx_ptr, viewport->width, viewport->height, "Hello W0rld");
 	/* TEST */
 	obs_pos = create_pos(0, 0, 0);
-	sphere = create_sphere(10, 0xff00);
+	sphere = create_sphere(10, 0xbf3eff);
 	set_pos(sphere->position, -75, -75, 200);
 	lstobj = create_obj(0, sphere);
 	begin = lstobj;
-	sphere = create_sphere(25, 0x87ceff);
-	set_pos(sphere->position, 75, 75, 200);
+	sphere = create_sphere(25, 0x6400);
+	set_pos(sphere->position, 25, 25, 75);
+	light = create_light(0, 0.2);
+	set_pos(light->position, 0, 0, 1);
 	lstobj->next = create_obj(0, sphere);
 	x = -viewport->width/2;
 	while (x < viewport->width/2)
@@ -202,22 +224,37 @@ int				main(void)
 			printed = 0;
 			while (lstobj)
 			{
-				pixel = create_pos(x / viewport->width, y / viewport->height, viewport->distance);
-				pos2d = intersect(*obs_pos, *pixel, lstobj->object);
-				if (pos2d)
+				direction = create_pos(x / viewport->width, y / viewport->height, 1);
+				ts = intersect(*obs_pos, *direction, lstobj->object);
+				if (ts)
 				{
+					s_pos	*point;
+					s_pos	*normal;
+					point = create_pos(obs_pos->x + ts * direction->x, obs_pos->y + ts * direction->y, obs_pos->z + ts * direction->z);
+					normal = create_pos(point->x - ((s_sphere *)(lstobj->object))->position->x, point->y - ((s_sphere *)lstobj->object)->position->y, point->z - ((s_sphere *)lstobj->object)->position->y);
+					set_pos(normal, 1/ft_sqrt(dot_product(*normal, *normal)) * normal->x, 1/ft_sqrt(dot_product(*normal, *normal)) * normal->y, 1/ft_sqrt(dot_product(*normal, *normal)) * normal->z);
+					n_dot_l = dot_product(*normal, *light->position);
+					//printf("n_dot_l %f\n", n_dot_l);
+					intensity = 0;
+					if (n_dot_l > 0)
+						intensity += light->intensity * n_dot_l / (ft_sqrt(dot_product(*light->position, *light->position)) * 1);
+					printf("intensity : %f\n", intensity);
+					color = ((s_sphere *)(lstobj->object))->color + ((s_sphere *)(lstobj->object))->color * intensity;
 					printed = 1;
-					mlx_pixel_put(mlx_ptr, win_ptr, x + viewport->width/2, y + viewport->height/2, ((s_sphere *)(lstobj->object))->color);
+					mlx_pixel_put(mlx_ptr, win_ptr, (x + viewport->width/2), (y + viewport->height/2), color);
 				}
-				free(pos2d);
-				pos2d = NULL;
-				free(pixel);
-				pixel = NULL;
+				free(direction);
+				direction = NULL;
 				lstobj = lstobj->next;
 			}
-			if (!printed)
-				mlx_pixel_put(mlx_ptr, win_ptr, x + viewport->width/2, y + viewport->height/2, 0x0);
 			lstobj = begin;
+			if (!printed)
+			{
+				if (x == 0 || y == 0)
+					mlx_pixel_put(mlx_ptr, win_ptr, (x + viewport->width/2), y + (viewport->height/2), 0xfffafa);
+				else
+					mlx_pixel_put(mlx_ptr, win_ptr, (x + viewport->width/2), y + (viewport->height/2), 0x0);
+			}
 			y++;
 		}
 		x++;
