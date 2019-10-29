@@ -6,28 +6,56 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/10/29 05:43:17 by lmartin          ###   ########.fr        #
+#    Updated: 2019/10/29 08:44:27 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-$(DIR_HEADERS) = ./includes/
+CC =			gcc
 
-$(NAME) = miniRT
+FLAGS =			-Wall -Wextra -Werror
 
-$(LIBMLX) = libmlx
+RM =			rm -rf
 
-$(DYLIB) = $(LIBMLX).dylib
+DIR_HEADERS =	./includes/
 
-all:
-		make -C ./minilibx_mms_20191025_beta/
-		make -C ./minilibx_opengl_20191021/
+DIR_SRCS =		./srcs/
+
+DIR_OBJS =		./
+
+LIBMLX =		libmlx.dylib \
+				libmlx.a
+
+SRC =			canvas.c \
+				light.c \
+				lstobjects.c \
+				miniRT.c \
+				sphere.c \
+				vector_calculation.c \
+				vector.c
+
+SRCS =			$(addprefix $(DIR_SRCS), $(SRC))
+
+OBJS =			$(SRCS:.c=.o)
+
+NAME =			miniRT
+
+all:			$(NAME)
+
+$(NAME) :		$(OBJS)
+				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
+
+%.o: %.c
+				@gcc $(FLAG) -I $(DIR_HEADERS) -c $< -o $@
+				@echo "Compiled "$<" successfully!"
 
 bonus:
 
 clean:
+				$(RM) $(OBJS)
 
-fclean:
+fclean:			clean
+				$(RM) $(NAME)
 
-re:
+re:				fclean all
 
-.PHONY: all, clean, fclean, re, bonus
+.PHONY:			all, clean, fclean, re, bonus

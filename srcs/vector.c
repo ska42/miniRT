@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:38:02 by lmartin          ###   ########.fr       */
+/*   Created: 2019/10/29 07:06:42 by lmartin           #+#    #+#             */
+/*   Updated: 2019/10/29 08:30:29 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "vector.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include "canvas.h"
-# include "light.h"
-# include "lstobjects.h"
-# include "sphere.h"
-# include "vector.h"
+void			set_vector(s_vector *vector, float x, float y, float z)
+{
+	vector->x = x;
+	vector->y = y;
+	vector->z = z;
+}
 
-#endif
+s_vector		*new_vector(float x, float y, float z)
+{
+	s_vector	*vector;
+
+	vector = malloc(sizeof(s_vector));
+	set_vector(vector, x, y, z);
+	return (vector);
+}

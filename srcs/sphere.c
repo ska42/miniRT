@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:38:02 by lmartin          ###   ########.fr       */
+/*   Created: 2019/10/29 07:11:17 by lmartin           #+#    #+#             */
+/*   Updated: 2019/10/29 08:30:20 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "sphere.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include "canvas.h"
-# include "light.h"
-# include "lstobjects.h"
-# include "sphere.h"
-# include "vector.h"
+s_sphere		*new_sphere(float radius, int color, s_vector *center)
+{
+	s_sphere	*sphere;
 
-#endif
+	sphere = malloc(sizeof(s_sphere));
+	sphere->radius = radius;
+	sphere->color = color;
+	sphere->center = center;
+	return (sphere);
+}
+
+s_sphere		*new_default_sphere(float radius, int color)
+{
+	return (new_sphere(radius, color, new_vector(0, 0, 0)));
+}

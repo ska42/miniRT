@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   canvas.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:38:02 by lmartin          ###   ########.fr       */
+/*   Created: 2019/10/29 07:19:55 by lmartin           #+#    #+#             */
+/*   Updated: 2019/10/29 08:30:10 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "canvas.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include "canvas.h"
-# include "light.h"
-# include "lstobjects.h"
-# include "sphere.h"
-# include "vector.h"
+s_canvas		*new_canvas(int width, int heigth, int distance)
+{
+	s_canvas	*canvas;
 
-#endif
+	canvas = malloc(sizeof(s_canvas));
+	canvas->width = width;
+	canvas->height = heigth;
+	canvas->distance = distance;
+	return (canvas);
+}

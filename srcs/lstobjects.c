@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   lstobjects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:38:02 by lmartin          ###   ########.fr       */
+/*   Created: 2019/10/29 07:27:21 by lmartin           #+#    #+#             */
+/*   Updated: 2019/10/29 08:30:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "lstobjects.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include "canvas.h"
-# include "light.h"
-# include "lstobjects.h"
-# include "sphere.h"
-# include "vector.h"
+s_lstobjects		*new_obj(int type, void *object)
+{
+	s_lstobjects *obj;
 
-#endif
+	obj = malloc(sizeof(s_lstobjects));
+	obj->type	= type;
+	obj->object = object;
+	obj->next	= NULL;
+	return (obj);
+}

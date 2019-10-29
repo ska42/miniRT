@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   sphere.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:38:02 by lmartin          ###   ########.fr       */
+/*   Created: 2019/10/29 07:09:23 by lmartin           #+#    #+#             */
+/*   Updated: 2019/10/29 08:35:44 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef	SPHERE_H
+# define SPHERE_H
 
-# include <fcntl.h>
-# include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include "canvas.h"
-# include "light.h"
-# include "lstobjects.h"
-# include "sphere.h"
 # include "vector.h"
+
+typedef struct 	t_sphere
+{
+	float		radius;
+	int			color;
+	s_vector	*center;
+}				s_sphere;
+
+s_sphere		*new_sphere(float radius, int color, s_vector *center);
+s_sphere		*new_default_sphere(float radius, int color);
 
 #endif
