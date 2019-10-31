@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:02:22 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:36:36 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:40:40 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct 	t_vector
 	float		z;
 }				s_vector;
 
+float			length_vectors(s_vector v);
 float			product_vectors(s_vector v1, s_vector v2);
 s_vector		*add_vectors(s_vector v1, s_vector v2);
 s_vector		*subtract_vectors(s_vector v1, s_vector v2);

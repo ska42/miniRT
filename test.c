@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:40:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 06:50:27 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/10/31 13:59:52 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minilibx_opengl_20191021/mlx.h"
+#include "minilibx_opengl/mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 

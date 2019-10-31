@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/10/29 08:44:27 by lmartin          ###   ########.fr        #
+#    Updated: 2019/10/31 15:27:20 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC =			canvas.c \
 				light.c \
 				lstobjects.c \
 				miniRT.c \
+				raytracing.c \
 				sphere.c \
 				vector_calculation.c \
 				vector.c
@@ -42,7 +43,11 @@ NAME =			miniRT
 all:			$(NAME)
 
 $(NAME) :		$(OBJS)
-				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
+				make -C ./minilibx_mms
+				make -C ./minilibx_opengl
+				cp ./minilibx_mms/libmlx.dylib libmlx.dylib
+				cp ./minilibx_opengl/libmlx.a libmlx.a
+				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME) -lmlx -framework OpenGL -framework AppKit
 
 %.o: %.c
 				@gcc $(FLAG) -I $(DIR_HEADERS) -c $< -o $@

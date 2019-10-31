@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.h                                            :+:      :+:    :+:   */
+/*   raytracing.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 07:29:23 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/31 16:38:05 by lmartin          ###   ########.fr       */
+/*   Created: 2019/10/31 14:47:59 by lmartin           #+#    #+#             */
+/*   Updated: 2019/10/31 17:39:33 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	LIGHT_H
-# define LIGHT_H
+#ifndef RAYTRACING_H
+# define RAYTRACING_H
 
-# include <stdlib.h>
-# include "vector.h"
-
-# define TYPE_AMBIENT 0
-# define TYPE_POINT 1
-# define TYPE_DIRECTIONAL 2
-
-typedef struct	t_light
-{
-	int			type;
-	float		intensity;
-	s_vector	*vector;
-}				s_light;
-
-s_light			*new_default_light(int type, float intensity);
+float	compute_lightning(s_vector *point, s_vector *normal, s_lstobjects *lights);
+float	intersect_sphere(s_vector origin, s_vector direction, s_sphere *object);
+int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float t_min_max[2], s_lstobjects *lights);
 
 #endif

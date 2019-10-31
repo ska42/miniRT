@@ -6,11 +6,16 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:46:39 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/29 08:30:24 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:28:33 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
+
+float			length_vectors(s_vector v)
+{
+	return (sqrt(product_vectors(v, v)));
+}
 
 float			product_vectors(s_vector v1, s_vector v2)
 {
