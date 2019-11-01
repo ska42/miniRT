@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/01 08:25:13 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/01 13:59:01 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ float	compute_lightning(s_vector *point, s_vector *normal, s_lstobjects *lights)
 {
 	int			i;
 	float		intensity;
-	s_light		light;
+	s_light		*light;
 	s_vector	*vec_l;
 	float		n_dot_l;
 	float		length_n;
@@ -26,18 +26,18 @@ float	compute_lightning(s_vector *point, s_vector *normal, s_lstobjects *lights)
 	i = 0;
 	while (lights)
 	{
-		light = (*(s_light *)lights->object);
-		if (light.type == TYPE_AMBIENT)
-			intensity += light.intensity;
+		light = ((s_light *)lights->object);
+		if (light->type == TYPE_AMBIENT)
+			intensity += light->intensity;
 		else
 		{
-			if (light.type == TYPE_POINT)
-				vec_l = subtract_vectors(*light.vector, *point);
-			else if (light.type == TYPE_DIRECTIONAL)
-				vec_l = light.vector;
+			if (light->type == TYPE_POINT)
+				vec_l = subtract_vectors(*light->vector, *point);
+			else if (light->type == TYPE_DIRECTIONAL)
+				vec_l = light->vector;
 			n_dot_l = product_vectors(*normal, *vec_l);
 			if (n_dot_l > 0)
-				intensity += light.intensity * n_dot_l / (1 * length_vectors(*vec_l));
+				intensity += light->intensity * n_dot_l / (1 * length_vectors(*vec_l));
 		}
 		lights = lights->next;
 	}
@@ -70,6 +70,9 @@ int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float
 {
 	int		ret_color;
 	int		type;
+	int		r;
+	int		g;
+	int		b;
 	float	t_temp;
 	float	closest_t;
 	void	*closest_object;
@@ -101,9 +104,31 @@ int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float
 	if (type == TYPE_SPHERE)
 	{
 		color = color_to_rgb(((s_sphere *)closest_object)->color);
+		//printf("RGB (%f, %f, %f)\n", color->x, color->y, color->z);
 		new_color = multiply_vectors(compute_lightning(point, normal, lights), *color);
+		//printf("RGB 2 (%f, %f, %f)\n", new_color->x, new_color->y, new_color->z);
 		free(color);
+		if (new_color->x > 255)
+			r = 255;
+		else if (new_color->x < 0)
+			r = 0;
+		else
+			r = new_color->x;
+		if (new_color->y > 255)
+			g = 255;
+		else if (new_color->y < 0)
+			g = 0;
+		else
+			g = new_color->y;
+		if (new_color->z > 255)
+			b = 255;
+		else if (new_color->z < 0)
+			b = 0;
+		else
+			b = new_color->z;
+		set_vector(new_color, r, g, b);
 		ret_color = rgb_to_color(new_color);
+		//printf("%d\n", ret_color);
 		free(new_color);
 		return (ret_color);
 	}
