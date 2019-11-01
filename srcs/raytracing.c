@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/31 17:42:02 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/01 06:56:57 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,15 @@ float	intersect_sphere(s_vector origin, s_vector direction, s_sphere *object)
 
 int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float t_min_max[2], s_lstobjects *lights)
 {
+	int		ret_color;
 	int		type;
 	float	t_temp;
 	float	closest_t;
 	void	*closest_object;
 	s_vector	*point;
 	s_vector	*normal;
+	s_vector	*color;
+	s_vector	*new_color;
 
 	closest_object = NULL;
 	closest_t = -1;
@@ -91,11 +94,18 @@ int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float
 		}
 		objects = objects->next;
 	}
-	point = add_vectors(origin, multiply_vectors(closest_t, direction));
-	normal = subtract_vectors(point, ((s_sphere *)closest_object).center);
-	normal = multiply_vectors(1 / length_vectors(normal), normal);
 	if (!closest_object)
 		return (BACKGROUND_COLOR);
+	point = add_vectors(origin, *(multiply_vectors(closest_t, direction)));
+	normal = subtract_vectors(*point, *(((s_sphere *)closest_object)->center));
+	normal = multiply_vectors(1 / length_vectors(*normal), *normal);
 	if (type == TYPE_SPHERE)
-		return (((s_sphere *)closest_object)->color * compute_lightning(point, normal));
+	{
+		color = color_to_rgb(((s_sphere *)closest_object)->color);
+		new_color = multiply_vectors(compute_lightning(point, normal, lights), *color);
+		free(color);
+		ret_color = rgb_to_color(new_color);
+		free(new_color);
+		return (ret_color);
+	}
 }

@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/10/31 15:27:20 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/01 06:46:46 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC =			canvas.c \
 				raytracing.c \
 				sphere.c \
 				vector_calculation.c \
+				vector_color.c \
 				vector.c
 
 SRCS =			$(addprefix $(DIR_SRCS), $(SRC))
@@ -47,7 +48,7 @@ $(NAME) :		$(OBJS)
 				make -C ./minilibx_opengl
 				cp ./minilibx_mms/libmlx.dylib libmlx.dylib
 				cp ./minilibx_opengl/libmlx.a libmlx.a
-				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME) -lmlx -framework OpenGL -framework AppKit
+				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
 				@gcc $(FLAG) -I $(DIR_HEADERS) -c $< -o $@
