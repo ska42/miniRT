@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/01 06:56:57 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/01 08:25:13 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float
 	{
 		if (objects->type == TYPE_SPHERE)
 			t_temp = intersect_sphere(origin, direction, objects->object);
-		if (t_temp > t_min_max[0] && (t_temp < t_min_max[1] || t_min_max[1] == -1)
-&& (t_temp < closest_t|| closest_t == -1))
+		if (t_temp > t_min_max[0] && (t_temp < t_min_max[1] || t_min_max[1] == -1) && (t_temp < closest_t|| closest_t == -1))
 		{
 			type = objects->type;
 			closest_t = t_temp;
@@ -108,4 +107,5 @@ int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float
 		free(new_color);
 		return (ret_color);
 	}
+	return (BACKGROUND_COLOR);
 }

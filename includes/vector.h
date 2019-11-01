@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:02:22 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/01 06:46:28 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/01 08:21:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ s_vector		*multiply_vectors(float k, s_vector v2);
 
 /** COLOR **/
 s_vector *color_to_rgb(unsigned int color);
+int			rgb_to_color(s_vector *rgb);
 
 /** VECTOR **/
 void			set_vector(s_vector *vector, float x, float y, float z);
