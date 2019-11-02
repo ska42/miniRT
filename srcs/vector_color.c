@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 06:45:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/01 13:07:58 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/02 05:50:06 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ int			rgb_to_color(s_vector *rgb)
 	color = (int)((color << 8) + (int)rgb->y);
 	color = (int)((color << 8) + (int)rgb->z);
 	return (color);
+}
+
+void 		rearrange_rgb(s_vector *color)
+{
+	color->x = (color->x > 255) ? 255 : color->x;
+	color->x = (color->x < 0) ? 0 : color->x;
+	color->y = (color->y > 255) ? 255 : color->y;
+	color->y = (color->y < 0) ? 0 : color->y;
+	color->z = (color->z > 255) ? 255 : color->z;
+	color->z = (color->z < 0) ? 0 : color->z;
 }

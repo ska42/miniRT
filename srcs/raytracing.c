@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/01 13:59:01 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/02 06:05:28 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 float	compute_lightning(s_vector *point, s_vector *normal, s_lstobjects *lights)
 {
-	int			i;
 	float		intensity;
 	s_light		*light;
 	s_vector	*vec_l;
@@ -23,7 +22,6 @@ float	compute_lightning(s_vector *point, s_vector *normal, s_lstobjects *lights)
 
 	length_n = length_vectors(*normal);
 	intensity = 0;
-	i = 0;
 	while (lights)
 	{
 		light = ((s_light *)lights->object);
@@ -37,11 +35,36 @@ float	compute_lightning(s_vector *point, s_vector *normal, s_lstobjects *lights)
 				vec_l = light->vector;
 			n_dot_l = product_vectors(*normal, *vec_l);
 			if (n_dot_l > 0)
-				intensity += light->intensity * n_dot_l / (1 * length_vectors(*vec_l));
+				intensity += light->intensity * n_dot_l / (1 *
+length_vectors(*vec_l));
 		}
 		lights = lights->next;
 	}
 	return (intensity);
+}
+
+int		calculate_new_color(int type, s_lstobjects *object,
+s_lstobjects *lights, s_vector *point)
+{
+	int			ret_color;
+	s_vector	*normal;
+	s_vector	*color;
+	s_vector	*new_color;
+
+	normal = subtract_vectors(*point, *(((s_sphere *)object)->center));
+	normal = multiply_vectors(1 / length_vectors(*normal), *normal);
+	if (type == TYPE_SPHERE)
+	{
+		color = color_to_rgb(((s_sphere *)object)->color);
+		new_color = multiply_vectors(compute_lightning(point, normal, lights)
+, *color);
+		free(color);
+		rearrange_rgb(new_color);
+		ret_color = rgb_to_color(new_color);
+		free(new_color);
+		return (ret_color);
+	}
+	return (BACKGROUND_COLOR);
 }
 
 float	intersect_sphere(s_vector origin, s_vector direction, s_sphere *object)
@@ -51,10 +74,12 @@ float	intersect_sphere(s_vector origin, s_vector direction, s_sphere *object)
 	float		k[3];
 	float		t[2];
 
-	difference = new_vector(origin.x - object->center->x, origin.y - object->center->y, origin.z - object->center->z);
+	difference = new_vector(origin.x - object->center->x,
+origin.y - object->center->y, origin.z - object->center->z);
 	k[0] = product_vectors(direction, direction);
 	k[1] = 2 * product_vectors(*difference, direction);
-	k[2] = product_vectors(*difference, *difference) - (object->radius * object->radius);
+	k[2] = product_vectors(*difference, *difference) -
+(object->radius * object->radius);
 	discriminant = k[1] * k[1] - 4 * k[0] * k[2];
 	if (discriminant < 0)
 		return (0);
@@ -66,71 +91,34 @@ float	intersect_sphere(s_vector origin, s_vector direction, s_sphere *object)
 	return (t[1]);
 }
 
-int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects, float t_min_max[2], s_lstobjects *lights)
+int		trace_ray(s_vector origin, s_vector direction, s_lstobjects *objects,
+s_lstobjects *lights)
 {
-	int		ret_color;
-	int		type;
-	int		r;
-	int		g;
-	int		b;
-	float	t_temp;
-	float	closest_t;
-	void	*closest_object;
-	s_vector	*point;
-	s_vector	*normal;
-	s_vector	*color;
-	s_vector	*new_color;
+	float			t_min_max[2];
+	float			t_temp;
+	float			closest_t;
+	s_lstobjects	*closest_object;
+	s_vector		*point;
 
+	t_min_max[0] = 1;
+	t_min_max[1] = -1;
 	closest_object = NULL;
 	closest_t = -1;
-	type = -1;
 	while (objects)
 	{
 		if (objects->type == TYPE_SPHERE)
 			t_temp = intersect_sphere(origin, direction, objects->object);
-		if (t_temp > t_min_max[0] && (t_temp < t_min_max[1] || t_min_max[1] == -1) && (t_temp < closest_t|| closest_t == -1))
+		if (t_temp > t_min_max[0] && (t_temp < t_min_max[1] ||
+t_min_max[1] == -1) && (t_temp < closest_t|| closest_t == -1))
 		{
-			type = objects->type;
 			closest_t = t_temp;
-			closest_object = objects->object;
+			closest_object = objects;
 		}
 		objects = objects->next;
 	}
 	if (!closest_object)
 		return (BACKGROUND_COLOR);
 	point = add_vectors(origin, *(multiply_vectors(closest_t, direction)));
-	normal = subtract_vectors(*point, *(((s_sphere *)closest_object)->center));
-	normal = multiply_vectors(1 / length_vectors(*normal), *normal);
-	if (type == TYPE_SPHERE)
-	{
-		color = color_to_rgb(((s_sphere *)closest_object)->color);
-		//printf("RGB (%f, %f, %f)\n", color->x, color->y, color->z);
-		new_color = multiply_vectors(compute_lightning(point, normal, lights), *color);
-		//printf("RGB 2 (%f, %f, %f)\n", new_color->x, new_color->y, new_color->z);
-		free(color);
-		if (new_color->x > 255)
-			r = 255;
-		else if (new_color->x < 0)
-			r = 0;
-		else
-			r = new_color->x;
-		if (new_color->y > 255)
-			g = 255;
-		else if (new_color->y < 0)
-			g = 0;
-		else
-			g = new_color->y;
-		if (new_color->z > 255)
-			b = 255;
-		else if (new_color->z < 0)
-			b = 0;
-		else
-			b = new_color->z;
-		set_vector(new_color, r, g, b);
-		ret_color = rgb_to_color(new_color);
-		//printf("%d\n", ret_color);
-		free(new_color);
-		return (ret_color);
-	}
-	return (BACKGROUND_COLOR);
+	return (calculate_new_color(closest_object->type, closest_object->object,
+lights, point));
 }

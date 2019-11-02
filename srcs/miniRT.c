@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/01 14:34:36 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/02 05:58:16 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		main(int	argc, char *argv[])
 	int				color;
 	int				x;
 	int				y;
-	float			t_min_max[2];
 	int				i;
 
 	(void)argc;
@@ -38,7 +37,7 @@ int		main(int	argc, char *argv[])
 	/** SPHERES & O **/
 	obs = new_vector(0, 0, 0);
 	lstobj = new_obj(TYPE_SPHERE, new_default_sphere(1, 0xbf3eff));
-	set_vector(((s_sphere *)lstobj->object)->center, 0, -1, 3);
+	set_vector(((s_sphere *)lstobj->object)->center, 0, 0, 3);
 	lstobj->next = new_obj(TYPE_SPHERE, new_default_sphere(1, 0x6400));
 	set_vector(((s_sphere *)((s_lstobjects *)lstobj->next)->object)->center, 2, 0, 4);
 	((s_lstobjects *)lstobj->next)->next = new_obj(TYPE_SPHERE, new_default_sphere(1, 0x7b68ee));
@@ -46,7 +45,7 @@ int		main(int	argc, char *argv[])
 	/** LIGHTS **/
 	lstlight = new_obj(TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.2));
 	lstlight->next = (s_lstobjects *)new_obj(TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6));
-	set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 2, 1, 0);
+	set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, -2, 1, 0);
 	((s_lstobjects *)lstlight->next)->next = new_obj(TYPE_LIGHT, new_default_light(TYPE_DIRECTIONAL, 0.2));
 	set_vector(((s_light *)((s_lstobjects *)((s_lstobjects *)lstlight->next)->next)->object)->vector, 1, 4, 4);
 	/** RENDERING **/
@@ -57,10 +56,8 @@ int		main(int	argc, char *argv[])
 		y = -(viewport->height/2);
 		while (y < viewport->height/2)
 		{
-			t_min_max[0] = 1;
-			t_min_max[1] = -1;
 			direction = new_vector(x / viewport->width, y /viewport->height, 1);
-			color = trace_ray(*obs, *direction, lstobj, t_min_max, lstlight);
+			color = trace_ray(*obs, *direction, lstobj, lstlight);
 			if (color != BACKGROUND_COLOR)
 				mlx_pixel_put(mlx_ptr, win_ptr, (int)(x + (viewport->width/2)), (int)(-(y - (viewport->height/2))), (int)color);
 			y++;
