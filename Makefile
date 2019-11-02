@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/01 06:46:46 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/02 08:21:24 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC =			canvas.c \
 				lstobjects.c \
 				miniRT.c \
 				raytracing.c \
+				scene.c \
 				sphere.c \
 				vector_calculation.c \
 				vector_color.c \

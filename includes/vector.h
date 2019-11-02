@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:02:22 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 05:51:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/02 07:53:08 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ typedef struct 	t_vector
 	float		y;
 	float		z;
 }				s_vector;
+
+typedef struct	t_lightning_vectors
+{
+	s_vector	*point;
+	s_vector	*normal;
+	s_vector	*view;
+	float		reflection;
+}				s_lightning_vectors;
 
 /**	CALCULATION **/
 float			length_vectors(s_vector v);

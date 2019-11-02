@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/31 14:49:34 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/02 06:42:07 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "sphere.h"
 # include "vector.h"
 # include "raytracing.h"
+# include "scene.h"
 # include "mlx.h"
 
 #endif

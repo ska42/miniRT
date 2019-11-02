@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.h                                           :+:      :+:    :+:   */
+/*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 07:09:23 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 06:30:20 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/02 06:37:11 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/02 07:19:39 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	SPHERE_H
-# define SPHERE_H
+#ifndef SCENE_H
+# define SCENE_H
 
 # include <stdlib.h>
+# include "lstobjects.h"
 # include "vector.h"
 
-typedef struct 	t_sphere
+typedef struct 	t_scene
 {
-	float		radius;
-	int			color;
-	float		reflection;
-	s_vector	*center;
-}				s_sphere;
+	s_vector		*origin;
+	s_lstobjects	*objects;
+	s_lstobjects	*lights;
+	int				background_color;
+	float			t_min;
+	float			t_max;
+}				s_scene;
 
-s_sphere		*new_sphere(float radius, int color,
-float reflection, s_vector *center);
-s_sphere		*new_default_sphere(float radius, int color);
-void 			set_reflection(s_sphere *sphere, float reflection);
+s_scene		*new_scene(s_vector *origin, s_lstobjects *objects,
+s_lstobjects *lights, int color);
 
 #endif
