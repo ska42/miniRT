@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/02 08:21:24 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/02 09:32:14 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ LIBMLX =		libmlx.dylib \
 
 SRC =			canvas.c \
 				light.c \
+				lightning.c \
 				lstobjects.c \
 				miniRT.c \
 				raytracing.c \
@@ -52,7 +53,7 @@ $(NAME) :		$(OBJS)
 				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
-				@gcc $(FLAG) -I $(DIR_HEADERS) -c $< -o $@
+				@gcc $(FLAGS) -I $(DIR_HEADERS) -c $< -o $@
 				@echo "Compiled "$<" successfully!"
 
 bonus:
