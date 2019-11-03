@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 09:15:09 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/03 10:08:06 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		main(int	argc, char *argv[])
 	/** LIGHTS **/
 	lstlight = new_obj(TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.2));
 	lstlight->next = (s_lstobjects *)new_obj(TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6));
-	set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, -2, 1, 0);
+	set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 0, -1, 0);
 	((s_lstobjects *)lstlight->next)->next = new_obj(TYPE_LIGHT, new_default_light(TYPE_DIRECTIONAL, 0.2));
 	set_vector(((s_light *)((s_lstobjects *)((s_lstobjects *)lstlight->next)->next)->object)->vector, 1, 4, 4);
 	/** ON MET TOUT DANS LA SCENE **/

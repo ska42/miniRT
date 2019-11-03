@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 09:30:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/03 10:31:03 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,39 @@ float length_v, s_vector *vec_l)
 	return (intensity);
 }
 
-float	compute_special_lights(s_lightning_vectors *l_vectors, s_light *light)
+s_vector	*type_light(s_lightning_vectors *l_vectors, s_light *light, s_scene *scene)
 {
-	float		intensity;
-	float		n_dot_l;
-	float		length_v;
-	s_vector	*vec_l;
+	s_vector *vec_l;
+
+	vec_l = NULL;
+	if (light->type == TYPE_POINT)
+	{
+		vec_l = subtract_vectors(*light->vector, *l_vectors->point);
+		scene->t_max = 1;
+	}
+	else if (light->type == TYPE_DIRECTIONAL)
+	{
+		vec_l = light->vector;
+		scene->t_max = -1;
+	}
+	scene->t_min = 0.001;
+	return (vec_l);
+}
+
+float	compute_special_lights(s_lightning_vectors *l_vectors, s_light *light, s_scene *scene)
+{
+	float			intensity;
+	float			n_dot_l;
+	float			length_v;
+	s_vector		*vec_l;
+	s_lstobjects	*shadow_obj;
 
 	intensity = 0;
 	length_v = length_vectors(*l_vectors->view);
-	vec_l = NULL;
-	if (light->type == TYPE_POINT)
-		vec_l = subtract_vectors(*light->vector, *l_vectors->point);
-	else if (light->type == TYPE_DIRECTIONAL)
-		vec_l = light->vector;
+	vec_l = type_light(l_vectors, light, scene);
+	closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
+	if (shadow_obj)
+		return (intensity);
 	n_dot_l = product_vectors(*l_vectors->normal, *vec_l);
 	if (n_dot_l > 0)
 		intensity += light->intensity * n_dot_l /
@@ -56,7 +75,7 @@ float	compute_special_lights(s_lightning_vectors *l_vectors, s_light *light)
 	return (intensity);
 }
 
-float	compute_lightning(s_lightning_vectors *l_vectors, s_lstobjects *lights)
+float	compute_lightning(s_lightning_vectors *l_vectors, s_lstobjects *lights, s_scene *scene)
 {
 	float		intensity;
 	s_light		*light;
@@ -68,7 +87,7 @@ float	compute_lightning(s_lightning_vectors *l_vectors, s_lstobjects *lights)
 		if (light->type == TYPE_AMBIENT)
 			intensity += light->intensity;
 		else
-			intensity += compute_special_lights(l_vectors, light);
+			intensity += compute_special_lights(l_vectors, light, scene);
 		lights = lights->next;
 	}
 	return (intensity);

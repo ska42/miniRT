@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:30:36 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 09:34:31 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/03 10:31:28 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 
 #include <stdlib.h>
 #include "lstobjects.h"
+#include "scene.h"
 #include "vector.h"
 #include "light.h"
 
 float	calcul_reflection(s_lightning_vectors *l_vectors, s_light *light, float length_v, s_vector *vec_l);
-float	compute_special_lights(s_lightning_vectors *l_vectors, s_light *light);
-float	compute_lightning(s_lightning_vectors *l_vectors, s_lstobjects *lights);
+float	compute_special_lights(s_lightning_vectors *l_vectors, s_light *light, s_scene *scene);
+s_vector	*type_light(s_lightning_vectors *l_vectors, s_light *light, s_scene *scene);
+float	compute_lightning(s_lightning_vectors *l_vectors, s_lstobjects *lights, s_scene *scene);
 
 #endif

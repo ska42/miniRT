@@ -6,14 +6,14 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 09:29:52 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/03 09:53:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 int		calculate_new_color(s_lstobjects *objects, s_lstobjects *lights,
-s_lightning_vectors *l_vectors)
+s_lightning_vectors *l_vectors, s_scene *scene)
 {
 	int			ret_color;
 	void 		*object;
@@ -31,7 +31,7 @@ s_lightning_vectors *l_vectors)
 		l_vectors->reflection = ((s_sphere *)object)->reflection;
 		color = color_to_rgb(((s_sphere *)object)->color);
 		new_color = multiply_vectors(compute_lightning(l_vectors,
-lights), *color);
+lights, scene), *color);
 		free(l_vectors->normal);
 		free(color);
 		rearrange_rgb(new_color);
@@ -56,7 +56,7 @@ s_vector direction, float closest_t, s_scene *scene)
 	l_vectors->point = add_vectors(*scene->origin, *(temp));
 	free(temp);
 	l_vectors->view = multiply_vectors(-1, direction);
-	final_color = calculate_new_color(closest_object, scene->lights, l_vectors);
+	final_color = calculate_new_color(closest_object, scene->lights, l_vectors, scene);
 	free(l_vectors->point);
 	free(l_vectors->view);
 	free(l_vectors);
@@ -87,29 +87,37 @@ origin.y - object->center->y, origin.z - object->center->z);
 	return (t[1]);
 }
 
-int		trace_ray(s_vector direction, s_scene *scene)
+float	closest_intersection(s_vector origin, s_vector direction, s_scene *scene, s_lstobjects **closest_object)
 {
 	float					t_temp;
 	float					closest_t;
-	s_lstobjects			*closest_object;
 	s_lstobjects			*objects;
 
-	closest_object = NULL;
+	*closest_object = NULL;
 	closest_t = -1;
 	objects = scene->objects;
 	while (objects)
 	{
 		if (objects->type == TYPE_SPHERE)
-			t_temp = intersect_sphere(*scene->origin,
+			t_temp = intersect_sphere(origin,
 direction, objects->object);
 		if (t_temp > scene->t_min && (t_temp < scene->t_max ||
 scene->t_max == -1) && (t_temp < closest_t|| closest_t == -1))
 		{
 			closest_t = t_temp;
-			closest_object = objects;
+			*closest_object = objects;
 		}
 		objects = objects->next;
 	}
+	return (closest_t);
+}
+
+int		trace_ray(s_vector direction, s_scene *scene)
+{
+	float					closest_t;
+	s_lstobjects			*closest_object;
+
+	closest_t = closest_intersection(*scene->origin, direction, scene, &closest_object);
 	if (!closest_object)
 		return (scene->background_color);
 	return (setup_l_vectors_and_calculate(closest_object,
