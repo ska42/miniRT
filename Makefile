@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/04 05:19:14 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/04 05:27:58 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC =			camera.c \
 				lightning.c \
 				lstobjects.c \
 				miniRT.c \
+				plan.c \
 				raytracing.c \
 				reflect.c \
 				rotation.c \

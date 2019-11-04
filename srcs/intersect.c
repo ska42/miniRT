@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 05:18:50 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 08:22:54 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,18 @@ origin.y - object->center->y, origin.z - object->center->z);
 	if (t[0] < t[1])
 		return (t[0]);
 	return (t[1]);
+}
+
+float		intersect_plan(s_vector origin, s_vector direction, s_plan *object)
+{
+	float denom;
+	float k[2];
+	float t;
+
+	t = 0;
+	denom = -(product_vectors(*object->normal, *object->point));
+	k[0] = product_vectors(origin, *object->normal) + denom;
+	k[1] = product_vectors(direction, *object->normal);
+	t = - (k[0] / k[1]);
+	return ((t < 0) ? 0 : t);
 }

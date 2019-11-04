@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 05:19:25 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 06:07:38 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "light.h"
 # include "lightning.h"
 # include "lstobjects.h"
+# include "plan.h"
 # include "sphere.h"
 # include "vector.h"
 # include "raytracing.h"

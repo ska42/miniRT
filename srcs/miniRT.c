@@ -6,13 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 04:18:07 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 08:23:07 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-
 
 int		main(int	argc, char *argv[])
 {
@@ -28,7 +26,6 @@ int		main(int	argc, char *argv[])
 	int				color;
 	int				x;
 	int				y;
-	int				i;
 	s_vector		*rota_x;
 	s_vector		*rota_y;
 	s_vector		*rota_z;
@@ -40,8 +37,8 @@ int		main(int	argc, char *argv[])
 	mlx_ptr = mlx_init();
 	viewport = new_canvas(700, 700, 1);
 	win_ptr = mlx_new_window(mlx_ptr, viewport->width, viewport->height, "miniRT");
-	/** SPHERES & O **/
-	obs = new_vector(3, 0, 1);
+	/** SPHERES & O & CAM **/
+	obs = new_vector(3, 0, 0);
 	rota_x = new_vector(0.7071, 0, -0.7071);
 	rota_y = new_vector(0, 1, 0);
 	rota_z = new_vector(0.7071, 0, 0.7071);
@@ -55,6 +52,9 @@ int		main(int	argc, char *argv[])
 	((s_lstobjects *)lstobj->next)->next = new_obj(TYPE_SPHERE, new_default_sphere(1, 0x7b68ee));
 	set_vector(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object)->center, -2, 0, 4);
 	set_shiny(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object), 10);
+	/** PLAN **/
+	((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->next = new_obj(TYPE_PLAN, new_plan(new_vector(0, -2, 0), new_vector(0, 1, 0), 0xff0000));
+	//lstobj = new_obj(TYPE_PLAN, new_plan(new_vector(0, 0, 3), new_vector(0, 1, 1), 0xfffafa));
 	/** LIGHTS **/
 	lstlight = new_obj(TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.2));
 	lstlight->next = (s_lstobjects *)new_obj(TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6));
@@ -64,7 +64,6 @@ int		main(int	argc, char *argv[])
 	/** ON MET TOUT DANS LA SCENE **/
 	scene = new_scene(obs, lstobj, lstlight, 0x0);
 	/** RENDERING **/
-	i = 0;
 	x = -(viewport->width/2) + 1;
 	while ((x + (viewport->width/2) <= viewport->width))
 	{
@@ -76,10 +75,7 @@ int		main(int	argc, char *argv[])
 			free(temp);
 			color = trace_ray(*direction, scene);
 			if (color != scene->background_color)
-			{
-				i++;
 				mlx_pixel_put(mlx_ptr, win_ptr, (int)(x + (viewport->width/2)), (int)(-(y - (viewport->height/2))), (int)color);
-			}
 			free(direction);
 			scene->origin = obs;
 			scene->depth = 3;
