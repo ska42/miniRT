@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/03 10:08:06 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 02:49:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ int		main(int	argc, char *argv[])
 	(void)argv;
 	/**	WINDOW **/
 	mlx_ptr = mlx_init();
-	viewport = new_canvas(700, 700, 1);
+	viewport = new_canvas(300, 300, 1);
 	win_ptr = mlx_new_window(mlx_ptr, viewport->width, viewport->height, "miniRT");
 	/** SPHERES & O **/
 	obs = new_vector(0, 0, 0);
 	lstobj = new_obj(TYPE_SPHERE, new_default_sphere(1, 0xbf3eff));
 	set_vector(((s_sphere *)lstobj->object)->center, 0, -1, 3);
-	set_reflection((s_sphere *)lstobj->object, 500);
+	set_shiny((s_sphere *)lstobj->object, 500);
 	lstobj->next = new_obj(TYPE_SPHERE, new_default_sphere(1, 0x6400));
 	set_vector(((s_sphere *)((s_lstobjects *)lstobj->next)->object)->center, 2, 0, 4);
-	set_reflection(((s_sphere *)((s_lstobjects *)lstobj->next)->object), 500);
+	set_shiny(((s_sphere *)((s_lstobjects *)lstobj->next)->object), 500);
 	((s_lstobjects *)lstobj->next)->next = new_obj(TYPE_SPHERE, new_default_sphere(1, 0x7b68ee));
 	set_vector(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object)->center, -2, 0, 4);
-	set_reflection(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object), 10);
+	set_shiny(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object), 10);
 	/** LIGHTS **/
 	lstlight = new_obj(TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.2));
 	lstlight->next = (s_lstobjects *)new_obj(TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6));
@@ -62,11 +62,14 @@ int		main(int	argc, char *argv[])
 		y = -(viewport->height/2);
 		while (y < viewport->height/2)
 		{
+			printf("x : %d - y : %d\n", x, y);
 			direction = new_vector(x / viewport->width, y /viewport->height, 1);
 			color = trace_ray(*direction, scene);
 			if (color != BACKGROUND_COLOR)
 				mlx_pixel_put(mlx_ptr, win_ptr, (int)(x + (viewport->width/2)), (int)(-(y - (viewport->height/2))), (int)color);
 			free(direction);
+			scene->origin = obs;
+			scene->depth = 3;
 			y++;
 		}
 		x++;

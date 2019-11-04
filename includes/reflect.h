@@ -1,35 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
+/*   reflect.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 06:37:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 01:58:18 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/04 02:38:22 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/04 02:39:00 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCENE_H
-# define SCENE_H
+#ifndef REFLECT_H
+# define REFLECT_H
 
-# include <stdlib.h>
-# include "lstobjects.h"
-# include "vector.h"
-
-typedef struct 	t_scene
-{
-	s_vector		*origin;
-	s_lstobjects	*objects;
-	s_lstobjects	*lights;
-	int				background_color;
-	int				depth;
-	float			t_min;
-	float			t_max;
-}				s_scene;
-
-s_scene		*new_scene(s_vector *origin, s_lstobjects *objects,
-s_lstobjects *lights, int color);
-s_scene		*cpy_scene(s_scene *scene);
+s_vector	*reflect_ray(s_vector v1, s_vector v2);
+int			color_with_reflect(s_lstobjects *closest_object, s_scene *scene, s_lightning_vectors *l_vectors, int color);
 
 #endif

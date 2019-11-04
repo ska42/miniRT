@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/02 09:32:14 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/04 02:44:07 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC =			canvas.c \
 				lstobjects.c \
 				miniRT.c \
 				raytracing.c \
+				reflect.c \
 				scene.c \
 				sphere.c \
 				vector_calculation.c \
@@ -46,10 +47,10 @@ NAME =			miniRT
 all:			$(NAME)
 
 $(NAME) :		$(OBJS)
-				make -C ./minilibx_mms
-				make -C ./minilibx_opengl
-				cp ./minilibx_mms/libmlx.dylib libmlx.dylib
-				cp ./minilibx_opengl/libmlx.a libmlx.a
+				@make -C ./minilibx_mms
+				@make -C ./minilibx_opengl
+				@cp ./minilibx_mms/libmlx.dylib libmlx.dylib
+				@cp ./minilibx_opengl/libmlx.a libmlx.a
 				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
@@ -57,6 +58,10 @@ $(NAME) :		$(OBJS)
 				@echo "Compiled "$<" successfully!"
 
 bonus:
+
+norme:
+				norminette $(DIR_SRCS)
+				norminette $(DIR_HEADERS)
 
 clean:
 				$(RM) $(OBJS)
