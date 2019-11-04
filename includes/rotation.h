@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   rotation.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 03:56:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 08:37:42 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/04 09:49:08 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/04 10:39:52 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#ifndef ROTATION_H
+# define ROTATION_H
 
-# include <stdlib.h>
-#include "miniRT.h"
 #include "vector.h"
 
-typedef struct 	t_camera
-{
-	s_vector		*origin;
-	s_vector		*rotation;
-}				s_camera;
-
-s_camera		*new_camera(s_vector *pos, s_vector *rota);
+void		rx(s_vector *vect, float x);
+void		ry(s_vector *vect, float y);
+void		rz(s_vector *vect, float z);
+void		rot(s_vector *vect, s_vector *angle);
+void		anti_rot(s_vector *vect, s_vector *angle);
 
 #endif
