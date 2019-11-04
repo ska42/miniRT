@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 02:39:12 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 04:23:28 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <math.h>
+# include "camera.h"
 # include "canvas.h"
 # include "light.h"
 # include "lightning.h"

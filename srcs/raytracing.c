@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 02:52:13 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 03:35:30 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ scene->lights, l_vectors, scene);
 && scene->depth > 0)
 		final_color = color_with_reflect(closest_object, scene,
 l_vectors, final_color);
-	printf("free_all\n");
 	free(l_vectors->point);
 	free(l_vectors->normal);
 	free(l_vectors->view);
 	free(l_vectors);
-	printf("free_end_all\n");
 	return (final_color);
 }
 
@@ -125,13 +123,11 @@ int			trace_ray(s_vector direction, s_scene *scene)
 	s_lstobjects			*closest_object;
 	int						color;
 
-	printf("trace_ray\n");
 	closest_t = closest_intersection(*scene->origin, direction,
 scene, &closest_object);
 	if (!closest_object)
 		return (scene->background_color);
 	color = setup_l_vectors_and_calculate(closest_object,
 direction, closest_t, scene);
-	printf("end_trace_ray\n");
 	return (color);
 }

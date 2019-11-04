@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 02:49:15 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 04:18:07 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		main(int	argc, char *argv[])
 	void			*win_ptr;
 	s_canvas		*viewport;
 	s_vector		*obs;
+	s_camera		*camera;
 	s_vector		*direction;
 	s_lstobjects	*lstobj;
 	s_lstobjects	*lstlight;
@@ -28,15 +29,23 @@ int		main(int	argc, char *argv[])
 	int				x;
 	int				y;
 	int				i;
+	s_vector		*rota_x;
+	s_vector		*rota_y;
+	s_vector		*rota_z;
+	s_vector		*temp;
 
 	(void)argc;
 	(void)argv;
 	/**	WINDOW **/
 	mlx_ptr = mlx_init();
-	viewport = new_canvas(300, 300, 1);
+	viewport = new_canvas(700, 700, 1);
 	win_ptr = mlx_new_window(mlx_ptr, viewport->width, viewport->height, "miniRT");
 	/** SPHERES & O **/
-	obs = new_vector(0, 0, 0);
+	obs = new_vector(3, 0, 1);
+	rota_x = new_vector(0.7071, 0, -0.7071);
+	rota_y = new_vector(0, 1, 0);
+	rota_z = new_vector(0.7071, 0, 0.7071);
+	camera = new_camera(obs, rota_x, rota_y, rota_z);
 	lstobj = new_obj(TYPE_SPHERE, new_default_sphere(1, 0xbf3eff));
 	set_vector(((s_sphere *)lstobj->object)->center, 0, -1, 3);
 	set_shiny((s_sphere *)lstobj->object, 500);
@@ -59,14 +68,18 @@ int		main(int	argc, char *argv[])
 	x = -(viewport->width/2) + 1;
 	while ((x + (viewport->width/2) <= viewport->width))
 	{
-		y = -(viewport->height/2);
+		y = -(viewport->height/2) + 1;
 		while (y < viewport->height/2)
 		{
-			printf("x : %d - y : %d\n", x, y);
-			direction = new_vector(x / viewport->width, y /viewport->height, 1);
+			temp = new_vector(x / viewport->width, y / viewport->height, 1);
+			direction = multiply_vectors_rotation(*camera->rotation, *temp);
+			free(temp);
 			color = trace_ray(*direction, scene);
-			if (color != BACKGROUND_COLOR)
+			if (color != scene->background_color)
+			{
+				i++;
 				mlx_pixel_put(mlx_ptr, win_ptr, (int)(x + (viewport->width/2)), (int)(-(y - (viewport->height/2))), (int)color);
+			}
 			free(direction);
 			scene->origin = obs;
 			scene->depth = 3;

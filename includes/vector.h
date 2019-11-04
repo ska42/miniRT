@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:02:22 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/03 23:10:49 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 04:23:18 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,23 @@ typedef struct	t_lightning_vectors
 	float		shiny;
 }				s_lightning_vectors;
 
+typedef struct	t_rotation
+{
+	s_vector	*x;
+	s_vector	*y;
+	s_vector	*z;
+}				s_rotation;
+
 /**	CALCULATION **/
 float			length_vectors(s_vector v);
 float			product_vectors(s_vector v1, s_vector v2);
 s_vector		*add_vectors(s_vector v1, s_vector v2);
 s_vector		*subtract_vectors(s_vector v1, s_vector v2);
+s_vector		*multiply_vectors_rotation(s_rotation r, s_vector v2);
 s_vector		*multiply_vectors(float k, s_vector v2);
+
+/** ROTATION **/
+s_rotation		*new_rotation(s_vector *rota_x, s_vector *rota_y, s_vector *rota_z);
 
 /** COLOR **/
 s_vector		*color_to_rgb(unsigned int color);

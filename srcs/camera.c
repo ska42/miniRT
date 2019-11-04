@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 07:06:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 04:26:00 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/04 03:51:43 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/04 04:24:00 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "camera.h"
 #include "vector.h"
 
-void			set_vector(s_vector *vector, float x, float y, float z)
+s_camera		*new_camera(s_vector *pos, s_vector *rota_x, s_vector *rota_y, s_vector *rota_z)
 {
-	vector->x = x;
-	vector->y = y;
-	vector->z = z;
-}
+	s_camera	*camera;
 
-s_vector		*new_vector(float x, float y, float z)
-{
-	s_vector	*vector;
-
-	vector = malloc(sizeof(s_vector));
-	set_vector(vector, x, y, z);
-	return (vector);
+	camera = malloc(sizeof(s_camera));
+	camera->rotation = new_rotation(rota_x, rota_y, rota_z);
+	camera->origin = pos;
+	return (camera);
 }

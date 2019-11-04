@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 02:37:46 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 02:50:30 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/04 03:35:48 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ s_lightning_vectors *l_vectors, int color)
 	s_vector				*temp2;
 	s_vector				*reflect_color;
 
-	printf("reflect\n");
 	temp = reflect_ray(*(l_vectors->view), *(l_vectors->normal));
 	temp2 = color_to_rgb(color);
 	scene->origin = l_vectors->point;
@@ -52,6 +51,5 @@ s_lightning_vectors *l_vectors, int color)
 	rearrange_rgb(reflect_color);
 	color = rgb_to_color(reflect_color);
 	free(reflect_color);
-	printf("reflect_end\n");
 	return (color);
 }

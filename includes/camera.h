@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 07:06:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 04:26:00 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/04 03:56:02 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/04 04:23:51 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CAMERA_H
+# define CAMERA_H
+
+# include <stdlib.h>
+#include "miniRT.h"
 #include "vector.h"
 
-void			set_vector(s_vector *vector, float x, float y, float z)
+typedef struct 	t_camera
 {
-	vector->x = x;
-	vector->y = y;
-	vector->z = z;
-}
+	s_vector		*origin;
+	s_rotation		*rotation;
+}				s_camera;
 
-s_vector		*new_vector(float x, float y, float z)
-{
-	s_vector	*vector;
+s_camera		*new_camera(s_vector *pos, s_vector *rota_x, s_vector *rota_y, s_vector *rota_z);
 
-	vector = malloc(sizeof(s_vector));
-	set_vector(vector, x, y, z);
-	return (vector);
-}
+#endif

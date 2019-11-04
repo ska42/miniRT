@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/04 02:44:07 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/04 04:00:37 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,15 @@ DIR_OBJS =		./
 LIBMLX =		libmlx.dylib \
 				libmlx.a
 
-SRC =			canvas.c \
+SRC =			camera.c \
+				canvas.c \
 				light.c \
 				lightning.c \
 				lstobjects.c \
 				miniRT.c \
 				raytracing.c \
 				reflect.c \
+				rotation.c \
 				scene.c \
 				sphere.c \
 				vector_calculation.c \
