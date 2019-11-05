@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:24:32 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 10:29:59 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/05 05:14:20 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 # define TYPE_SPHERE 0
 # define TYPE_PLAN 1
-# define TYPE_LIGHT 2
+# define TYPE_SQUARE 2
+# define TYPE_LIGHT 3
 
 typedef struct	t_lstobjects
 {

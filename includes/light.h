@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:29:23 by lmartin           #+#    #+#             */
-/*   Updated: 2019/10/31 16:38:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/05 04:53:12 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct	t_light
 {
 	int			type;
 	float		intensity;
+	int			color;
 	s_vector	*vector;
 }				s_light;
 

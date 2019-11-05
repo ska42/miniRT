@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/04 09:51:54 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/05 05:13:33 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC =			camera.c \
 				rotation.c \
 				scene.c \
 				sphere.c \
+				square.c \
 				vector_calculation.c \
 				vector_color.c \
 				vector.c

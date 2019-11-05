@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 08:22:54 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/05 09:10:35 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,39 @@ float		intersect_plan(s_vector origin, s_vector direction, s_plan *object)
 	k[1] = product_vectors(direction, *object->normal);
 	t = - (k[0] / k[1]);
 	return ((t < 0) ? 0 : t);
+}
+
+float		intersect_square(s_vector origin, s_vector direction, s_square *object)
+{
+	s_vector *point;
+	s_vector *temp;
+	float denom;
+	float k[2];
+	float t;
+	float distance;
+	float diago;
+
+	t = 0;
+	denom = -(product_vectors(*object->orientation, *object->center));
+	k[0] = product_vectors(origin, *object->orientation) + denom;
+	k[1] = product_vectors(direction, *object->orientation);
+	t = - (k[0] / k[1]);
+	if (t <= 0)
+		return (0);
+	temp = multiply_vectors(t, direction);
+	point = add_vectors(origin, *temp);
+	free(temp);
+	diago = object->size * sqrt(2);
+	distance = sqrt(pow(point->x - object->center->x, 2) +
+					pow(point->y - object->center->y, 2) +
+					pow(point->z - object->center->z, 2));
+	//printf("distance : %f\n", distance);
+	if (distance <= object->size/2 || distance <= diago/2)
+	{
+		//printf("point : (%f, %f, %f)\n", point->x, point->y, point->z);
+		//if (distance > 2.5 || distance < 1.5)
+			//printf("distance : %f\n", distance);
+		return (t);
+	}
+	return (0);
 }
