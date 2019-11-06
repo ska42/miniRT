@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 18:49:14 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 19:32:09 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,9 @@ float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *objec
 	if (r[1] < 0 || (r[0] + r[1] > 1))
 		return (0);
 	return (t);
+}
+
+float		intersect_cylinder(s_vector origin, s_vector direction, s_triangle *object)
+{
+	return (0);
 }

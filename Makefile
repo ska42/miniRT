@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/06 05:40:53 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/06 19:08:46 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ LIBMLX =		libmlx.dylib \
 
 SRC =			camera.c \
 				canvas.c \
+				cylinder.c \
 				intersect.c \
 				light.c \
 				lightning.c \

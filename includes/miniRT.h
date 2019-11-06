@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 05:32:31 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 19:02:48 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <math.h>
 # include "camera.h"
 # include "canvas.h"
+# include "cylinder.h"
 # include "intersect.h"
 # include "light.h"
 # include "lightning.h"
