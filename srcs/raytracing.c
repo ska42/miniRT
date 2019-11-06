@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/05 05:49:42 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 14:39:50 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 	else if (objects->type == TYPE_SQUARE)
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_square *)object)->center));
+	else if (objects->type == TYPE_TRIANGLE)
+		temp = subtract_vectors(*l_vectors->point,
+			*(((s_triangle *)object)->a));
 	l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
 	free(temp);
 	if (objects->type == TYPE_SPHERE)
@@ -47,6 +50,11 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 	{
 		l_vectors->shiny = ((s_square *)object)->shiny;
 		temp = color_to_rgb(((s_square *)object)->color);
+	}
+	else if (objects->type == TYPE_TRIANGLE)
+	{
+		l_vectors->shiny = ((s_triangle *)object)->shiny;
+		temp = color_to_rgb(((s_triangle *)object)->color);
 	}
 	new_color = multiply_vectors(compute_lightning(l_vectors,
 lights, scene), *temp);
@@ -84,6 +92,10 @@ l_vectors, final_color);
 	&& scene->depth > 0))
 		final_color = color_with_reflect(closest_object, scene,
 l_vectors, final_color);
+	else if (closest_object->type == TYPE_TRIANGLE && (((s_triangle *)closest_object->object)->reflective > 0
+	&& scene->depth > 0))
+		final_color = color_with_reflect(closest_object, scene,
+	l_vectors, final_color);
 	free(l_vectors->point);
 	free(l_vectors->normal);
 	free(l_vectors->view);
@@ -109,6 +121,8 @@ s_scene *scene, s_lstobjects **closest_object)
 			t_temp = intersect_plan(origin, direction, objects->object);
 		else if (objects->type == TYPE_SQUARE)
 			t_temp = intersect_square(origin, direction, objects->object);
+		else if (objects->type == TYPE_TRIANGLE)
+			t_temp = intersect_triangle(origin, direction, objects->object);
 		if (t_temp > scene->t_min && (t_temp < scene->t_max ||
 scene->t_max == -1) && (t_temp < closest_t|| closest_t == -1))
 		{

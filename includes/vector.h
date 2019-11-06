@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:02:22 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 08:35:04 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 17:53:32 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct	t_lightning_vectors
 /**	CALCULATION **/
 float			length_vectors(s_vector v);
 float			product_vectors(s_vector v1, s_vector v2);
+s_vector		*cross(s_vector u, s_vector v);
+s_vector		*product_scalar(s_vector u, s_vector v);
 s_vector		*add_vectors(s_vector v1, s_vector v2);
 s_vector		*subtract_vectors(s_vector v1, s_vector v2);
 s_vector		*multiply_vectors_rotation(s_vector r, s_vector v2);

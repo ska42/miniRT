@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 04:03:19 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 18:55:35 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		main(int	argc, char *argv[])
 	(void)argv;
 	/**	WINDOW **/
 	mlx_ptr = mlx_init();
-	viewport = new_canvas(1280, 720, 1);
+	viewport = new_canvas(1000, 700, 1);
 	if (viewport->height < viewport->width)
 		viewplane = new_canvas(viewport->width/viewport->height, 1, 1);
 	else
@@ -77,6 +77,7 @@ int		main(int	argc, char *argv[])
 	/** SQUARE **/
 	add_back(&lstobj, TYPE_SQUARE, new_square(new_vector(0, 3, 5), new_vector(0, 0, 0.5), 1, 0xffff00));
 	//lstobj = new_obj(TYPE_PLAN, new_plan(new_vector(0, 0, 3), new_vector(0, 1, 1), 0xfffafa));
+	add_back(&lstobj, TYPE_TRIANGLE, new_triangle(new_vector(-5, 2, 3), new_vector(-2, 0, 4), new_vector(-4, 3, 6), 0xfffafa));
 	/** LIGHTS **/
 	lstlight = NULL;
 	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.5));

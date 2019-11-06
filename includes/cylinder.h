@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   triangle.c                                         :+:      :+:    :+:   */
+/*   cylinder.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 05:32:43 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 14:45:08 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/06 18:58:19 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/06 18:59:49 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef CYLINDER_H
+# define CYLINDER_H
 
-s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, int color)
+# include <stdlib.h>
+# include "vector.h"
+
+typedef struct	t_triangle
 {
-	s_triangle *triangle;
+	s_vector	*center;
+	s_vector	*orientation;
+	s_vector	*diameter;
+	s_vector	*height;
+	int			color;
+	float		shiny;
+	float		reflective;
+}				s_triangle;
 
-	triangle = malloc(sizeof(s_triangle));
-	triangle->a = a;
-	triangle->b = b;
-	triangle->c = c;
-	triangle->color = color;
-	triangle->shiny = -1;
-	triangle->reflective = -1;
-	return (triangle);
-}
+#endif

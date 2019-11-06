@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 04:05:15 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 04:07:19 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 14:38:57 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ typedef struct	t_triangle
 	float		shiny;
 	float		reflective;
 }				s_triangle;
+
+s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, int color);
 
 #endif
