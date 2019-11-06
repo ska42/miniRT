@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/05 05:25:27 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 03:35:27 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ s_light *light, s_scene *scene)
 		return (intensity);
 	n_dot_l = product_vectors(*l_vectors->normal, *vec_l);
 	if (n_dot_l > 0)
-		intensity += light->intensity * n_dot_l /
-(length_vectors(*l_vectors->normal) * length_vectors(*vec_l));
+		intensity += (light->intensity * n_dot_l) /
+((length_vectors(*l_vectors->normal) * length_vectors(*vec_l)));
 	if (l_vectors->shiny != -1)
 		intensity += calcul_shiny(l_vectors, light, length_v, vec_l);
 	if (light->type == TYPE_POINT)

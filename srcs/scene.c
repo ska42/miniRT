@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:43:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 01:58:02 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 03:51:57 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ s_lstobjects *lights, int color)
 	scene->objects = objects;
 	scene->lights = lights;
 	scene->background_color = color;
-	scene->t_min = 1;
+	scene->t_min = 0.001;
 	scene->t_max = -1;
 	scene->depth = 3;
 	return (scene);
