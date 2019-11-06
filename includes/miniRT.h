@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/05 05:10:41 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/06 05:32:31 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include "raytracing.h"
 # include "scene.h"
 # include "square.h"
+# include "triangle.h"
 # include "reflect.h"
 # include "rotation.h"
 # include "mlx.h"
