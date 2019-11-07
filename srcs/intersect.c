@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 19:32:09 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/07 16:14:32 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,27 @@ float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *objec
 	return (t);
 }
 
-float		intersect_cylinder(s_vector origin, s_vector direction, s_triangle *object)
+float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *object)
 {
-	return (0);
+	s_vector	*difference;
+	float		discriminant;
+	float		k[3];
+	float		t[2];
+	float		tmp[2];
+
+	difference = subtract_vectors(origin, *object->center);
+	tmp[0] = product_vectors(direction, *object->orientation);
+	tmp[1] = product_vectors(*difference, *object->orientation);
+	k[0] = product_vectors(direction, direction) - pow(tmp[0], 2);
+	k[1] = 2 * (product_vectors(direction, *difference) - (tmp[0] * tmp[1]));
+	k[2] = product_vectors(*difference, *difference) - pow(tmp[1], 2) - pow(object->diameter/2, 2);
+	discriminant = k[1] * k[1] - 4 * k[0] * k[2];
+	if (discriminant < 0)
+		return (0);
+	t[0] = (- k[1] + sqrt(discriminant)) / (2 * k[0]);
+	t[1] = (- k[1] - sqrt(discriminant)) / (2 * k[0]);
+	free(difference);
+	if (t[0] < t[1])
+		return (t[0]);
+	return (t[1]);
 }

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:18:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 14:49:44 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/07 16:10:09 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ float		intersect_sphere(s_vector origin, s_vector direction, s_sphere *object);
 float		intersect_plan(s_vector origin, s_vector direction, s_plan *object);
 float		intersect_square(s_vector origin, s_vector direction, s_square *object);
 float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *object);
+float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *object);
 
 #endif
