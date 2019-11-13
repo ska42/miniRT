@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/06 19:08:46 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/13 01:28:38 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ $(NAME) :		$(OBJS)
 				@make -C ./minilibx_opengl
 				@cp ./minilibx_mms/libmlx.dylib libmlx.dylib
 				@cp ./minilibx_opengl/libmlx.a libmlx.a
-				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
+				$(CC) $(FLAGS) -g3 -fsanitize=address -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
 				@gcc $(FLAGS) -I $(DIR_HEADERS) -c $< -o $@

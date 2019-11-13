@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 18:58:19 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 19:08:33 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/12 21:39:45 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct	t_cylinder
 {
 	s_vector	*center;
 	s_vector	*orientation;
+	s_vector	*point1;
+	s_vector	*point2;
 	float		diameter;
 	float		height;
 	int			color;
