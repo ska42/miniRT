@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/13 05:28:46 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/13 15:18:03 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,44 +131,34 @@ float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *objec
 
 float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *object)
 {
-	//s_vector	*difference;
-	//s_plan		*face;
-	float		discriminant;
-	float		k[3];
-	float		t[2];
-	//float		ret;
+	//s_vector *difference;
+	s_vector	*tmp_direction;
+	s_vector	*p;
+	float a;
+	float b;
+	float c;
+	float delta;
+	//float root;
+	float t[2];
 
-	k[0] = product_vectors(direction, direction);
-	k[1] = 2 * product_vectors(origin, direction);
-	k[2] = product_vectors(origin, origin) - (pow(object->diameter/2, 2));
-	/**
-	difference = new_vector(origin.x - object->center->x, origin.y - object->center->y, origin.z - object->center->z);
-	k[0] = product_vectors(direction, direction);
-	k[1] = 2 * (product_vectors(direction, origin) - product_vectors(*object->center, direction));
-	k[2] = - 2 *(product_vectors(origin, *object->center)) + product_vectors(origin, origin) + product_vectors(*object->center, *object->center) - ((object->diameter / 2) * (object->diameter / 2));
-	**/
-	discriminant = k[1] * k[1] - 4 * k[0] * k[2];
-	if (discriminant < 0)
+	tmp_direction = new_vector(direction.x, direction.y, direction.z);
+	p = subtract_vectors(origin, *object->center);
+	rot(tmp_direction, object->orientation);
+	rot(p, object->orientation);
+	a = (tmp_direction->x * tmp_direction->x) +
+		(tmp_direction->z * tmp_direction->z);
+	b = 2 * (tmp_direction->x * p->x) +
+		2 * (tmp_direction->z * p->z);
+	c = p->x * p->x +
+	 	p->z * p->z -
+		((object->diameter / 2) * (object->diameter / 2));
+	free(p);
+	free(tmp_direction);
+	delta = b * b - (4 * a * c);
+	if (delta < 0)
 		return (0);
-	if (product_vectors(origin, origin) > pow(object->diameter/2, 2))
-		return (0);
-	/**
-	if (origin.x > object->height/2 || (origin.x > 0 && origin.x < object->height / 2))
-	{
-		face = new_plan(object->point1, object->orientation, 0x0);
-		ret = intersect_plan(origin, direction, face);
-		free(face);
-		return (ret);
-	}
-	if (origin.x < 0 || (origin.x > 0 && origin.x < object->height / 2))
-	{
-		face = new_plan(object->point2, object->orientation, 0x0);
-		ret = intersect_plan(origin, direction, face);
-		free(face);
-		return (ret);
-	}**/
-	t[0] = (- k[1] + sqrt(discriminant)) / (2 * k[0]);
-	t[1] = (- k[1] - sqrt(discriminant)) / (2 * k[0]);
+	t[0] = (- b + sqrt(delta)) / (2 * a);
+	t[1] = (- b - sqrt(delta)) / (2 * a);
 	//free(difference);
 	if (t[0] < t[1])
 		return (t[0]);
