@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 05:09:38 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:41:13 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	//float root;
 	float t[2];
 	float tmp[4];
+	float ret;
 
 	//a   = D|D - (D|V)^2
     //b/2 = D|X - (D|V)*(X|V)
@@ -213,8 +214,26 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	t[1] = (- b - sqrt(delta)) / (2.0 * a);
 	//free(difference);
 	if (t[0] < t[1])
-	{
-		return (t[0]);
-	}
-	return (t[1]);
+		ret = t[0];
+	else
+		ret = t[1];
+
+	float denom;
+	float l[2];
+	float tt;
+	tt = 0;
+	denom = -(product_vectors(*object->orientation, *object->point1));
+	l[0] = product_vectors(origin, *object->orientation) + denom;
+	l[1] = product_vectors(direction, *object->orientation);
+	tt = - (l[0] / l[1]);
+	if (tt > 0 && tt < ret)
+		ret = tt;
+		tt = 0;
+	denom = -(product_vectors(*object->orientation, *object->point2));
+	l[0] = product_vectors(origin, *object->orientation) + denom;
+	l[1] = product_vectors(direction, *object->orientation);
+	tt = - (l[0] / l[1]);
+	if (tt > 0 && tt < ret)
+		ret = tt;
+	return (ret);
 }
