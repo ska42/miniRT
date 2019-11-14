@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 04:14:10 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/14 04:43:40 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,16 +138,19 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	s_vector	*ab;
 	s_vector	*ao;
 	**/
+	/**
 	s_vector *pdp;
 	s_vector *eyexpdp;
 	s_vector *rdxpdp;
 	s_vector *temp;
+	**/
 	float a;
 	float b;
 	float c;
 	float delta;
 	//float root;
 	float t[2];
+	float tmp[4];
 
 	//a   = D|D - (D|V)^2
     //b/2 = D|X - (D|V)*(X|V)
@@ -165,6 +168,8 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	//p = cross(origin, *object->center);
 	//tmp_direction = cross(direction, *ab);
 	//p = subtract_vectors(origin, *object->center);
+
+	/**
 	pdp = subtract_vectors(*object->orientation, *object->center);
 	temp = subtract_vectors(origin, *object->center);
 	eyexpdp = cross(*temp, *pdp);
@@ -172,6 +177,15 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	a = product_vectors(*rdxpdp, *rdxpdp);
 	b = 2 * product_vectors(*rdxpdp, *eyexpdp);
 	c = product_vectors(*eyexpdp, *eyexpdp) - ((object->diameter / 2.0) * (object->diameter / 2.0) * product_vectors(*pdp, *pdp));
+	**/
+	s_vector *x = subtract_vectors(origin, *object->center);
+	tmp[0] = 1.0 / product_vectors(*object->orientation, *object->orientation);
+	tmp[1] = product_vectors(direction, *object->orientation);
+	tmp[2] = product_vectors(*x, *x);
+	tmp[3] = product_vectors(*object->orientation, *x);
+	a = product_vectors(direction, direction) - (tmp[1] * tmp[1] * tmp[0]);
+	b = 2.0 * (product_vectors(direction, *x)) - (2 * tmp[1] * tmp[3] * tmp[0]);
+	c = tmp[2] - ((object->diameter / 2.0) * (object->diameter / 2.0)) - ((tmp[3] * tmp[3]) * tmp[0]);
 	/**
 	MARCHE SUR LES x y z
 		a = product_vectors(direction, direction) - pow(product_vectors(direction, *object->orientation), 2);
