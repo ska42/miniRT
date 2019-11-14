@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/13 15:18:03 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/14 04:14:10 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,16 @@ float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *objec
 float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *object)
 {
 	//s_vector *difference;
+	/**
 	s_vector	*tmp_direction;
 	s_vector	*p;
+	s_vector	*ab;
+	s_vector	*ao;
+	**/
+	s_vector *pdp;
+	s_vector *eyexpdp;
+	s_vector *rdxpdp;
+	s_vector *temp;
 	float a;
 	float b;
 	float c;
@@ -141,24 +149,53 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	//float root;
 	float t[2];
 
-	tmp_direction = new_vector(direction.x, direction.y, direction.z);
-	p = subtract_vectors(origin, *object->center);
-	rot(tmp_direction, object->orientation);
-	rot(p, object->orientation);
-	a = (tmp_direction->x * tmp_direction->x) +
-		(tmp_direction->z * tmp_direction->z);
-	b = 2 * (tmp_direction->x * p->x) +
-		2 * (tmp_direction->z * p->z);
-	c = p->x * p->x +
-	 	p->z * p->z -
-		((object->diameter / 2) * (object->diameter / 2));
+	//a   = D|D - (D|V)^2
+    //b/2 = D|X - (D|V)*(X|V)
+    //c   = X|X - (X|V)^2 - r*r
+
+	/**
+	ab = subtract_vectors(*object->orientation, *object->center);
+	ao = subtract_vectors(origin, *object->center);
+	p = cross(*ao, *ab);
+	tmp_direction = cross(direction, *ab);
+	**/
+
+	//free(ao);
+	//tmp_direction = cross(direction, *object->center);
+	//p = cross(origin, *object->center);
+	//tmp_direction = cross(direction, *ab);
+	//p = subtract_vectors(origin, *object->center);
+	pdp = subtract_vectors(*object->orientation, *object->center);
+	temp = subtract_vectors(origin, *object->center);
+	eyexpdp = cross(*temp, *pdp);
+	rdxpdp = cross(direction, *pdp);
+	a = product_vectors(*rdxpdp, *rdxpdp);
+	b = 2 * product_vectors(*rdxpdp, *eyexpdp);
+	c = product_vectors(*eyexpdp, *eyexpdp) - ((object->diameter / 2.0) * (object->diameter / 2.0) * product_vectors(*pdp, *pdp));
+	/**
+	MARCHE SUR LES x y z
+		a = product_vectors(direction, direction) - pow(product_vectors(direction, *object->orientation), 2);
+		b = 2 * (product_vectors(direction, *ao) - product_vectors(direction, *object->orientation) * product_vectors(*ao, *object->orientation));
+		c = product_vectors(*ao, *ao) - pow(product_vectors(*ao, *object->orientation), 2) - ((object->diameter / 2.0) * (object->diameter / 2.0));
+	**/
+
+
+	//a = product_vectors(*tmp_direction, *tmp_direction);
+	//b = 2.0 * product_vectors(*tmp_direction, *p);
+	//c = (product_vectors(*p, *p)) -
+//		((object->diameter / 2.0) * (object->diameter / 2.0) * product_vectors(*ab, *ab));
+
+	/**
+	free(ao);
 	free(p);
 	free(tmp_direction);
-	delta = b * b - (4 * a * c);
+	free(ab);
+	**/
+	delta = (b * b) - (4.0 * a * c);
 	if (delta < 0)
 		return (0);
-	t[0] = (- b + sqrt(delta)) / (2 * a);
-	t[1] = (- b - sqrt(delta)) / (2 * a);
+	t[0] = (- b + sqrt(delta)) / (2.0 * a);
+	t[1] = (- b - sqrt(delta)) / (2.0 * a);
 	//free(difference);
 	if (t[0] < t[1])
 		return (t[0]);
