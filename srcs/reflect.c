@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 02:37:46 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/13 01:34:03 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/14 05:18:54 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ s_lightning_vectors *l_vectors, int color)
 	else if (closest_object->type == TYPE_TRIANGLE)
 		temp2 = multiply_vectors(
 			((s_triangle *)closest_object->object)->reflective, *reflect_color);
-	else if (closest_object->type == TYPE_PLAN)
+	else if (closest_object->type == TYPE_CYLINDER)
 		temp2 = multiply_vectors(
 			((s_cylinder *)closest_object->object)->reflective, *reflect_color);
 	free(reflect_color);

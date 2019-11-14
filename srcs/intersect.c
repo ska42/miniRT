@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 04:43:40 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/14 05:09:38 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	a = product_vectors(direction, direction) - (tmp[1] * tmp[1] * tmp[0]);
 	b = 2.0 * (product_vectors(direction, *x)) - (2 * tmp[1] * tmp[3] * tmp[0]);
 	c = tmp[2] - ((object->diameter / 2.0) * (object->diameter / 2.0)) - ((tmp[3] * tmp[3]) * tmp[0]);
+	free(x);
 	/**
 	MARCHE SUR LES x y z
 		a = product_vectors(direction, direction) - pow(product_vectors(direction, *object->orientation), 2);
@@ -212,6 +213,8 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	t[1] = (- b - sqrt(delta)) / (2.0 * a);
 	//free(difference);
 	if (t[0] < t[1])
+	{
 		return (t[0]);
+	}
 	return (t[1]);
 }
