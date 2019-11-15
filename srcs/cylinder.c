@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 05:20:32 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/15 06:54:48 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,46 @@
 s_cylinder	*new_cylinder(s_vector *center, s_vector *orientation, float diameter, float height)
 {
 	s_cylinder	*new;
-	s_vector 	*angle;
-	s_vector	*vector[2];
+	s_vector	*temp;
+	float		total;
+	//float		test;
+	//s_vector	*direction;
+	//s_vector	*vector[2];
 
 	new = malloc(sizeof(s_cylinder));
 	new->center = center;
 	new->orientation = orientation;
-	angle = new_vector(orientation->x/1 * 180, orientation->y/1 * 180, orientation->z/1 * 180);
-	vector[0] = new_vector(0, center->y + height/2, 0);
-	vector[1] = new_vector(0, center->y - height/2, 0);
-	rot(vector[0], angle);
-	rot(vector[1], angle);
-	new->point1 = add_vectors(*vector[0], *center);
-	new->point2 = add_vectors(*vector[1], *center);
+
+
+	total = fabs(new->orientation->x) + fabs(new->orientation->y) + fabs(new->orientation->z);
+	temp = new_vector(height/2 * (new->orientation->x / total), height/2 * (new->orientation->y / total), height/2 * (new->orientation->z / total));
+	new->point1 = add_vectors(*new->center, *temp);
+	free(temp);
+	temp = new_vector(-height/2 * (new->orientation->x / total), -height/2 * (new->orientation->y / total), -height/2 * (new->orientation->z / total));
+	new->point2 = add_vectors(*new->center, *temp);
+	free(temp);
+	//test = distance_points(*new->point1, *new->point2);
+	//printf("test : %f\n", test);
+	//temp = multiply_vectors(tt, *object->orientation);
+	//point_tmp = add_vectors(*point, *temp);
+	//vector[0] = new_vector(0, 0, 0);
+	//vector[1] = new_vector(0, 0, 0);
+	//new->point1 = add_vectors(*vector[0], *new->center);
+	//new->point2 = add_vectors(*vector[1], *new->center);
+	//rot(new->point1, new->orientation);
+	//rot(new->point2, new->orientation);
+	/**
+	vector[0] = new->center;
+	rot(vector[0], new->orientation);
+	new->point1 = add_vectors(*vector[0], *temp);
+	//free(temp);
+	vector[1] = new->center;
+	rot(vector[1], new->orientation);
+	//free(temp);
+	new->point2 = add_vectors(*vector[1], *tem);
+	**/
+	printf("point1 : %f %f %f\n", new->point1->x, new->point1->y, new->point1->z);
+	printf("point2 : %f %f %f\n", new->point2->x, new->point2->y, new->point2->z);
 	new->diameter = diameter;
 	new->height = height;
 	new->color = 0xffffff;

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:46:39 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 17:53:25 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/14 21:37:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 float			length_vectors(s_vector v)
 {
 	return (sqrt(product_vectors(v, v)));
+}
+
+float			distance_points(s_vector p1, s_vector p2)
+{
+	float d;
+
+	d = (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y) + (p2.z - p1.z) * (p2.z - p1.z);
+	return (sqrt(d));
 }
 
 float			product_vectors(s_vector v1, s_vector v2)

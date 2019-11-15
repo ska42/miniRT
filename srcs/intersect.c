@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 16:41:13 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/15 06:54:37 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,13 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	float b;
 	float c;
 	float delta;
+	s_vector *temp;
+	s_vector *point;
 	//float root;
 	float t[2];
 	float tmp[4];
 	float ret;
+	float size;
 
 	//a   = D|D - (D|V)^2
     //b/2 = D|X - (D|V)*(X|V)
@@ -217,23 +220,116 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 		ret = t[0];
 	else
 		ret = t[1];
-
+	if (ret == 0)
+		return (0);
+	size = distance_points(*object->point1, *object->point2);
 	float denom;
 	float l[2];
 	float tt;
+	float d[4];
+	//temp = multiply_vectors(ret, direction);
+	//point = add_vectors(origin, *temp);
+	//free(temp);
+	/**
+	d[0] = distance_points(*point, *object->point1);
+	d[1] = distance_points(*point, *object->point2);
+	if (d[0] > object->height + object->diameter/2 || d[1] > object->height + object->diameter/2)
+	{
+		printf("d[0] %f - d[1] %f\n", d[0], d[1]);
+		return (0);
+	}**/
+	//s_vector *pt;
+	temp = multiply_vectors(ret, direction);
+	point = add_vectors(origin, *temp);
+	free(temp);
+	//d[2] = distance_points(*point, *object->point1);
+	//d[3] = distance_points(*point, *object->point2);
+
+	s_vector *point_tmp;
+	//float	total;
+	//s_vector *null;
+	//null = new_vector(0, 0, 0);
+	denom = -(product_vectors(*object->orientation, *object->point1));
+	l[0] = product_vectors(*point, *object->orientation) + denom;
+	l[1] = product_vectors(*object->orientation, *object->orientation);
+	tt = - (l[0] / l[1]);
+	temp = multiply_vectors(tt, *object->orientation);
+	point_tmp = add_vectors(*point, *temp);
+	free(temp);
+	d[2] = distance_points(*point, *point_tmp);
+	free(point_tmp);
+
+	s_vector *temp2;
+	denom = -(product_vectors(*object->orientation, *object->point2));
+	l[0] = product_vectors(*point, *object->orientation) + denom;
+	temp2 = multiply_vectors(-1, *object->orientation);
+	l[1] = product_vectors(*temp2, *object->orientation);
+	tt = - (l[0] / l[1]);
+	temp = multiply_vectors(tt, *temp2);
+	point_tmp = add_vectors(*point, *temp);
+	free(temp2);
+	free(temp);
+	d[3] = distance_points(*point, *point_tmp);
+	free(point_tmp);
+	//printf("d[2] %f - d[3] %f\n", d[2], d[3]);
+	free(point);
+
 	tt = 0;
 	denom = -(product_vectors(*object->orientation, *object->point1));
 	l[0] = product_vectors(origin, *object->orientation) + denom;
 	l[1] = product_vectors(direction, *object->orientation);
 	tt = - (l[0] / l[1]);
-	if (tt > 0 && tt < ret)
-		ret = tt;
-		tt = 0;
+	if (tt > 0)
+	{
+		temp = multiply_vectors(tt, direction);
+		point = add_vectors(origin, *temp);
+		free(temp);
+		d[0] = distance_points(*point, *object->point1);
+		d[1] = distance_points(*point, origin);
+		//printf("d[1] : %f\n", d[1]);
+		if (d[0] < object->diameter / 2)
+		{
+			if (!(d[2] > size || d[3] > size))
+			{
+				//if (d[0] < object->height + object->diameter/2 || d[1] < object->height + object->diameter/2)
+				//	printf("d[0] %f - d[1] %f\n", d[0], d[1]);
+				return (ret);
+			}
+			free(point);
+			return (tt);
+		}
+		free(point);
+	}
+	tt = 0;
 	denom = -(product_vectors(*object->orientation, *object->point2));
 	l[0] = product_vectors(origin, *object->orientation) + denom;
 	l[1] = product_vectors(direction, *object->orientation);
 	tt = - (l[0] / l[1]);
-	if (tt > 0 && tt < ret)
-		ret = tt;
+	if (tt > 0)
+	{
+		temp = multiply_vectors(tt, direction);
+		point = add_vectors(origin, *temp);
+		free(temp);
+		d[0] = distance_points(*point, *object->point2);
+		d[1] = distance_points(*point, origin);
+		if (d[0] < object->diameter / 2)
+		{
+			if (!(d[2] > size || d[3] > size))
+			{
+				//if (d[0] < object->height + object->diameter/2 || d[1] < object->height + object->diameter/2)
+				//	printf("d[0] %f - d[1] %f\n", d[0], d[1]);
+				return (ret);
+			}
+			free(point);
+			return (tt);
+		}
+		free(point);
+	}
+	if ((d[2] > size || d[3] > size))
+	{
+		//if (d[0] < object->height + object->diameter/2 || d[1] < object->height + object->diameter/2)
+		//	printf("d[0] %f - d[1] %f\n", d[0], d[1]);
+		return (0);
+	}
 	return (ret);
 }
