@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:27:10 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 05:02:12 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		main(int	argc, char *argv[])
 	/** SPHERES & O & CAM **/
 	obs = new_vector(-6, 2, -4);
 	rota = new_vector(0.001, 0.003, 0);
-	camera = new_camera(obs, rota);
+	camera = new_camera(obs, rota, 70);
 	cameras = NULL;
 	add_back(&cameras, TYPE_CAMERA, camera);
 	lstobj = NULL;
@@ -96,10 +96,10 @@ int		main(int	argc, char *argv[])
 	add_back(&lstobj, TYPE_CYLINDER, new_cylinder(new_vector(-5, 0, 5), new_vector(0.7, 0.5, 0.5), 1, 2));
 	/** LIGHTS **/
 	lstlight = NULL;
-	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.5));
-	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6));
+	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.5, 0xffffffff));
+	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6, 0xffffffff));
 	set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 2, 1, 0);
-	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_DIRECTIONAL, 0.2));
+	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_DIRECTIONAL, 0.2, 0xffffffff));
 	//set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 1, 4, 4);
 	set_vector(((s_light *)((s_lstobjects *)((s_lstobjects *)lstlight->next)->next)->object)->vector, 1, 4, 4);
 	/** ON MET TOUT DANS LA SCENE **/

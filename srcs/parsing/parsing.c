@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:05:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:20:52 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 07:50:33 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 int			choice_parsing(s_scene **scene, char *line)
 {
-	(void)scene;
 	if (line[0] != '\0')
 	{
 		if (line[0] == 'R')
-			printf("ok\n");
+			return (parsing_resolution(scene, line));
 		else if (line[0] == 'A')
-			printf("ok\n");
+			return (parsing_ambient_light(scene, line));
 		else if (line[0] == 'c' && line[1] == 'y')
 			printf("ok\n");
 		else if (line[0] == 'c')
-			printf("ok\n");
+			return (parsing_camera(scene, line));
 		else if (line[0] == 'l')
-			printf("ok\n");
+			return (parsing_point_light(scene, line));
 		else if (line[0] == 's' && line[1] == 'p')
 			printf("ok\n");
 		else if (line[0] == 's' && line[1] == 'q')

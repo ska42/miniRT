@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:06:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 04:26:00 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 05:45:46 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ s_vector		*new_vector(float x, float y, float z)
 {
 	s_vector	*vector;
 
-	vector = malloc(sizeof(s_vector));
-	set_vector(vector, x, y, z);
+	if (!(vector = malloc(sizeof(s_vector))))
+		return (NULL);
+	vector->x = x;
+	vector->y = y;
+	vector->z = z;
 	return (vector);
 }

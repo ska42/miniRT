@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/16 03:07:25 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/16 08:07:12 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC =			maths/rotation.c \
 				scene/objects/triangle.c \
 				\
 				utils/get_next_line.c \
+				utils/no_leaks.c \
 				utils/utils.c \
 				\
 				miniRT.c

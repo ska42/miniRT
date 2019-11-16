@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:17:32 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 08:06:57 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 **/
 # include "get_next_line.h"
 # include "utils.h"
+# include "no_leaks.h"
 
 /**
 **	parsing

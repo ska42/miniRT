@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 03:15:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:17:51 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 07:46:52 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "scene.h"
 
 int		parsing_resolution(s_scene **scene, char *line);
-int		parsing_ambiant_light(s_scene **scene, char *line);
+int		parsing_ambient_light(s_scene **scene, char *line);
 int		parsing_point_light(s_scene **scene, char *line);
 int		parsing_directional_light(s_scene **scene, char *line);
 int		parsing_camera(s_scene **scene, char *line);

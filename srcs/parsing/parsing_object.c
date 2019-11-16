@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 23:59:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:13:50 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 08:11:02 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 int		parsing_sphere(s_scene **scene, char *line)
 {
+	int			i;
+	int			n;
+	int			r;
+	s_vector	*center;
+	float		radius;
+	int			color;
+
+	i = 2;
+	n = 0;
+	while (n < 4)
+	{
+		n++;
+	}
 	(void)scene;
 	(void)line;
 	return (0);
