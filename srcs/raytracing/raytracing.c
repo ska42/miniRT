@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 19:11:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 03:30:29 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ s_vector direction, float closest_t, s_scene *scene)
 	final_color = 0;
 	l_vectors = malloc(sizeof(s_lightning_vectors));
 	temp = multiply_vectors(closest_t, direction);
-	l_vectors->point = add_vectors(*scene->origin, *(temp));
+	l_vectors->point = add_vectors(*((s_camera *)scene->cameras->object)->origin, *(temp));
 	free(temp);
 	l_vectors->view = multiply_vectors(-1, direction);
 	final_color = calculate_new_color(closest_object,
@@ -154,7 +154,7 @@ int			trace_ray(s_vector direction, s_scene *scene)
 	s_lstobjects			*closest_object;
 	int						color;
 
-	closest_t = closest_intersection(*scene->origin, direction,
+	closest_t = closest_intersection(*((s_camera *)scene->cameras->object)->origin, direction,
 scene, &closest_object);
 	if (!closest_object)
 		return (scene->background_color);

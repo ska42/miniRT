@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 19:02:48 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 03:17:32 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,53 @@
 # include <stdio.h>
 # include <string.h>
 # include <math.h>
+
+/**
+**	minilibx
+**/
+# include "mlx.h"
+
+/**
+**	utils
+**/
+# include "get_next_line.h"
+# include "utils.h"
+
+/**
+**	parsing
+**/
+# include "parsing.h"
+
+/**
+**	scene
+**/
+# include "scene.h"
 # include "camera.h"
 # include "canvas.h"
-# include "cylinder.h"
-# include "intersect.h"
+
+/**
+**	objects
+**/
 # include "light.h"
-# include "lightning.h"
 # include "lstobjects.h"
+# include "cylinder.h"
 # include "plan.h"
-# include "sphere.h"
-# include "vector.h"
-# include "raytracing.h"
-# include "scene.h"
 # include "square.h"
 # include "triangle.h"
-# include "reflect.h"
+# include "sphere.h"
+
+/**
+**	maths
+**/
+# include "vector.h"
 # include "rotation.h"
-# include "mlx.h"
+
+/**
+** raytracing
+**/
+# include "intersect.h"
+# include "lightning.h"
+# include "raytracing.h"
+# include "reflect.h"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:37:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/04 04:23:43 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 03:26:44 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 # define SCENE_H
 
 # include <stdlib.h>
+# include "canvas.h"
 # include "lstobjects.h"
 # include "vector.h"
 
 typedef struct 	t_scene
 {
 	s_vector		*origin;
+	s_canvas		*viewport;
+	s_canvas		*viewplane;
+	s_lstobjects	*cameras;
 	s_lstobjects	*objects;
 	s_lstobjects	*lights;
 	int				background_color;
@@ -28,7 +32,8 @@ typedef struct 	t_scene
 	float			t_max;
 }				s_scene;
 
-s_scene		*new_scene(s_vector *origin, s_lstobjects *objects,
+s_scene		*new_empty_scene(int color);
+s_scene		*new_scene(s_lstobjects* cameras, s_lstobjects *objects,
 s_lstobjects *lights, int color);
 s_scene		*cpy_scene(s_scene *scene);
 

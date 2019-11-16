@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/13 15:24:11 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/16 03:07:25 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,25 +25,35 @@ DIR_OBJS =		./
 LIBMLX =		libmlx.dylib \
 				libmlx.a
 
-SRC =			camera.c \
-				canvas.c \
-				cylinder.c \
-				intersect.c \
-				light.c \
-				lightning.c \
-				lstobjects.c \
-				miniRT.c \
-				plan.c \
-				raytracing.c \
-				reflect.c \
-				rotation.c \
-				scene.c \
-				sphere.c \
-				square.c \
-				triangle.c \
-				vector_calculation.c \
-				vector_color.c \
-				vector.c
+SRC =			maths/rotation.c \
+				maths/vector_calculation.c \
+				maths/vector_color.c \
+				maths/vector.c \
+				\
+				parsing/parsing_object.c \
+				parsing/parsing_scene_elem.c \
+				parsing/parsing.c \
+				\
+				raytracing/intersect.c \
+				raytracing/lightning.c \
+				raytracing/raytracing.c \
+				raytracing/reflect.c \
+				\
+				scene/camera.c \
+				scene/canvas.c \
+				scene/light.c \
+				scene/scene.c \
+				scene/objects/cylinder.c \
+				scene/objects/lstobjects.c \
+				scene/objects/plan.c \
+				scene/objects/sphere.c \
+				scene/objects/square.c \
+				scene/objects/triangle.c \
+				\
+				utils/get_next_line.c \
+				utils/utils.c \
+				\
+				miniRT.c
 
 SRCS =			$(addprefix $(DIR_SRCS), $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/15 06:55:57 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 03:27:10 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ void			putimage(char *data, int bpp, int size_line, int x, int y, int color)
 		data[++i] = color >> 16;
 }
 
+/**
+int		main(int argc, char *argv[])
+{
+	int		fd;
+	int		ret;
+	char	*line;
+
+	fd = open(argv[1], O_RDONLY);
+
+}
+**/
+
 int		main(int	argc, char *argv[])
 {
 	void			*mlx_ptr;
@@ -34,6 +46,7 @@ int		main(int	argc, char *argv[])
 	s_vector		*direction;
 	s_lstobjects	*lstobj;
 	s_lstobjects	*lstlight;
+	s_lstobjects	*cameras;
 	s_scene			*scene;
 	int				color;
 	int				x;
@@ -60,6 +73,8 @@ int		main(int	argc, char *argv[])
 	obs = new_vector(-6, 2, -4);
 	rota = new_vector(0.001, 0.003, 0);
 	camera = new_camera(obs, rota);
+	cameras = NULL;
+	add_back(&cameras, TYPE_CAMERA, camera);
 	lstobj = NULL;
 	add_back(&lstobj, TYPE_SPHERE, new_default_sphere(1, 0xbf3eff));
 	set_vector(((s_sphere *)lstobj->object)->center, 0, -1, 3);
@@ -88,7 +103,7 @@ int		main(int	argc, char *argv[])
 	//set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 1, 4, 4);
 	set_vector(((s_light *)((s_lstobjects *)((s_lstobjects *)lstlight->next)->next)->object)->vector, 1, 4, 4);
 	/** ON MET TOUT DANS LA SCENE **/
-	scene = new_scene(obs, lstobj, lstlight, 0x0);
+	scene = new_scene(cameras, lstobj, lstlight, 0x0);
 	/** RENDERING **/
 	angle = new_vector(rota->x/1 * 180, rota->y/1 * 180, rota->z/1 * 180);
 	x = -(viewport->width/2);
@@ -110,7 +125,7 @@ int		main(int	argc, char *argv[])
 				//mlx_pixel_put(mlx_ptr, win_ptr, (int)(x + (viewport->width/2)), (int)(-(y - (viewport->height/2))), (int)color);
 			}
 			free(direction);
-			scene->origin = obs;
+			camera->origin = obs;
 			scene->depth = 3;
 			y++;
 		}

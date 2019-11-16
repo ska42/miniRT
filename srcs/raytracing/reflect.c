@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 02:37:46 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 05:18:54 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 03:34:21 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ s_lightning_vectors *l_vectors, int color)
 
 	temp = reflect_ray(*(l_vectors->view), *(l_vectors->normal));
 	temp2 = color_to_rgb(color);
-	scene->origin = l_vectors->point;
+	((s_camera *)scene->cameras->object)->origin = l_vectors->point;
 	scene->depth--;
 	color = trace_ray(*temp, scene);
 	free(temp);

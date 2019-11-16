@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/15 06:54:48 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/16 03:29:11 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ s_cylinder	*new_cylinder(s_vector *center, s_vector *orientation, float diameter
 	//free(temp);
 	new->point2 = add_vectors(*vector[1], *tem);
 	**/
-	printf("point1 : %f %f %f\n", new->point1->x, new->point1->y, new->point1->z);
-	printf("point2 : %f %f %f\n", new->point2->x, new->point2->y, new->point2->z);
+	//printf("point1 : %f %f %f\n", new->point1->x, new->point1->y, new->point1->z);
+	//printf("point2 : %f %f %f\n", new->point2->x, new->point2->y, new->point2->z);
 	new->diameter = diameter;
 	new->height = height;
 	new->color = 0xffffff;
