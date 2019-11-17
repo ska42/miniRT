@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:00:47 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 07:20:08 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:07:50 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		ft_atoc(char *line, int *color)
 		i += r;
 		if (n < 2 && line[i] != ',')
 			return (-1);
-		else
+		else if (n < 2 && line[i] == ',')
 			i++;
 		n++;
 	}

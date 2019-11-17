@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:05:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 07:28:27 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:08:29 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ s_scene		*parsing(int fd)
 		printf("\n");
 		free(line);
 	}
-	printf("ko\n");
 	if (ret < 0 || choice_parsing(&scene, line) < 0)
 	{
 		free(line);

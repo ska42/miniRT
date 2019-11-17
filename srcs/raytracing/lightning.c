@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 03:35:27 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:22:33 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ s_lstobjects *lights, s_scene *scene)
 			intensity += compute_special_lights(l_vectors, light, scene);
 		lights = lights->next;
 	}
+	printf("intensity : %f\n", intensity);
 	return (intensity);
 }

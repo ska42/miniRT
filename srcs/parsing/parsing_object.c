@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 23:59:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 07:28:15 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:08:14 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ int		parsing_sphere(s_scene **scene, char *l)
 		|| (i[2] = ft_atov(&l[i[0]], &center)) < 0))
 			return (-1);
 		if ((i[1] == 1) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atof(&l[i[0]], &radius) < 0)))
+		(i[2] = ft_atof(&l[i[0]], &radius)) < 0))
 			return (free_and_return_minus_one(center));
 		if ((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &color) < 0)))
+		(i[2] = ft_atoc(&l[i[0]], &color)) < 0))
 			return (free_and_return_minus_one(center));
 	}
+	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
+		return (free_and_return_minus_one(center));
 	printf("sphere_working");
 	return (!l[i[0]] && (!(add_back(&(*scene)->objects, TYPE_SPHERE, new_sphere(
 	radius, color, 10, center))) ? 0 : free_and_return_minus_one(center)));
@@ -60,7 +62,7 @@ int		parsing_plan(s_scene **scene, char *line)
 		(r = ft_atov(&line[i], &vectors[n])) < 0))
 			return (multiple_free_return(vectors, n - 1));
 		if ((n == 2) && ((line[i] < '0' || line[i] > '9') ||
-		(r = ft_atoc(&line[i], &color) < 0)))
+		(r = ft_atoc(&line[i], &color)) < 0))
 			return (multiple_free_return(vectors, 2));
 	}
 	if (line[i] && line[i] != ' ' && line[i] != '\t')
@@ -87,10 +89,10 @@ int		parsing_square(s_scene **scene, char *l)
 		(i[2] = ft_atov(&l[i[0]], &vectors[i[1]])) < 0))
 			return (multiple_free_return(vectors, i[1] - 1));
 		if ((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atof(&l[i[0]], &size) < 0)))
+		(i[2] = ft_atof(&l[i[0]], &size)) < 0))
 			return (multiple_free_return(vectors, 2));
 		if ((i[1] == 3) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &i[3]) < 0)))
+		(i[2] = ft_atoc(&l[i[0]], &i[3])) < 0))
 			return (multiple_free_return(vectors, 2));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
@@ -116,7 +118,7 @@ int		parsing_triangle(s_scene **scene, char *l)
 		(i[2] = ft_atov(&l[i[0]], &vec[i[1]])) < 0))
 			return (multiple_free_return(vec, i[1] - 1));
 		if ((i[1] == 3) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &i[3]) < 0)))
+		(i[2] = ft_atoc(&l[i[0]], &i[3])) < 0))
 			return (multiple_free_return(vec, 3));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
@@ -129,7 +131,7 @@ vec[0], vec[1], vec[2], i[3]))) ? 0 : multiple_free_return(vec, 2)));
 int		parsing_cylinder(s_scene **scene, char *l)
 {
 	int			i[4];
-	s_vector	*vec[3];
+	s_vector	*vec[2];
 	float		j[2];
 
 	i[0] = 2;
@@ -143,9 +145,9 @@ int		parsing_cylinder(s_scene **scene, char *l)
 		(i[2] = ft_atov(&l[i[0]], &vec[i[1]])) < 0))
 			return (multiple_free_return(vec, i[1] - 1));
 		if ((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &i[3]) < 0)))
+		(i[2] = ft_atoc(&l[i[0]], &i[3])) < 0))
 			return (multiple_free_return(vec, 2));
-		if ((i[1] < 5) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		if ((i[1] > 2 && i[1] < 5) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
 		(i[2] = ft_atof(&l[i[0]], &j[i[1] - 3])) < 0))
 			return (multiple_free_return(vec, 2));
 	}

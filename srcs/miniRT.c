@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 05:51:18 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:21:28 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void			putimage(char *data, int bpp, int size_line, int x, int y, int color)
 		data[++i] = color >> 8;
 		data[++i] = color >> 16;
 }
-
 
 int		main(int argc, char *argv[])
 {
@@ -44,24 +43,14 @@ int		main(int argc, char *argv[])
 	(void)argc;
 	fd = open(argv[1], O_RDONLY);
 	scene = parsing(fd);
-	printf("%f\n", scene->viewport->width);
-	exit(0);
 	if (scene->viewport->height < scene->viewport->width)
-	{
-		exit(0);
 		scene->viewplane = new_canvas(scene->viewport->width/scene->viewport->height, 1, 1);
-	}
 	else
-	{
-		exit(0);
 		scene->viewplane = new_canvas(1, scene->viewport->height/scene->viewport->width, 1);
-	}
-	exit(0);
 	mlx_ptr = mlx_init();
 	mlx_img = mlx_new_image(mlx_ptr, scene->viewport->width, scene->viewport->height);
 	win_ptr = mlx_new_window(mlx_ptr, scene->viewport->width, scene->viewport->height, "miniRT");
-	/** RENDERING **/
-	exit(0);
+
 	angle = new_vector(((s_camera *)scene->cameras->object)->rotation->x/1 * 180, ((s_camera *)scene->cameras->object)->rotation->y/1 * 180, ((s_camera *)scene->cameras->object)->rotation->z/1 * 180);
 	x = -(scene->viewport->width/2);
 	data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
@@ -94,10 +83,9 @@ int		main(int argc, char *argv[])
 	//mlx_img = mlx_new_image(mlx_ptr, viewport->width, viewport->height);
 	//mlx_ptr2 = mlx_init();
 	mlx_put_image_to_window(mlx_ptr, win_ptr, mlx_img, 0, 0);
-	/** WINDOW'S LOOP **/
+
 	mlx_loop(mlx_ptr);
 }
-
 
 /**
 int		main(int	argc, char *argv[])

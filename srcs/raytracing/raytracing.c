@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:30:29 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:25:20 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,11 @@ s_scene *scene, s_lstobjects **closest_object)
 			t_temp = intersect_triangle(origin, direction, objects->object);
 		else if (objects->type == TYPE_CYLINDER)
 			t_temp = intersect_cylinder(origin, direction, objects->object);
+		printf("t_temp %f\n", t_temp);
 		if (t_temp > scene->t_min && (t_temp < scene->t_max ||
 scene->t_max == -1) && (t_temp < closest_t|| closest_t == -1))
 		{
+					printf("yes\n");
 			closest_t = t_temp;
 			*closest_object = objects;
 		}
@@ -158,6 +160,7 @@ int			trace_ray(s_vector direction, s_scene *scene)
 scene, &closest_object);
 	if (!closest_object)
 		return (scene->background_color);
+		printf("wlhn\n");
 	color = setup_l_vectors_and_calculate(closest_object,
 direction, closest_t, scene);
 	return (color);

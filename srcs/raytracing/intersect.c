@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/15 06:54:37 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 08:26:13 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ s_vector direction, s_sphere *object)
 	float		k[3];
 	float		t[2];
 
+	printf("lol %f\n", object->center->y);
 	difference = new_vector(origin.x - object->center->x,
 origin.y - object->center->y, origin.z - object->center->z);
 	k[0] = product_vectors(direction, direction);
