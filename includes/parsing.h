@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 03:15:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 07:46:52 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 05:38:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PARSING_H
 
 # include "scene.h"
+
+int			choice_parsing(s_scene **scene, char *line);
+s_scene		*parsing(int fd);
 
 int		parsing_resolution(s_scene **scene, char *line);
 int		parsing_ambient_light(s_scene **scene, char *line);

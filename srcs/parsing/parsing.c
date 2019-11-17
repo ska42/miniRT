@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:05:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 07:50:33 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 07:28:27 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ int			choice_parsing(s_scene **scene, char *line)
 		else if (line[0] == 'A')
 			return (parsing_ambient_light(scene, line));
 		else if (line[0] == 'c' && line[1] == 'y')
-			printf("ok\n");
+			return (parsing_cylinder(scene, line));
 		else if (line[0] == 'c')
 			return (parsing_camera(scene, line));
 		else if (line[0] == 'l')
 			return (parsing_point_light(scene, line));
 		else if (line[0] == 's' && line[1] == 'p')
-			printf("ok\n");
+			return (parsing_sphere(scene, line));
 		else if (line[0] == 's' && line[1] == 'q')
-			printf("ok\n");
+			return (parsing_square(scene, line));
 		else if (line[0] == 'p' && line[1] == 'l')
-			printf("ok\n");
+			return (parsing_plan(scene, line));
 		else if (line[0] == 't' && line[1] == 'r')
-			printf("ok\n");
+			return (parsing_triangle(scene, line));
 		else
 			return (-1);
 	}
@@ -54,18 +54,15 @@ s_scene		*parsing(int fd)
 			free(line);
 			return (NULL);
 		}
+		printf("\n");
 		free(line);
 	}
-	if (ret < 0)
-		return (NULL);
-	else
+	printf("ko\n");
+	if (ret < 0 || choice_parsing(&scene, line) < 0)
 	{
-		if (choice_parsing(&scene, line) < 0)
-		{
-			free(line);
-			return (NULL);
-		}
 		free(line);
+		return (NULL);
 	}
+	free(line);
 	return (scene);
 }

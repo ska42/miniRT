@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:00:47 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 05:46:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 07:20:08 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		ft_atoc(char *line, int *color)
 		i += r;
 		if (n < 2 && line[i] != ',')
 			return (-1);
+		else
+			i++;
 		n++;
 	}
 	*color = rgb[0];
@@ -89,6 +91,8 @@ int		ft_atov(char *line, s_vector **vector)
 		i += r;
 		if (n < 2 && line[i] != ',')
 			return (-1);
+		else if (n < 2 && line[i] == ',')
+			i++;
 		n++;
 	}
 	if (!(*vector = new_vector(v[0], v[1], v[2])))

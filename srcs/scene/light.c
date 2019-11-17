@@ -6,11 +6,12 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:32:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 07:06:58 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 07:21:41 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "light.h"
+#include <stdio.h>
 
 s_light			*new_default_light(int type, float intensity, int color)
 {

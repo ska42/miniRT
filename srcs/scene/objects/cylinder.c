@@ -6,13 +6,13 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:29:11 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 02:38:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-s_cylinder	*new_cylinder(s_vector *center, s_vector *orientation, float diameter, float height)
+s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, int color)
 {
 	s_cylinder	*new;
 	s_vector	*temp;
@@ -22,8 +22,8 @@ s_cylinder	*new_cylinder(s_vector *center, s_vector *orientation, float diameter
 	//s_vector	*vector[2];
 
 	new = malloc(sizeof(s_cylinder));
-	new->center = center;
-	new->orientation = orientation;
+	new->center = vectors[0];
+	new->orientation = vectors[1];
 
 
 	total = fabs(new->orientation->x) + fabs(new->orientation->y) + fabs(new->orientation->z);
@@ -57,7 +57,7 @@ s_cylinder	*new_cylinder(s_vector *center, s_vector *orientation, float diameter
 	//printf("point2 : %f %f %f\n", new->point2->x, new->point2->y, new->point2->z);
 	new->diameter = diameter;
 	new->height = height;
-	new->color = 0xffffff;
+	new->color = color;
 	new->shiny = -1;
 	new->reflective = -1;
 	return (new);
