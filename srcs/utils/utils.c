@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:00:47 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:07:50 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 20:53:44 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,18 @@ int		ft_atoi(char *line, int *nb)
 int		ft_atof(char *line, float *nb)
 {
 	int			i;
+	int			nnb;
 	float		sub_zero;
 
-	if ((i = ft_atoi(line, (int *)nb)) < 0)
+	if ((i = ft_atoi(line, &nnb)) < 0)
 		return (-1);
+	*nb = nnb;
 	if (line[i] == '.')
 		i++;
 	sub_zero = (nb < 0) ? -0.1 : 0.1;
 	while (line[i] && line[i] >= '0' && line[i] <= '9')
 	{
-		*nb += sub_zero * line[i++] - '0';
+		*nb += sub_zero * (line[i++] - '0');
 		sub_zero *= 0.1;
 	}
 	return (i);

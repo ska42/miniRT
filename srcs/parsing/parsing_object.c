@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 23:59:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:08:14 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 20:58:36 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int		parsing_sphere(s_scene **scene, char *l)
 		return (free_and_return_minus_one(center));
 	printf("sphere_working");
 	return (!l[i[0]] && (!(add_back(&(*scene)->objects, TYPE_SPHERE, new_sphere(
-	radius, color, 10, center))) ? 0 : free_and_return_minus_one(center)));
+radius, color, 10, center))) ? 0 : free_and_return_minus_one(center)));
+	return (0);
 }
 
 int		parsing_plan(s_scene **scene, char *line)

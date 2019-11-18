@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:25:20 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/18 01:39:00 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,31 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_sphere *)object)->center));
 	else if (objects->type == TYPE_PLAN)
+	{
+		s_vector	*temp2;
+		s_vector	*point;
+		float t;
+
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_plan *)object)->point));
+		t = intersect_plan(*l_vectors->point, *temp, object);
+		temp2 = multiply_vectors(t, *temp);
+		point = add_vectors(*l_vectors->point, *temp2);
+		free(temp);
+		temp = subtract_vectors(*l_vectors->point, *point);
+		free(point);
+		free(temp2);
+	}
 	else if (objects->type == TYPE_SQUARE)
+	{
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_square *)object)->center));
+	}
 	else if (objects->type == TYPE_TRIANGLE)
+	{
 		temp = subtract_vectors(*l_vectors->point,
-			*(((s_triangle *)object)->a));
+			*(((s_triangle *)object)->b));
+	}
 	else if (objects->type == TYPE_CYLINDER)
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_cylinder *)object)->center));
@@ -81,7 +98,8 @@ s_vector direction, float closest_t, s_scene *scene)
 	s_vector				*temp;
 
 	final_color = 0;
-	l_vectors = malloc(sizeof(s_lightning_vectors));
+	if (!(l_vectors = malloc(sizeof(s_lightning_vectors))))
+		return (-1);
 	temp = multiply_vectors(closest_t, direction);
 	l_vectors->point = add_vectors(*((s_camera *)scene->cameras->object)->origin, *(temp));
 	free(temp);
@@ -125,6 +143,8 @@ s_scene *scene, s_lstobjects **closest_object)
 	*closest_object = NULL;
 	closest_t = -1;
 	objects = scene->objects;
+	//printf("O (%f, %f, %f)\n", origin.x, origin.y, origin.z);
+	//printf("D (%f, %f, %f)\n", direction.x, direction.y, direction.z);
 	while (objects)
 	{
 		if (objects->type == TYPE_SPHERE)
@@ -137,14 +157,17 @@ s_scene *scene, s_lstobjects **closest_object)
 			t_temp = intersect_triangle(origin, direction, objects->object);
 		else if (objects->type == TYPE_CYLINDER)
 			t_temp = intersect_cylinder(origin, direction, objects->object);
-		printf("t_temp %f\n", t_temp);
+		//printf("t_temp %f\n", t_temp);
+		//printf("t_min %f\n", scene->t_min);
+		//printf("t_max %f\n", scene->t_max);
 		if (t_temp > scene->t_min && (t_temp < scene->t_max ||
 scene->t_max == -1) && (t_temp < closest_t|| closest_t == -1))
 		{
-					printf("yes\n");
+					//printf("yes\n");
 			closest_t = t_temp;
 			*closest_object = objects;
 		}
+		scene->t_max = -1;
 		objects = objects->next;
 	}
 	return (closest_t);
@@ -156,11 +179,11 @@ int			trace_ray(s_vector direction, s_scene *scene)
 	s_lstobjects			*closest_object;
 	int						color;
 
-	closest_t = closest_intersection(*((s_camera *)scene->cameras->object)->origin, direction,
+	closest_t = closest_intersection(*(((s_camera *)scene->cameras->object)->origin), direction,
 scene, &closest_object);
 	if (!closest_object)
 		return (scene->background_color);
-		printf("wlhn\n");
+		//printf("wlhn\n");
 	color = setup_l_vectors_and_calculate(closest_object,
 direction, closest_t, scene);
 	return (color);

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 05:32:43 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/06 14:45:08 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 21:17:25 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, int color)
 {
 	s_triangle *triangle;
 
-	triangle = malloc(sizeof(s_triangle));
+	if (!(triangle = malloc(sizeof(s_triangle))))
+		return (NULL);
 	triangle->a = a;
 	triangle->b = b;
 	triangle->c = c;

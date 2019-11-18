@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:26:13 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 23:10:00 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ s_vector direction, s_sphere *object)
 	float		k[3];
 	float		t[2];
 
-	printf("lol %f\n", object->center->y);
 	difference = new_vector(origin.x - object->center->x,
 origin.y - object->center->y, origin.z - object->center->z);
 	k[0] = product_vectors(direction, direction);
@@ -28,11 +27,13 @@ origin.y - object->center->y, origin.z - object->center->z);
 	k[2] = product_vectors(*difference, *difference) -
 (object->radius * object->radius);
 	discriminant = k[1] * k[1] - 4 * k[0] * k[2];
+	//printf("DISCRIMINANT : %f\n", discriminant);
 	if (discriminant < 0)
 		return (0);
 	t[0] = (- k[1] + sqrt(discriminant)) / (2 * k[0]);
 	t[1] = (- k[1] - sqrt(discriminant)) / (2 * k[0]);
 	free(difference);
+	//printf("t[0] %f, t[1] %f\n", t[0], t[1]);
 	if (t[0] < t[1])
 		return (t[0]);
 	return (t[1]);

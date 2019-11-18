@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:22:33 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/18 03:56:22 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ s_light *light, s_scene *scene)
 	if (light->type == TYPE_POINT)
 	{
 		vec_l = subtract_vectors(*light->vector, *l_vectors->point);
+		//printf("vec_l(%f, %f, %f)\n", vec_l->x, vec_l->y, vec_l->z);
 		scene->t_max = 1;
 	}
 	else if (light->type == TYPE_DIRECTIONAL)
@@ -59,21 +60,30 @@ s_light *light, s_scene *scene)
 	float			intensity;
 	float			n_dot_l;
 	float			length_v;
+	float			test;
 	s_vector		*vec_l;
 	s_lstobjects	*shadow_obj;
 
 	intensity = 0;
 	length_v = length_vectors(*l_vectors->view);
 	vec_l = type_light(l_vectors, light, scene);
-	closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
-	if (shadow_obj)
-		return (intensity);
-	n_dot_l = product_vectors(*l_vectors->normal, *vec_l);
-	if (n_dot_l > 0)
-		intensity += (light->intensity * n_dot_l) /
-((length_vectors(*l_vectors->normal) * length_vectors(*vec_l)));
-	if (l_vectors->shiny != -1)
-		intensity += calcul_shiny(l_vectors, light, length_v, vec_l);
+	//printf("LEN %f\n", length_vectors(*vec_l));
+	test = closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
+	if (!shadow_obj)
+	{
+		n_dot_l = product_vectors(*l_vectors->normal, *vec_l);
+		//dot(N, L) * lightIntensity / distanceToLight^2;
+		if (n_dot_l > 0)
+		{
+			printf("intensity * n_dot_l : %f\n", light->intensity * n_dot_l);
+			intensity += (light->intensity * n_dot_l) /
+		((length_vectors(*l_vectors->normal) * length_vectors(*vec_l)));
+		}
+		if (l_vectors->shiny != -1)
+			intensity += calcul_shiny(l_vectors, light, length_v, vec_l);
+	}
+	if (intensity)
+		printf("intensity : %f\n", intensity);
 	if (light->type == TYPE_POINT)
 		free(vec_l);
 	return (intensity);
@@ -95,6 +105,6 @@ s_lstobjects *lights, s_scene *scene)
 			intensity += compute_special_lights(l_vectors, light, scene);
 		lights = lights->next;
 	}
-	printf("intensity : %f\n", intensity);
+	//printf("intensity : %f\n", intensity);
 	return (intensity);
 }

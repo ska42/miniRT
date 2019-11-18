@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:21:28 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/17 23:09:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,12 @@ int		main(int argc, char *argv[])
 	x = -(scene->viewport->width/2);
 	data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
 	obs = ((s_camera *)scene->cameras->object)->origin;
+	printf("viewplane : (%f, %f)\n", scene->viewplane->width, scene->viewplane->height);
+	printf("viewport : (%f, %f)\n", scene->viewport->width, scene->viewport->height);
+	printf("angle (%f, %f, %f)\n", angle->x, angle->y, angle->z);
 	while ((x + (scene->viewport->width/2) <= scene->viewport->width))
 	{
+		//printf("ok\n");
 		y = -(scene->viewport->height/2);
 		while (y <= scene->viewport->height/2)
 		{
@@ -130,41 +134,44 @@ int		main(int	argc, char *argv[])
 	cameras = NULL;
 	add_back(&cameras, TYPE_CAMERA, camera);
 	lstobj = NULL;
-	add_back(&lstobj, TYPE_SPHERE, new_default_sphere(1, 0xbf3eff));
+	add_back(&lstobj, TYPE_SPHERE, new_default_sphere(2, 0xbf3eff));
 	set_vector(((s_sphere *)lstobj->object)->center, 0, -1, 3);
 	set_shiny((s_sphere *)lstobj->object, 500);
-	add_back(&lstobj, TYPE_SPHERE, new_default_sphere(2, 0x6400));
-	set_vector(((s_sphere *)((s_lstobjects *)lstobj->next)->object)->center, 2, 0, 4);
-	set_shiny(((s_sphere *)((s_lstobjects *)lstobj->next)->object), 500);
-	add_back(&lstobj, TYPE_SPHERE, new_default_sphere(1, 0x7b68ee));
-	set_vector(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object)->center, -2, 0, 4);
-	set_shiny(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object), 10);
+	//add_back(&lstobj, TYPE_SPHERE, new_default_sphere(2, 0x6400));
+	//set_vector(((s_sphere *)((s_lstobjects *)lstobj->next)->object)->center, 2, 0, 4);
+	//set_shiny(((s_sphere *)((s_lstobjects *)lstobj->next)->object), 500);
+	//add_back(&lstobj, TYPE_SPHERE, new_default_sphere(1, 0x7b68ee));
+	//set_vector(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object)->center, -2, 0, 4);
+	//set_shiny(((s_sphere *)((s_lstobjects *)((s_lstobjects *)lstobj->next)->next)->object), 10);
 
-	add_back(&lstobj, TYPE_PLAN, new_plan(new_vector(0, -2, 0), new_vector(0, 1, 0), 0xff0000));
+	//add_back(&lstobj, TYPE_PLAN, new_plan(new_vector(0, -2, 0), new_vector(0, 1, 0), 0xff0000));
 	//s_plan *plan = new_plan(new_vector(-3, 0, 0), new_vector(1, 0, 0), 0xfffafa);
 	//add_back(&lstobj, TYPE_PLAN, plan);
 
-	add_back(&lstobj, TYPE_SQUARE, new_square(new_vector(0, 3, 5), new_vector(0, 0, 0.5), 1, 0xffff00));
+	//add_back(&lstobj, TYPE_SQUARE, new_square(new_vector(0, 3, 5), new_vector(0, 0, 0.5), 1, 0xffff00));
 	//lstobj = new_obj(TYPE_PLAN, new_plan(new_vector(0, 0, 3), new_vector(0, 1, 1), 0xfffafa));
-	add_back(&lstobj, TYPE_TRIANGLE, new_triangle(new_vector(-5, 2, 3), new_vector(-2, 0, 4), new_vector(-4, 3, 6), 0xfffafa));
-	s_vector *cylinder_par[2];
-	cylinder_par[0] = new_vector(-5, 0, 5);
-	cylinder_par[1] = new_vector(0.7, 0.5, 0.5);
-	add_back(&lstobj, TYPE_CYLINDER, new_cylinder(cylinder_par, 1, 2, 0xffffffff));
+	//add_back(&lstobj, TYPE_TRIANGLE, new_triangle(new_vector(-5, 2, 3), new_vector(-2, 0, 4), new_vector(-4, 3, 6), 0xfffafa));
+	//s_vector *cylinder_par[2];
+	//cylinder_par[0] = new_vector(-5, 0, 5);
+	//cylinder_par[1] = new_vector(0.7, 0.5, 0.5);
+	//add_back(&lstobj, TYPE_CYLINDER, new_cylinder(cylinder_par, 1, 2, 0xffffffff));
 
 	lstlight = NULL;
 	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_AMBIENT, 0.5, 0xffffffff));
 	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_POINT, 0.6, 0xffffffff));
 	set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 2, 1, 0);
-	add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_DIRECTIONAL, 0.2, 0xffffffff));
+	//add_back(&lstlight, TYPE_LIGHT, new_default_light(TYPE_DIRECTIONAL, 0.2, 0xffffffff));
 	//set_vector(((s_light *)((s_lstobjects *)lstlight->next)->object)->vector, 1, 4, 4);
-	set_vector(((s_light *)((s_lstobjects *)((s_lstobjects *)lstlight->next)->next)->object)->vector, 1, 4, 4);
+	//set_vector(((s_light *)((s_lstobjects *)((s_lstobjects *)lstlight->next)->next)->object)->vector, 1, 4, 4);
 
 	scene = new_scene(cameras, lstobj, lstlight, 0x0);
 
 	angle = new_vector(rota->x/1 * 180, rota->y/1 * 180, rota->z/1 * 180);
 	x = -(viewport->width/2);
 	data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
+	printf("viewplane : (%f, %f)\n", viewplane->width, viewplane->height);
+	printf("viewport : (%f, %f)\n", viewport->width, viewport->height);
+	printf("angle (%f, %f, %f)\n", angle->x, angle->y, angle->z);
 	while ((x + (viewport->width/2) <= viewport->width))
 	{
 		y = -(viewport->height/2);
