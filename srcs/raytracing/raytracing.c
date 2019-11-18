@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/18 01:39:00 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/18 05:09:35 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,8 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 			*(((s_sphere *)object)->center));
 	else if (objects->type == TYPE_PLAN)
 	{
-		s_vector	*temp2;
-		s_vector	*point;
-		float t;
-
 		temp = subtract_vectors(*l_vectors->point,
-			*(((s_plan *)object)->point));
-		t = intersect_plan(*l_vectors->point, *temp, object);
-		temp2 = multiply_vectors(t, *temp);
-		point = add_vectors(*l_vectors->point, *temp2);
-		free(temp);
-		temp = subtract_vectors(*l_vectors->point, *point);
-		free(point);
-		free(temp2);
+			(*l_vectors->point));
 	}
 	else if (objects->type == TYPE_SQUARE)
 	{
@@ -49,7 +38,7 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 	else if (objects->type == TYPE_TRIANGLE)
 	{
 		temp = subtract_vectors(*l_vectors->point,
-			*(((s_triangle *)object)->b));
+			*(((s_triangle *)object)->a));
 	}
 	else if (objects->type == TYPE_CYLINDER)
 		temp = subtract_vectors(*l_vectors->point,

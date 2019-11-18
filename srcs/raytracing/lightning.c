@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/18 03:56:22 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/18 05:04:46 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ s_light *light, s_scene *scene)
 		//dot(N, L) * lightIntensity / distanceToLight^2;
 		if (n_dot_l > 0)
 		{
-			printf("intensity * n_dot_l : %f\n", light->intensity * n_dot_l);
-			intensity += (light->intensity * n_dot_l) /
-		((length_vectors(*l_vectors->normal) * length_vectors(*vec_l)));
+			//printf("intensity * n_dot_l : %f\n", light->intensity * n_dot_l);
+			intensity += ((light->intensity * n_dot_l) /
+		((length_vectors(*l_vectors->normal) * length_vectors(*vec_l))));
 		}
 		if (l_vectors->shiny != -1)
 			intensity += calcul_shiny(l_vectors, light, length_v, vec_l);
 	}
 	if (intensity)
-		printf("intensity : %f\n", intensity);
+		//printf("intensity : %f\n", intensity);
 	if (light->type == TYPE_POINT)
 		free(vec_l);
 	return (intensity);
