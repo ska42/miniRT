@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/19 02:58:26 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/19 03:55:41 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,59 +15,7 @@
 int			calculate_new_color(s_lstobjects *objects, s_lstobjects *lights,
 s_lightning_vectors *l_vectors, s_scene *scene)
 {
-	int			ret_color;
-	void 		*object;
-	s_vector	*new_color;
-	s_vector	*temp;
-
-	temp = NULL;
-	object = objects->object;
-	if (objects->type == TYPE_SPHERE)
-	{
-		temp = subtract_vectors(*l_vectors->point,
-			*(((s_sphere *)object)->center));
-		l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
-		free(temp);
-	}
-	else if (objects->type == TYPE_CYLINDER)
-	{
-		temp = subtract_vectors(*l_vectors->point,
-			*(((s_cylinder *)object)->center));
-		l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
-		free(temp);
-	}
-	if (objects->type == TYPE_SPHERE)
-	{
-		l_vectors->shiny = ((s_sphere *)object)->shiny;
-		temp = color_to_rgb(((s_sphere *)object)->color);
-	}
-	else if (objects->type == TYPE_PLAN)
-	{
-		l_vectors->shiny = ((s_plan *)object)->shiny;
-		temp = color_to_rgb(((s_plan *)object)->color);
-	}
-	else if (objects->type == TYPE_SQUARE)
-	{
-		l_vectors->shiny = ((s_square *)object)->shiny;
-		temp = color_to_rgb(((s_square *)object)->color);
-	}
-	else if (objects->type == TYPE_TRIANGLE)
-	{
-		l_vectors->shiny = ((s_triangle *)object)->shiny;
-		temp = color_to_rgb(((s_triangle *)object)->color);
-	}
-	else if (objects->type == TYPE_CYLINDER)
-	{
-		l_vectors->shiny = ((s_cylinder *)object)->shiny;
-		temp = color_to_rgb(((s_cylinder *)object)->color);
-	}
-	new_color = multiply_vectors(compute_lightning(l_vectors,
-lights, scene, objects), *temp);
-	free(temp);
-	rearrange_rgb(new_color);
-	ret_color = rgb_to_color(new_color);
-	free(new_color);
-	return (ret_color);
+	return (compute_lightning(l_vectors, lights, scene, objects));
 }
 
 int			setup_l_vectors_and_calculate(s_lstobjects *closest_object,
@@ -83,6 +31,7 @@ s_vector direction, float closest_t, s_scene *scene)
 	temp = multiply_vectors(closest_t, direction);
 	l_vectors->point = add_vectors(*((s_camera *)scene->cameras->object)->origin, *(temp));
 	free(temp);
+	l_vectors->normal = new_vector(0, 0, 0);
 	l_vectors->view = multiply_vectors(-1, direction);
 	final_color = calculate_new_color(closest_object,
 scene->lights, l_vectors, scene);
