@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/18 05:09:35 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/19 02:58:26 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,19 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 	temp = NULL;
 	object = objects->object;
 	if (objects->type == TYPE_SPHERE)
+	{
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_sphere *)object)->center));
-	else if (objects->type == TYPE_PLAN)
-	{
-		temp = subtract_vectors(*l_vectors->point,
-			(*l_vectors->point));
-	}
-	else if (objects->type == TYPE_SQUARE)
-	{
-		temp = subtract_vectors(*l_vectors->point,
-			*(((s_square *)object)->center));
-	}
-	else if (objects->type == TYPE_TRIANGLE)
-	{
-		temp = subtract_vectors(*l_vectors->point,
-			*(((s_triangle *)object)->a));
+		l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
+		free(temp);
 	}
 	else if (objects->type == TYPE_CYLINDER)
+	{
 		temp = subtract_vectors(*l_vectors->point,
 			*(((s_cylinder *)object)->center));
-	l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
-	free(temp);
+		l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
+		free(temp);
+	}
 	if (objects->type == TYPE_SPHERE)
 	{
 		l_vectors->shiny = ((s_sphere *)object)->shiny;
@@ -71,7 +62,7 @@ s_lightning_vectors *l_vectors, s_scene *scene)
 		temp = color_to_rgb(((s_cylinder *)object)->color);
 	}
 	new_color = multiply_vectors(compute_lightning(l_vectors,
-lights, scene), *temp);
+lights, scene, objects), *temp);
 	free(temp);
 	rearrange_rgb(new_color);
 	ret_color = rgb_to_color(new_color);
