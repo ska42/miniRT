@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:11:17 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 04:14:48 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 04:38:57 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ s_vector *center)
 	sphere->color = color;
 	sphere->center = center;
 	sphere->shiny = shiny;
-	sphere->reflective = 0.5;
+	sphere->reflective = -1;
 	return (sphere);
 }
 

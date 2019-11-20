@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 04:26:43 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 04:52:20 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,6 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 		actual_color->y + ((new_color->y + obj_color->y) * ambient_intensity),
 		actual_color->z + ((new_color->z + obj_color->z) * ambient_intensity));
 			free(new_color);
-			free(light_color);
 			//printf("new_color (%f, %f, %f)\n", color->x, color->y, color->z);
 			//free(actual_color);
 			//free(new_color);

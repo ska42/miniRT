@@ -6,20 +6,36 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 04:27:00 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 07:22:37 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void			putimage(char *data, int bpp, int size_line, int x, int y, int color)
+typedef	struct	t_pipe
 {
-		int	i;
+	int	x;
+	int y;
+	char color1;
+	char color2;
+	char color3;
+	char *data;
+}				s_pipe;
 
-		i = (x * (bpp / 8)) + (y * size_line);
-		data[i] = color;
-		data[++i] = color >> 8;
-		data[++i] = color >> 16;
+void			putimage(int x, int y ,int color, int ret[2])
+{
+		int pat;
+		s_pipe *piped;
+		piped = malloc(sizeof(s_pipe));
+		piped->x = x;
+		piped->y = y;
+		piped->color1 = color;
+		piped->color2 = color >> 8;
+		piped->color3 = color >> 16;
+		printf("ok\n");
+		pat = write(ret[1], piped, sizeof(s_pipe));
+		printf("ko\n");
+		free(piped);
 }
 
 int		main(int argc, char *argv[])
@@ -39,6 +55,7 @@ int		main(int argc, char *argv[])
 	int				x;
 	int				y;
 	s_vector		*obs;
+	int				all_pipes[10][2];
 
 	(void)argc;
 	fd = open(argv[1], O_RDONLY);
@@ -52,35 +69,90 @@ int		main(int argc, char *argv[])
 	win_ptr = mlx_new_window(mlx_ptr, scene->viewport->width, scene->viewport->height, "miniRT");
 
 	angle = new_vector(((s_camera *)scene->cameras->object)->rotation->x/1 * 180, ((s_camera *)scene->cameras->object)->rotation->y/1 * 180, ((s_camera *)scene->cameras->object)->rotation->z/1 * 180);
-	x = -(scene->viewport->width/2);
+	x = -(scene->viewport->width/2) + 1;
 	data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
 	obs = ((s_camera *)scene->cameras->object)->origin;
-	printf("viewplane : (%f, %f)\n", scene->viewplane->width, scene->viewplane->height);
-	printf("viewport : (%f, %f)\n", scene->viewport->width, scene->viewport->height);
-	printf("angle (%f, %f, %f)\n", angle->x, angle->y, angle->z);
-	while ((x + (scene->viewport->width/2) <= scene->viewport->width))
+	int i;
+	i = 0;
+	while (i < 10)
 	{
-		//printf("ok\n");
-		y = -(scene->viewport->height/2);
-		while (y <= scene->viewport->height/2)
+		pipe(all_pipes[i]);
+		if (!fork())
 		{
-			//printf("y : %d\n", y);
-			direction = new_vector(x * (scene->viewplane->width / scene->viewport->width), y * (scene->viewplane->height / scene->viewport->height), 1);
-			rot(direction, angle);
-			//printf("direction (%f, %f, %f)\n", direction->x, direction->y, direction->z);
-			color = trace_ray(*direction, scene);
-			if (color != scene->background_color)
+			close(all_pipes[i][0]);
+			x += i * (scene->viewport->width) / 10;
+			while ((x + (scene->viewport->width/2) <= scene->viewport->width))
 			{
-				putimage(data, bpp, size_line, (int)((x + (scene->viewport->width/2))), (int)((-(y - (scene->viewport->height/2)))), color);
-				//printf("ko\n");
-				//mlx_pixel_put(mlx_ptr, win_ptr, (int)(x + (viewport->width/2)), (int)(-(y - (viewport->height/2))), (int)color);
+				//printf("ok\n");
+					y = -(scene->viewport->height/2);
+					while (y <= scene->viewport->height/2)
+					{
+							//printf("y : %d\n", y);
+							direction = new_vector(x * (scene->viewplane->width / scene->viewport->width), y * (scene->viewplane->height / scene->viewport->height), 1);
+							rot(direction, angle);
+							//printf("direction (%f, %f, %f)\n", direction->x, direction->y, direction->z);
+							s_scene *cpy;
+							cpy = cpy_scene(scene);
+							color = trace_ray(*direction, cpy);
+							putimage(x, y, color, all_pipes[i]);
+							free(direction);
+							//((s_camera *)scene->cameras->object)->origin = obs;
+							//scene->depth = 3;
+							y++;
+							//printf("%i : y %i\n", i, y);
+					}
+				x++;
+				//printf("%i : x %i\n", i, x);
 			}
-			free(direction);
-			((s_camera *)scene->cameras->object)->origin = obs;
-			scene->depth = 3;
-			y++;
+			printf("end\n %i\n",i);
+			return (0);
 		}
-		x++;
+		else
+		{
+			close(all_pipes[i][1]);
+			i++;
+		}
+	}
+	int j;
+	printf("%d\n", (int)((scene->viewport->width) / (100)));
+	int size;
+	while (--i)
+		wait(NULL);
+	size = scene->viewport->width * scene->viewport->height;
+	i = 0;
+	int n;
+	n = 0;
+	while (size--)
+	{
+			n++;
+			if (n == 701)
+			{
+				n = 0;
+				i++;
+			}
+			if(i == 10)
+				break;
+			s_pipe *piped;
+			piped = malloc(sizeof(s_pipe));
+			//printf("ko\n");
+			read(all_pipes[i][0], piped, sizeof(s_pipe));
+			//if (piped->x == -377)
+			//	break;
+			//printf("ok\n");
+			j = ((int)((piped->x + (scene->viewport->width/2))) * (bpp / 8)) + ((int)((-(piped->y - (scene->viewport->height/2)))) * size_line);
+			//printf("x : %d\n", piped->x);
+			//printf("y : %d\n", piped->y);
+			//printf("data[0] : %d\n", pipe->color1);
+			//printf("data[1] : %d\n", pipe->color2);
+			//printf("data[2] : %d\n", pipe->color3);
+			data[j] = piped->color1;
+			data[++j] = piped->color2;
+			data[++j] = piped->color3;
+			free(piped);
+			//printf("ko\n");
+			//printf("ok\n");
+			//printf("%d\n", i);
+			//printf("size %i\n",size);
 	}
 	//data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
 	//printf("data %s\n", data);

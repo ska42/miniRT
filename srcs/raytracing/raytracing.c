@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 04:26:29 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 04:51:24 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ s_vector direction, float closest_t, s_scene *scene)
 	l_vectors->view = multiply_vectors(-1, direction);
 	final_color = calculate_new_color(closest_object,
 scene->lights, l_vectors, scene);
+/**
 	if (closest_object->type == TYPE_SPHERE && (((s_sphere *)closest_object->object)->reflective > 0
 	&& scene->depth > 0))
 			final_color = color_with_reflect(closest_object, scene,
@@ -55,6 +56,7 @@ l_vectors, final_color);
 	&& scene->depth > 0))
 		final_color = color_with_reflect(closest_object, scene,
 	l_vectors, final_color);
+	**/
 	free(l_vectors->point);
 	free(l_vectors->normal);
 	free(l_vectors->view);

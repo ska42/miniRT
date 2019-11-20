@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:43:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/19 22:39:49 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 04:41:56 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ s_lstobjects *lights, int color)
 s_scene		*cpy_scene(s_scene *scene)
 {
 	s_scene *new;
+	float	t_min;
+	float	t_max;
+	int		depth;
 
+	t_min = scene->t_min;
+	t_max = scene->t_max;
+	depth = scene->depth;
 	new = malloc(sizeof(s_scene));
 	new->viewport = scene->viewport;
 	new->viewplane = scene->viewplane;
@@ -61,8 +67,8 @@ s_scene		*cpy_scene(s_scene *scene)
 	new->lights = scene->lights;
 	new->total_intensity = scene->total_intensity;
 	new->background_color = scene->background_color;
-	new->t_min = scene->t_min;
-	new->t_max = scene->t_max;
-	new->depth = scene->depth;
+	new->t_min = t_min;
+	new->t_max = t_max;
+	new->depth = depth;
 	return (new);
 }
