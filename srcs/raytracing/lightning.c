@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 01:14:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 04:26:43 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,20 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 	s_vector		*temp;
 	s_lstobjects	*shadow_obj;
 	void			*object;
+	s_vector		direction;
 
 	intensity = 0;
 	object = objects->object;
 	length_v = length_vectors(*l_vectors->view);
 	vec_l = type_light(l_vectors, light, scene);
+	direction = *multiply_vectors(-1, *l_vectors->view);
 	//printf("LEN %f\n", length_vectors(*vec_l));
 	test = closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
 	if (!shadow_obj)
 	{
 		free(l_vectors->normal);
 		float denom;
-		float k[2];
+		float k[4];
 		float t;
 		s_vector *point;
 		s_vector *temp2;
@@ -92,16 +94,82 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 		}
 		else if (objects->type == TYPE_CYLINDER)
 		{
-			temp = subtract_vectors(*l_vectors->point,
-				*(((s_cylinder *)object)->center));
+
+			temp = subtract_vectors(*l_vectors->point, *(((s_cylinder *)object)->center));
 			l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
 			free(temp);
+
+			if (product_vectors(*((s_cylinder *)object)->orientation, direction) < 0)
+			{
+				// SI FACE DESSUS OU DESSOUS
+				denom = -(product_vectors(*((s_cylinder *)object)->orientation, *((s_cylinder *)object)->point1));
+				k[0] = product_vectors(*((s_camera *)scene->cameras->object)->origin, *((s_cylinder *)object)->orientation) + denom;
+				k[1] = product_vectors(direction, *((s_cylinder *)object)->orientation);
+				t = - (k[0] / k[1]);
+				if (t > 0)
+				{
+					temp = multiply_vectors(t, direction);
+					point = add_vectors(*((s_camera *)scene->cameras->object)->origin, *temp);
+					free(temp);
+					k[0] = distance_points(*point, *((s_cylinder *)object)->point1);
+					free(point);
+					if (k[0] < ((s_cylinder *)object)->diameter / 2)
+					{
+						temp2 = multiply_vectors(-1, *((s_plan *)object)->normal);
+						denom = -(product_vectors(*((s_plan *)object)->normal, *((s_plan *)object)->point));
+						k[0] = product_vectors(*light->vector, *((s_plan *)object)->normal) + denom;
+						k[1] = product_vectors(*temp2, *((s_plan *)object)->normal);
+						t = - (k[0] / k[1]);
+						temp = multiply_vectors(t, *temp2);
+						point = add_vectors(*light->vector, *temp);
+						//printf("point (%f, %f, %f)\n", point->x, point->y, point->z);
+						free(temp);
+						temp = subtract_vectors(*light->vector, *point);
+						l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
+						free(temp);
+						free(point);
+					}
+				}
+			}
+			else if (product_vectors(*((s_cylinder *)object)->orientation, direction) > 0)
+			{
+				denom = -(product_vectors(*((s_cylinder *)object)->orientation, *((s_cylinder *)object)->point2));
+				k[0] = product_vectors(*((s_camera *)scene->cameras->object)->origin, *((s_cylinder *)object)->orientation) + denom;
+				k[1] = product_vectors(direction, *((s_cylinder *)object)->orientation);
+				t = - (k[0] / k[1]);
+				if (t > 0)
+				{
+
+					temp = multiply_vectors(t, direction);
+					point = add_vectors(*((s_camera *)scene->cameras->object)->origin, *temp);
+					free(temp);
+					k[0] = distance_points(*point, *((s_cylinder *)object)->point2);
+					free(point);
+					if (k[0] < ((s_cylinder *)object)->diameter / 2)
+					{
+						temp2 = multiply_vectors(-1, *((s_plan *)object)->normal);
+						denom = -(product_vectors(*((s_plan *)object)->normal, *((s_plan *)object)->point));
+						k[0] = product_vectors(*light->vector, *((s_plan *)object)->normal) + denom;
+						k[1] = product_vectors(*temp2, *((s_plan *)object)->normal);
+						t = - (k[0] / k[1]);
+						temp = multiply_vectors(t, *temp2);
+						point = add_vectors(*light->vector, *temp);
+						//printf("point (%f, %f, %f)\n", point->x, point->y, point->z);
+						free(temp);
+						temp = subtract_vectors(*light->vector, *point);
+						l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
+						free(temp);
+						free(point);
+					}
+				}
+			}
+			free(temp2);
 		}
 		else if (objects->type == TYPE_PLAN || objects->type == TYPE_TRIANGLE || objects->type == TYPE_SQUARE)
 		{
 			if (objects->type == TYPE_PLAN)
 			{
-				temp2 = multiply_vectors(-1, *((s_plan *)object)->normal);;
+				temp2 = multiply_vectors(-1, *((s_plan *)object)->normal);
 				denom = -(product_vectors(*((s_plan *)object)->normal, *((s_plan *)object)->point));
 				k[0] = product_vectors(*light->vector, *((s_plan *)object)->normal) + denom;
 				k[1] = product_vectors(*temp2, *((s_plan *)object)->normal);
@@ -114,14 +182,14 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 				u = subtract_vectors(*((s_triangle *)object)->b, *((s_triangle *)object)->a);
 				v = subtract_vectors(*((s_triangle *)object)->c, *((s_triangle *)object)->a);
 				normal = cross(*u, *v);
-				temp2 = multiply_vectors(-1, *normal);;
+				temp2 = multiply_vectors(-1, *normal);
 				denom = -(product_vectors(*normal, *((s_triangle *)object)->a));
 				k[0] = product_vectors(*light->vector, *normal) + denom;
 				k[1] = product_vectors(*temp2, *normal);
 			}
 			else if (objects->type == TYPE_SQUARE)
 			{
-				temp2 = multiply_vectors(-1, *((s_square *)object)->orientation);;
+				temp2 = multiply_vectors(-1, *((s_square *)object)->orientation);
 				denom = -(product_vectors(*((s_square *)object)->orientation, *((s_square *)object)->center));
 				k[0] = product_vectors(*light->vector, *((s_square *)object)->orientation) + denom;
 				k[1] = product_vectors(*temp2, *((s_square *)object)->orientation);
@@ -212,12 +280,32 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 		{
 			ambient_intensity += light->intensity;
 			ambient_color = color_to_rgb(light->color);
+			new_color = new_vector(ambient_color->x, ambient_color->y, ambient_color->z);
+
+			//printf("color: (%f, %f, %f)\n", new_color->x, new_color->y, new_color->z);
+			color = new_vector(actual_color->x + ((new_color->x + obj_color->x) * ambient_intensity),
+		actual_color->y + ((new_color->y + obj_color->y) * ambient_intensity),
+		actual_color->z + ((new_color->z + obj_color->z) * ambient_intensity));
+			free(new_color);
+			free(light_color);
+			//printf("new_color (%f, %f, %f)\n", color->x, color->y, color->z);
+			//free(actual_color);
+			//free(new_color);
+			//actual_color = new_vector(color->x, color->y, color->z);
+			//free(color);
+			//printf("color: (%f, %f, %f)\n", color->x, color->y, color->z);
+			rearrange_rgb(color);
+			actual_color = new_vector(color->x, color->y, color->z);
+			free(obj_color);
+			obj_color = new_vector(color->x, color->y, color->z);
+			free(color);
+			/**
 			new_color = new_vector((obj_color->x * (ambient_color->x * (ambient_intensity / scene->total_intensity)))
 			, (obj_color->y * (ambient_color->y * (ambient_intensity / scene->total_intensity)))
 			, (obj_color->z * (ambient_color->z * (ambient_intensity / scene->total_intensity))));
-			color = new_vector(((new_color->x / 255)),
-		((new_color->y / 255)),
-		((new_color->z / 255)));
+			color = new_vector(((new_color->x / ambient_color->x)),
+		((new_color->y / ambient_color->y)),
+		((new_color->z / ambient_color->z)));
 			//color = multiply_vectors(ambient_intensity / scene->total_intensity, *actual_color);
 			//printf("new_color (%f, %f, %f)\n", color->x, color->y, color->z);
 			//free(actual_color);
@@ -227,6 +315,7 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 			rearrange_rgb(color);
 			actual_color = new_vector(color->x, color->y, color->z);
 			free(color);
+			**/
 		}
 		else
 		{
@@ -257,5 +346,6 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 	}
 	//printf("end actual_color (%f, %f, %f)\n", actual_color->x, actual_color->y, actual_color->z);
 	//printf("intensity : %f\n", intensity);
+	free(obj_color);
 	return (rgb_to_color(actual_color));
 }
