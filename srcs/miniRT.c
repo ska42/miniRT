@@ -6,11 +6,12 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 07:22:37 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 23:21:05 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+#include <sys/time.h>
 
 typedef	struct	t_pipe
 {
@@ -32,9 +33,9 @@ void			putimage(int x, int y ,int color, int ret[2])
 		piped->color1 = color;
 		piped->color2 = color >> 8;
 		piped->color3 = color >> 16;
-		printf("ok\n");
+		//printf("bug\n");
 		pat = write(ret[1], piped, sizeof(s_pipe));
-		printf("ko\n");
+		//printf("gub\n");
 		free(piped);
 }
 
@@ -55,8 +56,11 @@ int		main(int argc, char *argv[])
 	int				x;
 	int				y;
 	s_vector		*obs;
-	int				all_pipes[10][2];
+	int				**all_pipes;
+	struct timeval start, stop;
+	double secs = 0;
 
+	gettimeofday(&start, NULL);
 	(void)argc;
 	fd = open(argv[1], O_RDONLY);
 	scene = parsing(fd);
@@ -73,15 +77,29 @@ int		main(int argc, char *argv[])
 	data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
 	obs = ((s_camera *)scene->cameras->object)->origin;
 	int i;
+	int nb_fork;
+	nb_fork = 50;
+	all_pipes = malloc(sizeof(int *) * nb_fork);
 	i = 0;
-	while (i < 10)
+	while (i < nb_fork)
+	{
+		all_pipes[i] = malloc(sizeof(int) * 2);
+		i++;
+	}
+	i = 0;
+	while (i < nb_fork)
 	{
 		pipe(all_pipes[i]);
 		if (!fork())
 		{
-			close(all_pipes[i][0]);
-			x += i * (scene->viewport->width) / 10;
-			while ((x + (scene->viewport->width/2) <= scene->viewport->width))
+			x += i * (scene->viewport->width) / nb_fork;
+			int max;
+			max = x + ((scene->viewport->width) / nb_fork) - 1;
+			//printf("x : %i\n", x);
+			//printf("max : %i\n", max);
+			s_scene *cpy;
+			cpy = cpy_scene(scene);
+			while (x <= max)
 			{
 				//printf("ok\n");
 					y = -(scene->viewport->height/2);
@@ -91,33 +109,34 @@ int		main(int argc, char *argv[])
 							direction = new_vector(x * (scene->viewplane->width / scene->viewport->width), y * (scene->viewplane->height / scene->viewport->height), 1);
 							rot(direction, angle);
 							//printf("direction (%f, %f, %f)\n", direction->x, direction->y, direction->z);
-							s_scene *cpy;
-							cpy = cpy_scene(scene);
 							color = trace_ray(*direction, cpy);
 							putimage(x, y, color, all_pipes[i]);
 							free(direction);
-							//((s_camera *)scene->cameras->object)->origin = obs;
-							//scene->depth = 3;
+							((s_camera *)cpy->cameras->object)->origin = obs;
+							cpy->depth = 3;
 							y++;
 							//printf("%i : y %i\n", i, y);
 					}
+				char *osef;
+				osef = malloc(2);
+				read(all_pipes[i][1], osef, 2);
+				//printf("osef : %c\n", osef[0]);
+				free(osef);
 				x++;
 				//printf("%i : x %i\n", i, x);
 			}
-			printf("end\n %i\n",i);
+			free(cpy);
+			//printf("end\n %i\n",i);
 			return (0);
 		}
 		else
 		{
-			close(all_pipes[i][1]);
 			i++;
 		}
 	}
 	int j;
-	printf("%d\n", (int)((scene->viewport->width) / (100)));
+	//printf("%d\n", (int)((scene->viewport->width) / (100)));
 	int size;
-	while (--i)
-		wait(NULL);
 	size = scene->viewport->width * scene->viewport->height;
 	i = 0;
 	int n;
@@ -125,13 +144,15 @@ int		main(int argc, char *argv[])
 	while (size--)
 	{
 			n++;
-			if (n == 701)
+			if (n == scene->viewport->height)
 			{
+				//printf("test\n");
 				n = 0;
+				write(all_pipes[i][0], "1", 2);
 				i++;
 			}
-			if(i == 10)
-				break;
+			if (i == nb_fork)
+				i = 0;
 			s_pipe *piped;
 			piped = malloc(sizeof(s_pipe));
 			//printf("ko\n");
@@ -154,12 +175,19 @@ int		main(int argc, char *argv[])
 			//printf("%d\n", i);
 			//printf("size %i\n",size);
 	}
+	//printf("ended\n");
+	i = nb_fork;
+	while (--i)
+		wait(NULL);
 	//data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
 	//printf("data %s\n", data);
 	//mlx_img = mlx_new_image(mlx_ptr, viewport->width, viewport->height);
 	//mlx_ptr2 = mlx_init();
 	mlx_put_image_to_window(mlx_ptr, win_ptr, mlx_img, 0, 0);
 
+	gettimeofday(&stop, NULL);
+	secs = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
+printf("time taken %fs\n",secs);
 	mlx_loop(mlx_ptr);
 }
 
