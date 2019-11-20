@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:43:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 03:22:46 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/19 22:39:49 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ s_scene		*new_empty_scene(int color)
 	scene->cameras = NULL;
 	scene->objects = NULL;
 	scene->lights = NULL;
+	scene->total_intensity = 0;
 	scene->background_color = color;
 	scene->t_min = 0.001;
 	scene->t_max = -1;
@@ -41,6 +42,7 @@ s_lstobjects *lights, int color)
 	scene->objects = objects;
 	scene->lights = lights;
 	scene->background_color = color;
+	scene->total_intensity = 0;
 	scene->t_min = 0.001;
 	scene->t_max = -1;
 	scene->depth = 3;
@@ -57,6 +59,7 @@ s_scene		*cpy_scene(s_scene *scene)
 	new->cameras = scene->cameras;
 	new->objects = scene->objects;
 	new->lights = scene->lights;
+	new->total_intensity = scene->total_intensity;
 	new->background_color = scene->background_color;
 	new->t_min = scene->t_min;
 	new->t_max = scene->t_max;

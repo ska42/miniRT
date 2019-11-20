@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 00:03:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/18 05:03:54 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/19 22:43:01 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int		parsing_ambient_light(s_scene **scene, char *line)
 		if (line[++i] && line[i] != ' ' && line[i] != '\t')
 			return (-1);
 	printf("ambient_light_working");
+	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
 new_default_light(TYPE_AMBIENT, intensity, color)))) ? 0 : -1);
 }
@@ -96,6 +97,7 @@ int		parsing_point_light(s_scene **scene, char *l)
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
 		return (free_and_return_minus_one(pos));
 	printf("point_light_working");
+	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
 new_point_light(pos, intensity, i[3])))) ? 0 : free_and_return_minus_one(pos));
 }

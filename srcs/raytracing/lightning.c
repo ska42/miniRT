@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/19 05:15:23 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/20 01:14:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,32 +74,32 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 	test = closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
 	if (!shadow_obj)
 	{
-		if (objects->type == TYPE_PLAN || objects->type == TYPE_TRIANGLE || objects->type == TYPE_SQUARE)
-		{
-			free(l_vectors->normal);
-			float denom;
-			float k[2];
-			float t;
-			s_vector *point;
-			s_vector *temp2;
+		free(l_vectors->normal);
+		float denom;
+		float k[2];
+		float t;
+		s_vector *point;
+		s_vector *temp2;
 
-			temp2 = NULL;
-			t = 0;
-			if (objects->type == TYPE_SPHERE)
-			{
-				temp = subtract_vectors(*l_vectors->point,
-					*(((s_sphere *)object)->center));
-				l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
-				free(temp);
-			}
-			else if (objects->type == TYPE_CYLINDER)
-			{
-				temp = subtract_vectors(*l_vectors->point,
-					*(((s_cylinder *)object)->center));
-				l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
-				free(temp);
-			}
-			else if (objects->type == TYPE_PLAN)
+		temp2 = NULL;
+		t = 0;
+		if (objects->type == TYPE_SPHERE)
+		{
+			temp = subtract_vectors(*l_vectors->point,
+				*(((s_sphere *)object)->center));
+			l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
+			free(temp);
+		}
+		else if (objects->type == TYPE_CYLINDER)
+		{
+			temp = subtract_vectors(*l_vectors->point,
+				*(((s_cylinder *)object)->center));
+			l_vectors->normal = multiply_vectors(1 / length_vectors(*temp), *temp);
+			free(temp);
+		}
+		else if (objects->type == TYPE_PLAN || objects->type == TYPE_TRIANGLE || objects->type == TYPE_SQUARE)
+		{
+			if (objects->type == TYPE_PLAN)
 			{
 				temp2 = multiply_vectors(-1, *((s_plan *)object)->normal);;
 				denom = -(product_vectors(*((s_plan *)object)->normal, *((s_plan *)object)->point));
@@ -158,64 +158,101 @@ int		compute_lightning(s_lightning_vectors *l_vectors,
 s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 {
 	float		intensity;
+	float		ambient_intensity;
 	s_light		*light;
 	void		*object;
 	s_vector	*color;
+	s_vector	*obj_color;
 	s_vector	*new_color;
+	s_vector	*light_color;
 	s_vector	*actual_color;
+	s_vector	*ambient_color;
 
 	actual_color = new_vector(0, 0, 0);
+	obj_color = NULL;
 	object = objects->object;
 	if (objects->type == TYPE_SPHERE)
 	{
 		free(actual_color);
 		l_vectors->shiny = ((s_sphere *)object)->shiny;
-		actual_color = color_to_rgb(((s_sphere *)object)->color);
+		obj_color = color_to_rgb(((s_sphere *)object)->color);
 	}
 	else if (objects->type == TYPE_PLAN)
 	{
 		free(actual_color);
 		l_vectors->shiny = ((s_plan *)object)->shiny;
-		actual_color = color_to_rgb(((s_plan *)object)->color);
+		obj_color = color_to_rgb(((s_plan *)object)->color);
 	}
 	else if (objects->type == TYPE_SQUARE)
 	{
 		free(actual_color);
 		l_vectors->shiny = ((s_square *)object)->shiny;
-		actual_color = color_to_rgb(((s_square *)object)->color);
+		obj_color = color_to_rgb(((s_square *)object)->color);
 	}
 	else if (objects->type == TYPE_TRIANGLE)
 	{
 		free(actual_color);
 		l_vectors->shiny = ((s_triangle *)object)->shiny;
-		actual_color = color_to_rgb(((s_triangle *)object)->color);
+		obj_color = color_to_rgb(((s_triangle *)object)->color);
 	}
 	else if (objects->type == TYPE_CYLINDER)
 	{
 		free(actual_color);
 		l_vectors->shiny = ((s_cylinder *)object)->shiny;
-		actual_color = color_to_rgb(((s_cylinder *)object)->color);
+		obj_color = color_to_rgb(((s_cylinder *)object)->color);
 	}
+	actual_color = new_vector(0, 0, 0);
 	//printf("before :actual_color (%f, %f, %f)\n", actual_color->x, actual_color->y, actual_color->z);
+	ambient_intensity = 0;
 	while (lights)
 	{
 		intensity = 0;
 		light = ((s_light *)lights->object);
 		if (light->type == TYPE_AMBIENT)
-			intensity += light->intensity;
+		{
+			ambient_intensity += light->intensity;
+			ambient_color = color_to_rgb(light->color);
+			new_color = new_vector((obj_color->x * (ambient_color->x * (ambient_intensity / scene->total_intensity)))
+			, (obj_color->y * (ambient_color->y * (ambient_intensity / scene->total_intensity)))
+			, (obj_color->z * (ambient_color->z * (ambient_intensity / scene->total_intensity))));
+			color = new_vector(((new_color->x / 255)),
+		((new_color->y / 255)),
+		((new_color->z / 255)));
+			//color = multiply_vectors(ambient_intensity / scene->total_intensity, *actual_color);
+			//printf("new_color (%f, %f, %f)\n", color->x, color->y, color->z);
+			//free(actual_color);
+			//free(new_color);
+			//actual_color = new_vector(color->x, color->y, color->z);
+			//free(color);
+			rearrange_rgb(color);
+			actual_color = new_vector(color->x, color->y, color->z);
+			free(color);
+		}
 		else
+		{
 			intensity += compute_special_lights(l_vectors, light, scene, objects);
+			//color = multiply_vectors(ambient_intensity / scene->total_intensity, *actual_color);
+			light_color = color_to_rgb(light->color);
+			new_color = new_vector(((light_color->x * (intensity / scene->total_intensity)) - obj_color->x)
+			,((light_color->y * (intensity / scene->total_intensity)) -  obj_color->y)
+			,((light_color->z * (intensity / scene->total_intensity)) - obj_color->z));
+			//printf("color: (%f, %f, %f)\n", new_color->x / 255, new_color->y / 255, new_color->z / 255);
+			color = new_vector(actual_color->x + (obj_color->x + (new_color->x)),
+		actual_color->y + (obj_color->y + (new_color->y)),
+		actual_color->z + (obj_color->z + (new_color->z)));
+			free(new_color);
+			free(light_color);
+			//printf("new_color (%f, %f, %f)\n", color->x, color->y, color->z);
+			//free(actual_color);
+			//free(new_color);
+			//actual_color = new_vector(color->x, color->y, color->z);
+			//free(color);
+			//printf("color: (%f, %f, %f)\n", color->x, color->y, color->z);
+			rearrange_rgb(color);
+			actual_color = new_vector(color->x, color->y, color->z);
+			free(color);
+		}
 		lights = lights->next;
-		new_color = color_to_rgb(light->color);
-		color = new_vector((actual_color->x + (new_color->x * intensity - actual_color->x)),
-(actual_color->y + (new_color->y * intensity - actual_color->y) * intensity),
-(actual_color->z + (new_color->z * intensity - actual_color->z) * intensity));
-		//printf("new_color (%f, %f, %f)\n", color->x, color->y, color->z);
-		free(actual_color);
-		free(new_color);
-		actual_color = new_vector(color->x, color->y, color->z);
-		free(color);
-		rearrange_rgb(actual_color);
 		//printf("actual_color (%f, %f, %f)\n", actual_color->x, actual_color->y, actual_color->z);
 	}
 	//printf("end actual_color (%f, %f, %f)\n", actual_color->x, actual_color->y, actual_color->z);
