@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 06:09:51 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 06:27:55 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ s_vector direction, s_sphere *object)
 
 	if (!object->difference || !is_equal(object->prev_origin, &origin))
 	{
-		object->difference = new_vector(origin.x - object->center->x, origin.y - object->center->y, origin.z - object->center->z);
+		object->difference = subtract_vectors(origin, *object->center);
 		object->calcul_c = product_vectors(*object->difference, *object->difference) - (object->radius * object->radius);
 		object->prev_origin = cpy_vector(&origin);
 	}
@@ -131,6 +131,7 @@ float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *objec
 
 float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *object)
 {
+	float calcul_b;
 	float a;
 	float b;
 	float c;
@@ -138,10 +139,8 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	s_vector *temp;
 	s_vector *point;
 	float t[2];
-	float tmp[4];
 	float ret;
 	float size;
-	s_vector *x;
 	float denom;
 	float l[2];
 	float tt;
@@ -149,15 +148,18 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	s_vector *point_tmp;
 	s_vector *temp2;
 
-	x = subtract_vectors(origin, *object->center);
-	tmp[0] = 1.0 / product_vectors(*object->orientation, *object->orientation);
-	tmp[1] = product_vectors(direction, *object->orientation);
-	tmp[2] = product_vectors(*x, *x);
-	tmp[3] = product_vectors(*object->orientation, *x);
-	a = product_vectors(direction, direction) - (tmp[1] * tmp[1] * tmp[0]);
-	b = 2.0 * (product_vectors(direction, *x)) - (2 * tmp[1] * tmp[3] * tmp[0]);
-	c = tmp[2] - ((object->diameter / 2.0) * (object->diameter / 2.0)) - ((tmp[3] * tmp[3]) * tmp[0]);
-	free(x);
+	if (!object->difference || !is_equal(object->prev_origin, &origin))
+	{
+		object->difference = subtract_vectors(origin, *object->center);
+		object->calcul_c = product_vectors(*object->difference, *object->difference);
+		object->calcul_d = product_vectors(*object->orientation, *object->difference);
+		object->prev_origin = cpy_vector(&origin);
+
+	}
+	calcul_b = product_vectors(direction, *object->orientation);
+	a = product_vectors(direction, direction) - (calcul_b * calcul_b * object->calcul_a);
+	b = 2.0 * (product_vectors(direction, *object->difference)) - (2 * calcul_b * object->calcul_d * object->calcul_a);
+	c = object->calcul_c - ((object->diameter / 2.0) * (object->diameter / 2.0)) - ((object->calcul_d * object->calcul_d) * object->calcul_a);
 	delta = (b * b) - (4.0 * a * c);
 	if (delta < 0)
 		return (0);

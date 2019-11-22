@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 04:50:11 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 06:27:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, int
 	new->color = color;
 	new->shiny = -1;
 	new->reflective = -1;
+
+	new->difference = NULL;
+	new->calcul_a = 1.0 / product_vectors(*new->orientation, *new->orientation);
+	new->calcul_c = 0;
+	new->calcul_d = 0;
+	new->prev_origin = NULL;
 	return (new);
 }
 
@@ -44,6 +50,10 @@ void		free_cylinder(s_cylinder *cylinder)
 	free(cylinder->orientation);
 	free(cylinder->point1);
 	free(cylinder->point2);
+	if (cylinder->difference)
+		free(cylinder->difference);
+	if (cylinder->prev_origin)
+		free(cylinder->prev_origin);
 	free(cylinder);
 }
 
@@ -61,5 +71,11 @@ s_cylinder	*cpy_cylinder(s_cylinder *cylinder)
 	new->color = cylinder->color;
 	new->shiny = cylinder->shiny;
 	new->reflective = cylinder->reflective;
+
+	new->difference = NULL;
+	new->calcul_a = cylinder->calcul_a;
+	new->calcul_c = 0;
+	new->calcul_d = 0;
+	new->prev_origin = NULL;
 	return (new);
 }
