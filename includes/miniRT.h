@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 08:06:57 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 01:04:21 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,17 @@
 # include "lightning.h"
 # include "raytracing.h"
 # include "reflect.h"
+
+typedef	struct	t_mlx
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*mlx_img;
+	char	*data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	s_scene *scene;
+}				s_mlx;
 
 #endif

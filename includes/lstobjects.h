@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:24:32 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 04:56:41 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 01:47:34 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ typedef struct	t_lstobjects
 {
 	int		type;
 	void	*object;
+	void	*prev;
 	void	*next;
 }				s_lstobjects;
 
 s_lstobjects		*new_obj(int type, void *object);
 int					add_back(s_lstobjects **lst, int type, void *object);
+s_lstobjects		*cpy_lstobjects(s_lstobjects *);
 
 #endif

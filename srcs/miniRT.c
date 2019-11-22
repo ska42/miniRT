@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/21 00:33:18 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 03:06:27 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ typedef struct t_args
 {
 	char *data;
 	s_scene *scene;
-	s_vector *obs;
 	int x;
-	int max;
 	int bpp;
 	int size_line;
 }				s_args;
@@ -46,108 +44,74 @@ void	*thread_function(void *arguments)
 	s_scene *scene;
 	s_vector *obs;
 	int x;
-	int max;
 	int bpp;
 	int size_line;
 	s_vector		*direction;
 	s_vector		*angle;
 	int				color;
 	int y;
+
    	s_args *args = (s_args *)arguments;
 	data = args->data;
 	scene = args->scene;
-	obs = args->obs;
+	obs = ((s_camera *)scene->cameras->object)->origin;
 	x = args->x;
-	max = args->max;
 	bpp = args->bpp;
 	size_line = args->size_line;
 	//printf("x : %i\n", x);
 	//printf("max : %i\n", max);
-	s_scene *cpy;
 	angle = new_vector(((s_camera *)scene->cameras->object)->rotation->x/1 * 180, ((s_camera *)scene->cameras->object)->rotation->y/1 * 180, ((s_camera *)scene->cameras->object)->rotation->z/1 * 180);
-	cpy = cpy_scene(scene);
-	while (x <= max)
-	{
 		//printf("ok\n");
-			y = -(scene->viewport->height/2);
-			while (y <= scene->viewport->height/2)
-			{
-					//printf("y : %d\n", y);
-					direction = new_vector(x * (scene->viewplane->width / scene->viewport->width), y * (scene->viewplane->height / scene->viewport->height), 1);
-					rot(direction, angle);
-					//printf("direction (%f, %f, %f)\n", direction->x, direction->y, direction->z);
-					color = trace_ray(*direction, cpy);
-					putimage(data, bpp, size_line, (int)((x + (scene->viewport->width/2))), (int)((-(y - (scene->viewport->height/2)))), color);
-					free(direction);
-					((s_camera *)cpy->cameras->object)->origin = obs;
-					cpy->depth = 3;
-					y++;
-					//printf("%i : y %i\n", i, y);
-			}
-		x++;
-		//printf("%i : x %i\n", i, x);
+	y = -(scene->viewport->height/2);
+	while (y <= scene->viewport->height/2)
+	{
+		//printf("y : %d\n", y);
+		direction = new_vector(x * (scene->viewplane->width / scene->viewport->width), y * (scene->viewplane->height / scene->viewport->height), 1);
+		rot(direction, angle);
+		//printf("direction (%f, %f, %f)\n", direction->x, direction->y, direction->z);
+		color = trace_ray(*direction, scene);
+		putimage(data, bpp, size_line, (int)((x + (scene->viewport->width/2))), (int)((-(y - (scene->viewport->height/2)))), color);
+		free(direction);
+		((s_camera *)scene->cameras->object)->origin = obs;
+		scene->depth = 3;
+		y++;
+		//printf("%i : y %i\n", i, y);
 	}
-	free(cpy);
+	free(scene);
 	//printf("end\n %i\n",i);
 	return (NULL);
 }
 
-
-int		main(int argc, char *argv[])
+int		create_image(s_mlx	*my_mlx)
 {
-	void			*mlx_ptr;
-	void			*win_ptr;
-	void			*mlx_img;
-	int				fd;
-	s_scene			*scene;
-	char			*data;
-	int				bpp;
-	int				size_line;
-	int				endian;
-	s_vector		*obs;
 	pthread_t		*threads;
 	int				x;
-	//int				**all_pipes;
+	s_args *args;
+	s_scene *cpy;
+	int i;
+	int nb_fork;
 	struct timeval start, stop;
 	double secs = 0;
 
-	(void)argc;
-	fd = open(argv[1], O_RDONLY);
-	scene = parsing(fd);
-		gettimeofday(&start, NULL);
-	if (scene->viewport->height < scene->viewport->width)
-		scene->viewplane = new_canvas(scene->viewport->width/scene->viewport->height, 1, 1);
-	else
-		scene->viewplane = new_canvas(1, scene->viewport->height/scene->viewport->width, 1);
-	mlx_ptr = mlx_init();
-	mlx_img = mlx_new_image(mlx_ptr, scene->viewport->width, scene->viewport->height);
-	win_ptr = mlx_new_window(mlx_ptr, scene->viewport->width, scene->viewport->height, "miniRT");
-	data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
-	int i;
-	int nb_fork;
-	nb_fork = 20;
+	gettimeofday(&start, NULL);
+	nb_fork = my_mlx->scene->viewport->width;
 	threads = malloc(sizeof(pthread_t) * nb_fork);
 	if (pthread_mutex_init(&lock, NULL) != 0)
-    {
-        printf("\n mutex init failed\n");
-        return 1;
-    }
-			obs = ((s_camera *)scene->cameras->object)->origin;
+	{
+		printf("\n mutex init failed\n");
+		return 1;
+	}
 	i = 0;
-	s_args *args;
 	while (i < nb_fork)
 	{
-		x = -(scene->viewport->width/2) + 1 + i * (scene->viewport->width) / nb_fork;
-		int max;
-		max = x + ((scene->viewport->width) / nb_fork) - 1;
+		cpy = cpy_scene(my_mlx->scene);
+		x = -(my_mlx->scene->viewport->width/2) + 1 + i * (my_mlx->scene->viewport->width) / nb_fork;
 		args = malloc(sizeof(s_args));
-		args->data = data;
-		args->scene = scene;
-		args->obs = obs;
+		args->data = my_mlx->data;
+		args->scene = cpy;
 		args->x = x;
-		args->max = max;
-		args->bpp = bpp;
-		args->size_line = size_line;
+		args->bpp = my_mlx->bpp;
+		args->size_line = my_mlx->size_line;
 		if (pthread_create(&threads[i], NULL, &thread_function, args)) {
 			perror("pthread_create");
 			return EXIT_FAILURE;
@@ -161,7 +125,7 @@ int		main(int argc, char *argv[])
 		if (pthread_join(threads[i], NULL)) {
 			perror("pthread_join");
 			return EXIT_FAILURE;
-    	}
+		}
 		i++;
 	}
 	pthread_mutex_destroy(&lock);
@@ -169,16 +133,56 @@ int		main(int argc, char *argv[])
 	i = nb_fork;
 	while (--i)
 		wait(NULL);
+	mlx_put_image_to_window(my_mlx->mlx_ptr, my_mlx->win_ptr, my_mlx->mlx_img, 0, 0);
+	gettimeofday(&stop, NULL);
+	secs = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
+printf("time taken %fs\n",secs);
+	return (0);
+}
+
+int		handle_key(int keycode, s_mlx *my_mlx)
+{
+	if (keycode == 12)
+	{
+		my_mlx->scene->cameras = (s_lstobjects *)my_mlx->scene->cameras->prev;
+		create_image(my_mlx);
+	}
+	if (keycode == 14)
+	{
+		my_mlx->scene->cameras = (s_lstobjects *)my_mlx->scene->cameras->next;
+		create_image(my_mlx);
+	}
+	printf("keycode %d\n", keycode);
+	return (0);
+}
+
+int		main(int argc, char *argv[])
+{
+	s_mlx			*my_mlx;
+	int				fd;
+	s_scene			*scene;
+	//int				**all_pipes;
+
+	(void)argc;
+	my_mlx = malloc(sizeof(s_mlx));
+	fd = open(argv[1], O_RDONLY);
+	scene = parsing(fd);
+	if (scene->viewport->height < scene->viewport->width)
+		scene->viewplane = new_canvas(scene->viewport->width/scene->viewport->height, 1, 1);
+	else
+		scene->viewplane = new_canvas(1, scene->viewport->height/scene->viewport->width, 1);
+	my_mlx->mlx_ptr = mlx_init();
+	my_mlx->scene = scene;
+	my_mlx->mlx_img = mlx_new_image(my_mlx->mlx_ptr, my_mlx->scene->viewport->width, my_mlx->scene->viewport->height);
+		my_mlx->data = mlx_get_data_addr(my_mlx->mlx_img, &my_mlx->bpp, &my_mlx->size_line, &my_mlx->endian);
+	my_mlx->win_ptr = mlx_new_window(my_mlx->mlx_ptr, my_mlx->scene->viewport->width, my_mlx->scene->viewport->height, "miniRT");
 	//data = mlx_get_data_addr(mlx_img, &bpp, &size_line, &endian);
 	//printf("data %s\n", data);
 	//mlx_img = mlx_new_image(mlx_ptr, viewport->width, viewport->height);
 	//mlx_ptr2 = mlx_init();
-	mlx_put_image_to_window(mlx_ptr, win_ptr, mlx_img, 0, 0);
-
-	gettimeofday(&stop, NULL);
-	secs = (double)(stop.tv_usec - start.tv_usec) / 1000000 + (double)(stop.tv_sec - start.tv_sec);
-printf("time taken %fs\n",secs);
-	mlx_loop(mlx_ptr);
+	create_image(my_mlx);
+	mlx_hook(my_mlx->win_ptr, 2, 1L << 0, handle_key, my_mlx);
+	mlx_loop(my_mlx->mlx_ptr);
 }
 
 /**

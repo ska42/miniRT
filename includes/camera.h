@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 03:56:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/16 05:02:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/21 21:41:16 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ typedef struct 	t_camera
 }				s_camera;
 
 s_camera		*new_camera(s_vector *pos, s_vector *rota, int fov);
+s_camera		*cpy_camera(s_camera *cam);
 
 #endif

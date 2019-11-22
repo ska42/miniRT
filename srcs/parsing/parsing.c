@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:05:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 08:08:29 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 01:51:55 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int			choice_parsing(s_scene **scene, char *line)
 s_scene		*parsing(int fd)
 {
 	int		ret;
+	int		nb_cam;
 	char	*line;
 	s_scene	*scene;
+	s_lstobjects *cameras;
 
 	scene = new_empty_scene(BACKGROUND_COLOR);
 	while ((ret = get_next_line(fd, &line)) > 0)
@@ -62,6 +64,17 @@ s_scene		*parsing(int fd)
 		free(line);
 		return (NULL);
 	}
+	nb_cam = 1;
+	cameras = scene->cameras;
+	while (cameras->next)
+	{
+		((s_lstobjects *)cameras->next)->prev = cameras;
+		nb_cam++;
+		cameras = cameras->next;
+	}
+	cameras->next = scene->cameras;
+	scene->cameras->prev = cameras;
+	scene->nb_camera = nb_cam;
 	free(line);
 	return (scene);
 }

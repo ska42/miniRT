@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 02:37:46 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/20 04:26:07 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 01:39:39 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,13 @@ s_lightning_vectors *l_vectors, int color)
 		temp2 = multiply_vectors(
 ((s_sphere *)closest_object->object)->reflective, *reflect_color);
 	else if (closest_object->type == TYPE_PLAN)
-		temp2 = multiply_vectors(
-			((s_plan *)closest_object->object)->reflective, *reflect_color);
+		temp2 = multiply_vectors(((s_plan *)closest_object->object)->reflective, *reflect_color);
 	else if (closest_object->type == TYPE_SQUARE)
-		temp2 = multiply_vectors(
-			((s_square *)closest_object->object)->reflective, *reflect_color);
+		temp2 = multiply_vectors(((s_square *)closest_object->object)->reflective, *reflect_color);
 	else if (closest_object->type == TYPE_TRIANGLE)
-		temp2 = multiply_vectors(
-			((s_triangle *)closest_object->object)->reflective, *reflect_color);
+		temp2 = multiply_vectors(((s_triangle *)closest_object->object)->reflective, *reflect_color);
 	else if (closest_object->type == TYPE_CYLINDER)
-		temp2 = multiply_vectors(
-			((s_cylinder *)closest_object->object)->reflective, *reflect_color);
+		temp2 = multiply_vectors(((s_cylinder *)closest_object->object)->reflective, *reflect_color);
 	free(reflect_color);
 	reflect_color = add_vectors(*temp, *temp2);
 	free(temp);

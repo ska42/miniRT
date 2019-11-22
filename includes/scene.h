@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:37:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/19 22:38:58 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 01:11:28 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct 	t_scene
 	s_lstobjects	*objects;
 	s_lstobjects	*lights;
 	float			total_intensity;
+	int				nb_camera;
 	int				background_color;
 	int				depth;
 	float			t_min;
