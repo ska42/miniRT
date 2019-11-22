@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 00:03:27 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 03:29:46 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,9 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 				denom = -(product_vectors(*normal, *((s_triangle *)object)->a));
 				k[0] = product_vectors(*light->vector, *normal) + denom;
 				k[1] = product_vectors(*temp2, *normal);
+				free(normal);
+				free(u);
+				free(v);
 			}
 			else if (objects->type == TYPE_SQUARE)
 			{
@@ -218,6 +221,7 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 {
 	float		intensity;
 	float		ambient_intensity;
+	int			ret_color;
 	s_light		*light;
 	void		*object;
 	s_vector	*color;
@@ -274,6 +278,7 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 			color = new_vector(actual_color->x + ((new_color->x + obj_color->x) * ambient_intensity),
 		actual_color->y + ((new_color->y + obj_color->y) * ambient_intensity),
 		actual_color->z + ((new_color->z + obj_color->z) * ambient_intensity));
+			free(ambient_color);
 			free(new_color);
 			rearrange_rgb(color);
 			actual_color = new_vector(color->x, color->y, color->z);
@@ -300,5 +305,7 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 		lights = lights->next;
 	}
 	free(obj_color);
-	return (rgb_to_color(actual_color));
+	ret_color = rgb_to_color(actual_color);
+	free(actual_color);
+	return (ret_color);
 }

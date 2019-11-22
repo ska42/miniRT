@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 03:06:27 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 03:19:24 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*thread_function(void *arguments)
 		y++;
 		//printf("%i : y %i\n", i, y);
 	}
-	free(scene);
+	free_cpy_scene(scene);
 	//printf("end\n %i\n",i);
 	return (NULL);
 }

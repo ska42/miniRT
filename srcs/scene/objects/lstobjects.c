@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:27:21 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 01:06:50 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 04:36:12 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int					add_back(s_lstobjects **lst, int type, void *object)
 
 s_lstobjects		*cpy_lstobjects(s_lstobjects *obj)
 {
+
 	return (new_obj(obj->type, obj->object));
 }

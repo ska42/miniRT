@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:11:17 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/21 23:23:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 05:47:16 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,36 @@ s_vector *center)
 	sphere->color = color;
 	sphere->center = center;
 	sphere->shiny = shiny;
+	sphere->calcul_c = 0;
+	sphere->difference = NULL;
 	sphere->reflective = 0.5;
+	sphere->prev_origin = NULL;
 	return (sphere);
 }
 
-s_sphere		*new_default_sphere(float radius, int color)
+void			free_sphere(s_sphere *sphere)
 {
-	return (new_sphere(radius, color, -1, new_vector(0, 0, 0)));
+	free(sphere->center);
+	if (sphere->difference)
+		free(sphere->difference);
+	if (sphere->prev_origin)
+		free(sphere->prev_origin);
+	free(sphere);
+
 }
 
-void			set_reflective(s_sphere *sphere, float reflective)
+s_sphere		*cpy_sphere(s_sphere *sphere)
 {
-	sphere->reflective = reflective;
-}
+	s_sphere	*new;
 
-void 			set_shiny(s_sphere *sphere, float shiny)
-{
-	sphere->shiny = shiny;
+	new = malloc(sizeof(s_sphere));
+	new->center = cpy_vector(sphere->center);
+	new->radius = sphere->radius;
+	new->color = sphere->color;
+	new->shiny = sphere->shiny;
+	new->reflective = sphere->reflective;
+	new->calcul_c = 0;
+	new->difference = NULL;
+	new->prev_origin = NULL;
+	return (new);
 }

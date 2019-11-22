@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:02:22 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/14 20:47:09 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/22 05:57:46 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int				rgb_to_color(s_vector *rgb);
 void 			rearrange_rgb(s_vector *color);
 
 /** VECTOR **/
-void			set_vector(s_vector *vector, float x, float y, float z);
 s_vector		*new_vector(float x, float y, float z);
+s_vector		*cpy_vector(s_vector *vector);
+int				is_equal(s_vector *a, s_vector *b);
 
 #endif
