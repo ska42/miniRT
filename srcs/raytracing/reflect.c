@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 02:37:46 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 01:39:39 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:55:55 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,10 @@ s_lightning_vectors *l_vectors, int color)
 	scene->depth--;
 	color = trace_ray(*temp, scene);
 	free(temp);
-	if (closest_object->type == TYPE_SPHERE)
-		temp = multiply_vectors(1 - ((s_sphere *)closest_object)->reflective,
-*temp2);
-	else if (closest_object->type == TYPE_PLAN)
-		temp = multiply_vectors(1 - ((s_plan *)closest_object)->reflective,
-*temp2);
-	else if (closest_object->type == TYPE_SQUARE)
-		temp = multiply_vectors(1 - ((s_square *)closest_object)->reflective,
-	*temp2);
-	else if (closest_object->type == TYPE_TRIANGLE)
-		temp = multiply_vectors(1 - ((s_triangle *)closest_object)->reflective,
-	*temp2);
-	else if (closest_object->type == TYPE_CYLINDER)
-		temp = multiply_vectors(1 - ((s_triangle *)closest_object)->reflective,
-	*temp2);
+	temp = multiply_vectors(1 - closest_object->reflective, *temp2);
 	free(temp2);
 	reflect_color = color_to_rgb(color);
-	if (closest_object->type == TYPE_SPHERE)
-		temp2 = multiply_vectors(
-((s_sphere *)closest_object->object)->reflective, *reflect_color);
-	else if (closest_object->type == TYPE_PLAN)
-		temp2 = multiply_vectors(((s_plan *)closest_object->object)->reflective, *reflect_color);
-	else if (closest_object->type == TYPE_SQUARE)
-		temp2 = multiply_vectors(((s_square *)closest_object->object)->reflective, *reflect_color);
-	else if (closest_object->type == TYPE_TRIANGLE)
-		temp2 = multiply_vectors(((s_triangle *)closest_object->object)->reflective, *reflect_color);
-	else if (closest_object->type == TYPE_CYLINDER)
-		temp2 = multiply_vectors(((s_cylinder *)closest_object->object)->reflective, *reflect_color);
+	temp2 = multiply_vectors(closest_object->reflective, *reflect_color);
 	free(reflect_color);
 	reflect_color = add_vectors(*temp, *temp2);
 	free(temp);

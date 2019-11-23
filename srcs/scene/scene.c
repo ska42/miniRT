@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:43:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 04:42:01 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:52:06 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ s_scene		*cpy_scene(s_scene *scene)
 	i = 0;
 	while (i < scene->nb_camera)
 	{
-		add_back(&(new->cameras), TYPE_CAMERA, cpy_camera(((s_camera *)cameras->object)));
+		add_back(&(new->cameras), TYPE_CAMERA, cpy_camera(((s_camera *)cameras->object)), -1);
 		cameras = cameras->next;
 		i++;
 	}
@@ -82,15 +82,15 @@ s_scene		*cpy_scene(s_scene *scene)
 	while (objects)
 	{
 		if (objects->type == TYPE_SPHERE)
-			add_back(&(new->objects), objects->type, cpy_sphere(objects->object));
+			add_back(&(new->objects), objects->type, cpy_sphere(objects->object), objects->reflective);
 		if (objects->type == TYPE_PLAN)
-			add_back(&(new->objects), objects->type, cpy_plan(objects->object));
+			add_back(&(new->objects), objects->type, cpy_plan(objects->object), objects->reflective);
 		if (objects->type == TYPE_SQUARE)
-			add_back(&(new->objects), objects->type, cpy_square(objects->object));
+			add_back(&(new->objects), objects->type, cpy_square(objects->object), objects->reflective);
 		if (objects->type == TYPE_TRIANGLE)
-			add_back(&(new->objects), objects->type, cpy_triangle(objects->object));
+			add_back(&(new->objects), objects->type, cpy_triangle(objects->object), objects->reflective);
 		if (objects->type == TYPE_CYLINDER)
-			add_back(&(new->objects), objects->type, cpy_cylinder(objects->object));
+			add_back(&(new->objects), objects->type, cpy_cylinder(objects->object), objects->reflective);
 		objects = objects->next;
 	}
 	new->lights = scene->lights;

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:11:17 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 05:47:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:45:50 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ s_vector *center)
 	sphere->shiny = shiny;
 	sphere->calcul_c = 0;
 	sphere->difference = NULL;
-	sphere->reflective = 0.5;
 	sphere->prev_origin = NULL;
 	return (sphere);
 }
@@ -49,7 +48,6 @@ s_sphere		*cpy_sphere(s_sphere *sphere)
 	new->radius = sphere->radius;
 	new->color = sphere->color;
 	new->shiny = sphere->shiny;
-	new->reflective = sphere->reflective;
 	new->calcul_c = 0;
 	new->difference = NULL;
 	new->prev_origin = NULL;

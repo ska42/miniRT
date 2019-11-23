@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 23:59:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 20:58:36 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:45:28 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		parsing_sphere(s_scene **scene, char *l)
 		return (free_and_return_minus_one(center));
 	printf("sphere_working");
 	return (!l[i[0]] && (!(add_back(&(*scene)->objects, TYPE_SPHERE, new_sphere(
-radius, color, 10, center))) ? 0 : free_and_return_minus_one(center)));
+radius, color, 10, center), 0.5)) ? 0 : free_and_return_minus_one(center)));
 	return (0);
 }
 
@@ -70,7 +70,7 @@ int		parsing_plan(s_scene **scene, char *line)
 		return (multiple_free_return(vectors, 2));
 	printf("plan_working");
 	return ((!(add_back(&(*scene)->objects, TYPE_PLAN, new_plan(
-vectors[0], vectors[1], color))) ? 0 : multiple_free_return(vectors, 2)));
+vectors[0], vectors[1], color), 0.5)) ? 0 : multiple_free_return(vectors, 2)));
 }
 
 int		parsing_square(s_scene **scene, char *l)
@@ -100,7 +100,7 @@ int		parsing_square(s_scene **scene, char *l)
 		return (multiple_free_return(vectors, 2));
 	printf("square_working");
 	return ((!(add_back(&(*scene)->objects, TYPE_SQUARE, new_square(
-vectors[0], vectors[1], size, i[3]))) ? 0 : multiple_free_return(vectors, 2)));
+vectors[0], vectors[1], size, i[3]), -1)) ? 0 : multiple_free_return(vectors, 2)));
 }
 
 int		parsing_triangle(s_scene **scene, char *l)
@@ -126,7 +126,7 @@ int		parsing_triangle(s_scene **scene, char *l)
 		return (multiple_free_return(vec, 3));
 	printf("triangle_working");
 	return ((!(add_back(&(*scene)->objects, TYPE_TRIANGLE, new_triangle(
-vec[0], vec[1], vec[2], i[3]))) ? 0 : multiple_free_return(vec, 2)));
+vec[0], vec[1], vec[2], i[3]), -1)) ? 0 : multiple_free_return(vec, 2)));
 }
 
 int		parsing_cylinder(s_scene **scene, char *l)
@@ -156,5 +156,5 @@ int		parsing_cylinder(s_scene **scene, char *l)
 		return (multiple_free_return(vec, 2));
 	printf("cylinder_working");
 	return ((!(add_back(&(*scene)->objects, TYPE_CYLINDER, new_cylinder(
-vec, j[0], j[1], i[3]))) ? 0 : multiple_free_return(vec, 2)));
+vec, j[0], j[1], i[3]), -1)) ? 0 : multiple_free_return(vec, 2)));
 }

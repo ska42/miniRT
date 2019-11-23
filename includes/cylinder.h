@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 18:58:19 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 06:19:21 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:43:37 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ typedef struct	t_cylinder
 	float		height;
 	int			color;
 	float		shiny;
-	float		reflective;
-
 	s_vector	*difference;
 	float		calcul_a;
 	float		calcul_c;

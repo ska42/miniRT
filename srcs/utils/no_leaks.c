@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 08:03:15 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/17 01:03:13 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:38:11 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,13 @@ int		multiple_free_return(s_vector *ptr[], int size)
 	while (size--)
 		free(ptr[size]);
 	return (-1);
+}
+
+int		free_l_vectors(s_lightning_vectors *l_vectors)
+{
+	free(l_vectors->point);
+	free(l_vectors->normal);
+	free(l_vectors->view);
+	free(l_vectors);
+	return (0);
 }

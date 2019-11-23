@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:09:23 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 06:14:34 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:44:01 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct 	t_sphere
 	int			color;
 	float		shiny;
 	float		calcul_c;
-	float		reflective;
 	s_vector	*difference;
 	s_vector	*center;
 	s_vector	*prev_origin;

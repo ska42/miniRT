@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 00:03:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/19 22:43:01 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:44:58 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		parsing_ambient_light(s_scene **scene, char *line)
 	printf("ambient_light_working");
 	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
-new_default_light(TYPE_AMBIENT, intensity, color)))) ? 0 : -1);
+new_default_light(TYPE_AMBIENT, intensity, color), -1))) ? 0 : -1);
 }
 
 int		parsing_point_light(s_scene **scene, char *l)
@@ -99,7 +99,7 @@ int		parsing_point_light(s_scene **scene, char *l)
 	printf("point_light_working");
 	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
-new_point_light(pos, intensity, i[3])))) ? 0 : free_and_return_minus_one(pos));
+new_point_light(pos, intensity, i[3]), -1))) ? 0 : free_and_return_minus_one(pos));
 }
 
 int		parsing_directional_light(s_scene **scene, char *line)
@@ -135,5 +135,5 @@ int		parsing_camera(s_scene **scene, char *line)
 		return (multiple_free_return(vectors, 2));
 	printf("camera_working");
 	return ((!(add_back(&(*scene)->cameras, TYPE_CAMERA, new_camera(
-vectors[0], vectors[1], fov))) ? 0 : multiple_free_return(vectors, 2)));
+vectors[0], vectors[1], fov), -1)) ? 0 : multiple_free_return(vectors, 2)));
 }

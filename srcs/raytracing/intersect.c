@@ -6,11 +6,29 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 06:27:55 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:38:50 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+float		intersect_global(s_vector origin, s_vector direction, s_lstobjects *objects)
+{
+	float	t;
+	
+	t = 0;
+	if (objects->type == TYPE_SPHERE)
+		t = intersect_sphere(origin, direction, objects->object);
+	else if (objects->type == TYPE_PLAN)
+		t = intersect_plan(origin, direction, objects->object);
+	else if (objects->type == TYPE_SQUARE)
+		t = intersect_square(origin, direction, objects->object);
+	else if (objects->type == TYPE_TRIANGLE)
+		t = intersect_triangle(origin, direction, objects->object);
+	else if (objects->type == TYPE_CYLINDER)
+		t = intersect_cylinder(origin, direction, objects->object);
+	return (t);
+}
 
 float		intersect_sphere(s_vector origin,
 s_vector direction, s_sphere *object)
@@ -19,8 +37,12 @@ s_vector direction, s_sphere *object)
 	float		k[2];
 	float		t[2];
 
-	if (!object->difference || !is_equal(object->prev_origin, &origin))
+	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{
+		if (object->difference)
+			free(object->difference);
+		if (object->prev_origin)
+			free(object->prev_origin);
 		object->difference = subtract_vectors(origin, *object->center);
 		object->calcul_c = product_vectors(*object->difference, *object->difference) - (object->radius * object->radius);
 		object->prev_origin = cpy_vector(&origin);
@@ -44,8 +66,10 @@ float		intersect_plan(s_vector origin, s_vector direction, s_plan *object)
 	float t;
 
 	t = 0;
-	if (!object->calcul_a || !is_equal(object->prev_origin, &origin))
+	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{
+		if (object->prev_origin)
+			free(object->prev_origin);
 		denom = -(product_vectors(*object->normal, *object->point));
 		object->calcul_a = product_vectors(origin, *object->normal) + denom;
 		object->prev_origin = cpy_vector(&origin);
@@ -67,8 +91,10 @@ float		intersect_square(s_vector origin, s_vector direction, s_square *object)
 	float beta;
 
 	t = 0;
-	if (!object->calcul_a || !is_equal(object->prev_origin, &origin))
+	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{
+		if (object->prev_origin)
+			free(object->prev_origin);
 		denom = -(product_vectors(*object->normal, *object->center));
 		object->calcul_a = product_vectors(origin, *object->normal) + denom;
 		object->prev_origin = cpy_vector(&origin);
@@ -103,8 +129,10 @@ float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *objec
 	float r[2];
 
 	t = 0;
-	if (!object->calcul_a || !is_equal(object->prev_origin, &origin))
+	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{
+		if (object->prev_origin)
+			free(object->prev_origin);
 		denom = -(product_vectors(*object->normal, *object->a));
 		object->calcul_a = product_vectors(origin, *object->normal) + denom;
 		object->prev_origin = cpy_vector(&origin);
@@ -140,7 +168,6 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	s_vector *point;
 	float t[2];
 	float ret;
-	float size;
 	float denom;
 	float l[2];
 	float tt;
@@ -148,8 +175,12 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	s_vector *point_tmp;
 	s_vector *temp2;
 
-	if (!object->difference || !is_equal(object->prev_origin, &origin))
+	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{
+		if (object->difference)
+			free(object->difference);
+		if (object->prev_origin)
+			free(object->prev_origin);
 		object->difference = subtract_vectors(origin, *object->center);
 		object->calcul_c = product_vectors(*object->difference, *object->difference);
 		object->calcul_d = product_vectors(*object->orientation, *object->difference);
@@ -169,9 +200,8 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 		ret = t[0];
 	else
 		ret = t[1];
-	if (ret == 0)
+	if (ret <= 0)
 		return (0);
-	size = distance_points(*object->point1, *object->point2);
 	temp = multiply_vectors(ret, direction);
 	point = add_vectors(origin, *temp);
 	free(temp);
@@ -196,7 +226,6 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 	d[3] = distance_points(*point, *point_tmp);
 	free(point_tmp);
 	free(point);
-
 	tt = 0;
 	denom = -(product_vectors(*object->orientation, *object->point1));
 	l[0] = product_vectors(origin, *object->orientation) + denom;
@@ -211,7 +240,7 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 		d[1] = distance_points(*point, origin);
 		if (d[0] < object->diameter / 2)
 		{
-			if (!(d[2] > size || d[3] > size))
+			if (!(d[2] > object->height || d[3] > object->height))
 				return (ret);
 			free(point);
 			return (tt);
@@ -232,14 +261,14 @@ float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *objec
 		d[1] = distance_points(*point, origin);
 		if (d[0] < object->diameter / 2)
 		{
-			if (!(d[2] > size || d[3] > size))
+			if (!(d[2] > object->height || d[3] > object->height))
 				return (ret);
 			free(point);
 			return (tt);
 		}
 		free(point);
 	}
-	if ((d[2] > size || d[3] > size))
+	if ((d[2] > object->height || d[3] > object->height))
 		return (0);
 	return (ret);
 }

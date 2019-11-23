@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 03:29:46 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:58:24 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 	float			intensity;
 	float			n_dot_l;
 	float			length_v;
-	float			test;
 	s_vector		*vec_l;
 	s_vector		*temp;
 	s_lstobjects	*shadow_obj;
@@ -71,7 +70,7 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 	length_v = length_vectors(*l_vectors->view);
 	vec_l = type_light(l_vectors, light, scene);
 	direction = *multiply_vectors(-1, *l_vectors->view);
-	test = closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
+	closest_intersection(*l_vectors->point, *vec_l, scene, &shadow_obj);
 	if (!shadow_obj)
 	{
 		free(l_vectors->normal);
@@ -231,36 +230,30 @@ s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 	s_vector	*actual_color;
 	s_vector	*ambient_color;
 
-	actual_color = new_vector(0, 0, 0);
 	obj_color = NULL;
 	object = objects->object;
 	if (objects->type == TYPE_SPHERE)
 	{
-		free(actual_color);
 		l_vectors->shiny = ((s_sphere *)object)->shiny;
 		obj_color = color_to_rgb(((s_sphere *)object)->color);
 	}
 	else if (objects->type == TYPE_PLAN)
 	{
-		free(actual_color);
 		l_vectors->shiny = ((s_plan *)object)->shiny;
 		obj_color = color_to_rgb(((s_plan *)object)->color);
 	}
 	else if (objects->type == TYPE_SQUARE)
 	{
-		free(actual_color);
 		l_vectors->shiny = ((s_square *)object)->shiny;
 		obj_color = color_to_rgb(((s_square *)object)->color);
 	}
 	else if (objects->type == TYPE_TRIANGLE)
 	{
-		free(actual_color);
 		l_vectors->shiny = ((s_triangle *)object)->shiny;
 		obj_color = color_to_rgb(((s_triangle *)object)->color);
 	}
 	else if (objects->type == TYPE_CYLINDER)
 	{
-		free(actual_color);
 		l_vectors->shiny = ((s_cylinder *)object)->shiny;
 		obj_color = color_to_rgb(((s_cylinder *)object)->color);
 	}

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:20:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 05:52:02 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:43:44 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct 	t_plan
 	s_vector	*point;
 	s_vector	*normal;
 	float		shiny;
-	float		reflective;
 	int			color;
 	float		calcul_a;
 	s_vector	*prev_origin;

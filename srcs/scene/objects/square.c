@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 05:10:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 05:58:06 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:45:59 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ s_square	*new_square(s_vector *center, s_vector *orientation, float size, int co
 	new->ac = subtract_vectors(*new->c, *new->a);
 	new->normal = cross(*new->ab, *new->ac);
 	new->shiny = -1;
-	new->reflective = -1;
 	new->calcul_a = 0;
 	new->prev_origin = NULL;
 	return (new);
@@ -79,7 +78,6 @@ s_square	*cpy_square(s_square *square)
 	new->size = square->size;
 	new->color = square->color;
 	new->shiny = square->shiny;
-	new->reflective = square->reflective;
 	new->calcul_a = 0;
 	new->prev_origin = NULL;
 	return (new);

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 06:27:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:44:33 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, int
 	new = malloc(sizeof(s_cylinder));
 	new->center = vectors[0];
 	new->orientation = vectors[1];
-
-
 	total = fabs(new->orientation->x) + fabs(new->orientation->y) + fabs(new->orientation->z);
 	temp = new_vector(height/2 * (new->orientation->x / total), height/2 * (new->orientation->y / total), height/2 * (new->orientation->z / total));
 	new->point1 = add_vectors(*new->center, *temp);
@@ -31,11 +29,9 @@ s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, int
 	new->point2 = add_vectors(*new->center, *temp);
 	free(temp);
 	new->diameter = diameter;
-	new->height = height;
+	new->height = distance_points(*new->point1, *new->point2);
 	new->color = color;
 	new->shiny = -1;
-	new->reflective = -1;
-
 	new->difference = NULL;
 	new->calcul_a = 1.0 / product_vectors(*new->orientation, *new->orientation);
 	new->calcul_c = 0;
@@ -70,8 +66,6 @@ s_cylinder	*cpy_cylinder(s_cylinder *cylinder)
 	new->height = cylinder->height;
 	new->color = cylinder->color;
 	new->shiny = cylinder->shiny;
-	new->reflective = cylinder->reflective;
-
 	new->difference = NULL;
 	new->calcul_a = cylinder->calcul_a;
 	new->calcul_c = 0;

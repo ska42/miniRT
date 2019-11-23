@@ -6,17 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/22 03:21:56 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 22:46:44 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-int			calculate_new_color(s_lstobjects *objects, s_lstobjects *lights,
-s_lightning_vectors *l_vectors, s_scene *scene)
-{
-	return (compute_lightning(l_vectors, lights, scene, objects));
-}
 
 int			setup_l_vectors_and_calculate(s_lstobjects *closest_object,
 s_vector direction, float closest_t, s_scene *scene)
@@ -33,24 +27,10 @@ s_vector direction, float closest_t, s_scene *scene)
 	free(temp);
 	l_vectors->normal = new_vector(0, 0, 0);
 	l_vectors->view = multiply_vectors(-1, direction);
-	final_color = calculate_new_color(closest_object, scene->lights, l_vectors, scene);
-	if (scene->depth > 0)
-	{
-		if (closest_object->type == TYPE_SPHERE && ((s_sphere *)closest_object->object)->reflective > 0)
-			final_color = color_with_reflect(closest_object, scene, l_vectors, final_color);
-		else if (closest_object->type == TYPE_PLAN && ((s_plan *)closest_object->object)->reflective > 0)
-			final_color = color_with_reflect(closest_object, scene, l_vectors, final_color);
-		else if (closest_object->type == TYPE_SQUARE && ((s_square *)closest_object->object)->reflective > 0)
-			final_color = color_with_reflect(closest_object, scene, l_vectors, final_color);
-		else if (closest_object->type == TYPE_TRIANGLE && ((s_triangle *)closest_object->object)->reflective > 0)
-			final_color = color_with_reflect(closest_object, scene, l_vectors, final_color);
-		else if (closest_object->type == TYPE_CYLINDER && ((s_cylinder *)closest_object->object)->reflective > 0)
-			final_color = color_with_reflect(closest_object, scene, l_vectors, final_color);
-	}
-	free(l_vectors->point);
-	free(l_vectors->normal);
-	free(l_vectors->view);
-	free(l_vectors);
+	final_color = compute_lightning(l_vectors, scene->lights, scene, closest_object);
+	if (scene->depth > 0 && closest_object->reflective > 0)
+		final_color = color_with_reflect(closest_object, scene, l_vectors, final_color);
+	free_l_vectors(l_vectors);
 	return (final_color);
 }
 
@@ -66,16 +46,7 @@ s_scene *scene, s_lstobjects **closest_object)
 	objects = scene->objects;
 	while (objects)
 	{
-		if (objects->type == TYPE_SPHERE)
-			t_temp = intersect_sphere(origin, direction, objects->object);
-		else if (objects->type == TYPE_PLAN)
-			t_temp = intersect_plan(origin, direction, objects->object);
-		else if (objects->type == TYPE_SQUARE)
-			t_temp = intersect_square(origin, direction, objects->object);
-		else if (objects->type == TYPE_TRIANGLE)
-			t_temp = intersect_triangle(origin, direction, objects->object);
-		else if (objects->type == TYPE_CYLINDER)
-			t_temp = intersect_cylinder(origin, direction, objects->object);
+		t_temp = intersect_global(origin, direction, objects);
 		if (t_temp > scene->t_min && (t_temp < scene->t_max || scene->t_max == -1) && (t_temp < closest_t || closest_t == -1))
 		{
 			closest_t = t_temp;
