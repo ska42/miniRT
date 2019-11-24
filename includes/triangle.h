@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 04:05:15 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:44:14 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 23:51:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	t_triangle
 	s_vector	*u;
 	s_vector	*v;
 	s_vector	*normal;
-	int			color;
+	s_vector	*color;
 	float		shiny;
 	float		calcul_a;
 	float		dot_uu;
@@ -34,7 +34,7 @@ typedef struct	t_triangle
 	s_vector	*prev_origin;
 }				s_triangle;
 
-s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, int color);
+s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, s_vector *color);
 void		free_triangle(s_triangle *triangle);
 s_triangle	*cpy_triangle(s_triangle *triangle);
 

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:05:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:50:18 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:29:14 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,32 @@ s_scene		*parsing(int fd)
 	scene = new_empty_scene(BACKGROUND_COLOR);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		if (choice_parsing(&scene, line) < 0)
+		if ((ret = choice_parsing(&scene, line)) < 0)
 		{
 			free(line);
 			return (NULL);
 		}
-		printf("\n");
 		free(line);
 	}
-	if (ret < 0 || choice_parsing(&scene, line) < 0)
+	if (ret < 0 || (ret = choice_parsing(&scene, line)) < 0)
 	{
 		free(line);
 		return (NULL);
 	}
-	nb_cam = 1;
+	nb_cam = 0;
 	cameras = scene->cameras;
-	while (cameras->next)
+	if (cameras)
 	{
-		((s_lstobjects *)cameras->next)->prev = cameras;
-		nb_cam++;
-		cameras = cameras->next;
+		nb_cam = 1;
+		while (cameras->next)
+		{
+			((s_lstobjects *)cameras->next)->prev = cameras;
+			nb_cam++;
+			cameras = cameras->next;
+		}
+		cameras->next = scene->cameras;
+		scene->cameras->prev = cameras;
 	}
-	cameras->next = scene->cameras;
-	scene->cameras->prev = cameras;
 	scene->nb_camera = nb_cam;
-	free(line);
 	return (scene);
 }

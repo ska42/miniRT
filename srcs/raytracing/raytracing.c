@@ -6,10 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:46:44 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:21:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "miniRT.h"
 
 int			setup_l_vectors_and_calculate(s_lstobjects *closest_object,
@@ -21,7 +22,7 @@ s_vector direction, float closest_t, s_scene *scene)
 
 	final_color = 0;
 	if (!(l_vectors = malloc(sizeof(s_lightning_vectors))))
-		return (-1);
+		print_error_and_exit(-7);
 	temp = multiply_vectors(closest_t, direction);
 	l_vectors->point = add_vectors(*((s_camera *)scene->cameras->object)->origin, *(temp));
 	free(temp);

@@ -6,10 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 19:18:05 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/15 20:06:43 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:23:24 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "get_next_line.h"
 
 void	ft_substr(char buffer[])
@@ -69,7 +70,7 @@ int		copy_and_cut_buffer(int size, int length, char **line, char buffer[])
 	free((*line));
 	if (!((*line) = malloc(sizeof(char) *
 					(size + ((buffer[length] == '\n' || !length) ? 1 : 0)))))
-		return (-1);
+		print_error_and_exit(-7);
 	i = -1;
 	while (++i < size)
 		(*line)[i] = cpy[i];
@@ -90,9 +91,10 @@ int		get_next_line(int fd, char **line)
 	int				size;
 	static char		buffer[BUFFER_SIZE + 1];
 
-	if (!line || BUFFER_SIZE <= 0 || !((*line) = malloc(sizeof(char)))
-		|| (length = check_file(fd, buffer)) < 0)
+	if (!line || BUFFER_SIZE <= 0 || (length = check_file(fd, buffer)) < 0)
 		return (-1);
+	if (!((*line) = malloc(sizeof(char))))
+		print_error_and_exit(-7);;
 	if (!length && buffer[length] != '\n')
 		(*line)[0] = '\0';
 	size = 0;

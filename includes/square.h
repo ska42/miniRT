@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 04:57:24 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:44:08 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 23:51:05 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ typedef struct	t_square
 	s_vector	*ac;
 	s_vector	*normal;
 	float		size;
-	int			color;
+	s_vector	*color;
 	float		shiny;
 	float		calcul_a;
 	s_vector	*prev_origin;
 }				s_square;
 
-s_square	*new_square(s_vector *center, s_vector *orientation, float size, int color);
+s_square	*new_square(s_vector *center, s_vector *orientation, float size, s_vector *color);
 void		free_square(s_square *square);
 s_square	*cpy_square(s_square *square);
 

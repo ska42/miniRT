@@ -6,10 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:06:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:32:17 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:23:41 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "vector.h"
 
 s_vector		*new_vector(float x, float y, float z)
@@ -17,7 +18,7 @@ s_vector		*new_vector(float x, float y, float z)
 	s_vector	*vector;
 
 	if (!(vector = malloc(sizeof(s_vector))))
-		return (NULL);
+		print_error_and_exit(-7);
 	vector->x = x;
 	vector->y = y;
 	vector->z = z;

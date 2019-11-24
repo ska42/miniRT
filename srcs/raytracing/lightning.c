@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 09:29:56 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:58:24 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 00:16:38 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,89 +215,77 @@ s_light *light, s_scene *scene, s_lstobjects *objects)
 	return (intensity);
 }
 
+s_vector	*set_shiny_and_get_color(s_lightning_vectors *l_vectors, s_lstobjects *objects)
+{
+	if (objects->type == TYPE_SPHERE)
+	{
+		l_vectors->shiny = ((s_sphere *)objects->object)->shiny;
+		return (((s_sphere *)objects->object)->color);
+	}
+	else if (objects->type == TYPE_PLAN)
+	{
+		l_vectors->shiny = ((s_plan *)objects->object)->shiny;
+		return (((s_plan *)objects->object)->color);
+	}
+	else if (objects->type == TYPE_SQUARE)
+	{
+		l_vectors->shiny = ((s_square *)objects->object)->shiny;
+		return (((s_square *)objects->object)->color);
+	}
+	else if (objects->type == TYPE_TRIANGLE)
+	{
+		l_vectors->shiny = ((s_triangle *)objects->object)->shiny;
+		return (((s_triangle *)objects->object)->color);
+	}
+	else if (objects->type == TYPE_CYLINDER)
+	{
+		l_vectors->shiny = ((s_cylinder *)objects->object)->shiny;
+		return (((s_cylinder *)objects->object)->color);
+	}
+	return (NULL);
+}
+
 int		compute_lightning(s_lightning_vectors *l_vectors,
 s_lstobjects *lights, s_scene *scene, s_lstobjects *objects)
 {
 	float		intensity;
-	float		ambient_intensity;
 	int			ret_color;
-	s_light		*light;
-	void		*object;
 	s_vector	*color;
 	s_vector	*obj_color;
 	s_vector	*new_color;
-	s_vector	*light_color;
 	s_vector	*actual_color;
-	s_vector	*ambient_color;
 
-	obj_color = NULL;
-	object = objects->object;
-	if (objects->type == TYPE_SPHERE)
-	{
-		l_vectors->shiny = ((s_sphere *)object)->shiny;
-		obj_color = color_to_rgb(((s_sphere *)object)->color);
-	}
-	else if (objects->type == TYPE_PLAN)
-	{
-		l_vectors->shiny = ((s_plan *)object)->shiny;
-		obj_color = color_to_rgb(((s_plan *)object)->color);
-	}
-	else if (objects->type == TYPE_SQUARE)
-	{
-		l_vectors->shiny = ((s_square *)object)->shiny;
-		obj_color = color_to_rgb(((s_square *)object)->color);
-	}
-	else if (objects->type == TYPE_TRIANGLE)
-	{
-		l_vectors->shiny = ((s_triangle *)object)->shiny;
-		obj_color = color_to_rgb(((s_triangle *)object)->color);
-	}
-	else if (objects->type == TYPE_CYLINDER)
-	{
-		l_vectors->shiny = ((s_cylinder *)object)->shiny;
-		obj_color = color_to_rgb(((s_cylinder *)object)->color);
-	}
+	obj_color = set_shiny_and_get_color(l_vectors, objects);
 	actual_color = new_vector(0, 0, 0);
-	ambient_intensity = 0;
-	while (lights)
+	intensity = 0;
+	while(lights)
 	{
 		intensity = 0;
-		light = ((s_light *)lights->object);
-		if (light->type == TYPE_AMBIENT)
+		if (((s_light *)lights->object)->type == TYPE_AMBIENT)
 		{
-			ambient_intensity += light->intensity;
-			ambient_color = color_to_rgb(light->color);
-			new_color = new_vector(ambient_color->x, ambient_color->y, ambient_color->z);
-			color = new_vector(actual_color->x + ((new_color->x + obj_color->x) * ambient_intensity),
-		actual_color->y + ((new_color->y + obj_color->y) * ambient_intensity),
-		actual_color->z + ((new_color->z + obj_color->z) * ambient_intensity));
-			free(ambient_color);
-			free(new_color);
-			rearrange_rgb(color);
-			actual_color = new_vector(color->x, color->y, color->z);
-			free(obj_color);
-			obj_color = new_vector(color->x, color->y, color->z);
-			free(color);
+			intensity += ((s_light *)lights->object)->intensity;
+			new_color = cpy_vector(((s_light *)lights->object)->color);
+			color = new_vector(actual_color->x + ((new_color->x + obj_color->x) * intensity),
+		actual_color->y + ((new_color->y + obj_color->y) * intensity),
+		actual_color->z + ((new_color->z + obj_color->z) * intensity));
 		}
 		else
 		{
-			intensity += compute_special_lights(l_vectors, light, scene, objects);
-			light_color = color_to_rgb(light->color);
-			new_color = new_vector(((light_color->x * (intensity / scene->total_intensity)) - obj_color->x)
-			,((light_color->y * (intensity / scene->total_intensity)) -  obj_color->y)
-			,((light_color->z * (intensity / scene->total_intensity)) - obj_color->z));
+			intensity += compute_special_lights(l_vectors, (s_light *)lights->object, scene, objects);
+			new_color = new_vector(((((s_light *)lights->object)->color->x * (intensity / scene->total_intensity)) - obj_color->x)
+			,((((s_light *)lights->object)->color->y * (intensity / scene->total_intensity)) -  obj_color->y)
+			,((((s_light *)lights->object)->color->z * (intensity / scene->total_intensity)) - obj_color->z));
 			color = new_vector(actual_color->x + (obj_color->x + (new_color->x)),
 		actual_color->y + (obj_color->y + (new_color->y)),
 		actual_color->z + (obj_color->z + (new_color->z)));
-			free(new_color);
-			free(light_color);
-			rearrange_rgb(color);
-			actual_color = new_vector(color->x, color->y, color->z);
-			free(color);
 		}
+		free(new_color);
+		rearrange_rgb(color);
+		free(actual_color);
+		actual_color = cpy_vector(color);
+		free(color);
 		lights = lights->next;
 	}
-	free(obj_color);
 	ret_color = rgb_to_color(actual_color);
 	free(actual_color);
 	return (ret_color);

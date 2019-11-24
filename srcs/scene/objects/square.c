@@ -6,19 +6,21 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 05:10:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:45:59 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:18:48 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "miniRT.h"
 
-s_square	*new_square(s_vector *center, s_vector *orientation, float size, int color)
+s_square	*new_square(s_vector *center, s_vector *orientation, float size, s_vector *color)
 {
 	s_square	*new;
 	//s_vector	*angle;
 	s_vector	*vector[4];
 
-	new = malloc(sizeof(s_square));
+	if (!(new = malloc(sizeof(s_square))))
+		print_error_and_exit(-7);
 	new->center = center;
 	new->orientation = orientation;
 	new->size = size;
@@ -49,6 +51,7 @@ void		free_square(s_square *square)
 {
 	free(square->center);
 	free(square->orientation);
+	free(square->color);
 	free(square->a);
 	free(square->b);
 	free(square->c);
@@ -65,7 +68,8 @@ s_square	*cpy_square(s_square *square)
 {
 	s_square *new;
 
-	new = malloc(sizeof(s_square));
+	if (!(new = malloc(sizeof(s_square))))
+		print_error_and_exit(-7);
 	new->center = cpy_vector(square->center);
 	new->orientation = cpy_vector(square->orientation);
 	new->a = cpy_vector(square->a);
@@ -75,8 +79,8 @@ s_square	*cpy_square(s_square *square)
 	new->ab = cpy_vector(square->ab);
 	new->ac = cpy_vector(square->ac);
 	new->normal = cpy_vector(square->normal);
+	new->color = cpy_vector(square->color);
 	new->size = square->size;
-	new->color = square->color;
 	new->shiny = square->shiny;
 	new->calcul_a = 0;
 	new->prev_origin = NULL;

@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas.c                                           :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 07:19:55 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:15:51 by lmartin          ###   ########.fr       */
+/*   Created: 2019/11/24 01:43:54 by lmartin           #+#    #+#             */
+/*   Updated: 2019/11/24 01:44:13 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
-#include "canvas.h"
+#ifndef ERROR_H
+# define ERROR_H
 
-s_canvas		*new_canvas(float width, float heigth, float distance)
-{
-	s_canvas	*canvas;
+void	print_error_and_exit(int nb_err);
 
-	if (!(canvas = malloc(sizeof(s_canvas))))
-		print_error_and_exit(-7);
-	canvas->width = width;
-	canvas->height = heigth;
-	canvas->distance = distance;
-	return (canvas);
-}
+#endif

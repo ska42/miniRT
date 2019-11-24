@@ -6,10 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:43:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:52:06 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:25:35 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "scene.h"
 #include "camera.h"
 #include "lstobjects.h"
@@ -18,7 +19,8 @@ s_scene		*new_empty_scene(int color)
 {
 	s_scene	*scene;
 
-	scene = malloc(sizeof(s_scene));
+	if (!(scene = malloc(sizeof(s_scene))))
+		print_error_and_exit(-7);
 	scene->viewport = NULL;
 	scene->viewplane = NULL;
 	scene->cameras = NULL;
@@ -28,7 +30,7 @@ s_scene		*new_empty_scene(int color)
 	scene->background_color = color;
 	scene->t_min = 0.001;
 	scene->t_max = -1;
-	scene->depth = 3;
+	scene->depth = 2;
 	return (scene);
 }
 
@@ -37,7 +39,8 @@ s_lstobjects *lights, int color)
 {
 	s_scene	*scene;
 
-	scene = malloc(sizeof(s_scene));
+	if (!(scene = malloc(sizeof(s_scene))))
+		print_error_and_exit(-7);
 	scene->viewport = NULL;
 	scene->viewplane = NULL;
 
@@ -48,7 +51,7 @@ s_lstobjects *lights, int color)
 	scene->total_intensity = 0;
 	scene->t_min = 0.001;
 	scene->t_max = -1;
-	scene->depth = 3;
+	scene->depth = 2;
 	return (scene);
 }
 
@@ -65,7 +68,8 @@ s_scene		*cpy_scene(s_scene *scene)
 	t_min = scene->t_min;
 	t_max = scene->t_max;
 	depth = scene->depth;
-	new = malloc(sizeof(s_scene));
+	if (!(new = malloc(sizeof(s_scene))))
+		print_error_and_exit(-7);
 	new->viewport = scene->viewport;
 	new->viewplane = scene->viewplane;
 	cameras = scene->cameras;

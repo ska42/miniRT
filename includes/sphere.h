@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:09:23 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:44:01 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 23:50:12 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 typedef struct 	t_sphere
 {
 	float		radius;
-	int			color;
+	s_vector	*color;
 	float		shiny;
 	float		calcul_c;
 	s_vector	*difference;
@@ -27,7 +27,7 @@ typedef struct 	t_sphere
 	s_vector	*prev_origin;
 }				s_sphere;
 
-s_sphere		*new_sphere(float radius, int color, float shiny, s_vector *center);
+s_sphere		*new_sphere(float radius, s_vector *color, float shiny, s_vector *center);
 void			free_sphere(s_sphere *sphere);
 s_sphere		*cpy_sphere(s_sphere *sphere);
 

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 18:58:19 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:43:37 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/23 23:50:29 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	t_cylinder
 	s_vector	*point2;
 	float		diameter;
 	float		height;
-	int			color;
+	s_vector	*color;
 	float		shiny;
 	s_vector	*difference;
 	float		calcul_a;
@@ -33,7 +33,7 @@ typedef struct	t_cylinder
 	s_vector	*prev_origin;
 }				s_cylinder;
 
-s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, int color);
+s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, s_vector *color);
 void		free_cylinder(s_cylinder *cylinder);
 s_cylinder	*cpy_cylinder(s_cylinder *cylinder);
 

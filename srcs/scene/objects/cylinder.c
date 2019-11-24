@@ -6,19 +6,21 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:44:33 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:19:01 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "miniRT.h"
 
-s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, int color)
+s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, s_vector *color)
 {
 	s_cylinder	*new;
 	s_vector	*temp;
 	float		total;
 
-	new = malloc(sizeof(s_cylinder));
+	if (!(new = malloc(sizeof(s_cylinder))))
+		print_error_and_exit(-7);
 	new->center = vectors[0];
 	new->orientation = vectors[1];
 	total = fabs(new->orientation->x) + fabs(new->orientation->y) + fabs(new->orientation->z);
@@ -46,6 +48,7 @@ void		free_cylinder(s_cylinder *cylinder)
 	free(cylinder->orientation);
 	free(cylinder->point1);
 	free(cylinder->point2);
+	free(cylinder->color);
 	if (cylinder->difference)
 		free(cylinder->difference);
 	if (cylinder->prev_origin)
@@ -57,14 +60,15 @@ s_cylinder	*cpy_cylinder(s_cylinder *cylinder)
 {
 	s_cylinder *new;
 
-	new = malloc(sizeof(s_cylinder));
+	if (!(new = malloc(sizeof(s_cylinder))))
+		print_error_and_exit(-7);
 	new->center = cpy_vector(cylinder->center);
 	new->orientation = cpy_vector(cylinder->orientation);
 	new->point1 = cpy_vector(cylinder->point1);
 	new->point2 = cpy_vector(cylinder->point2);
+	new->color = cpy_vector(cylinder->color);
 	new->diameter = cylinder->diameter;
 	new->height = cylinder->height;
-	new->color = cylinder->color;
 	new->shiny = cylinder->shiny;
 	new->difference = NULL;
 	new->calcul_a = cylinder->calcul_a;

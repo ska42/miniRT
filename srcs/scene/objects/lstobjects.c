@@ -6,10 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:27:21 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 23:03:54 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:18:58 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "lstobjects.h"
 
 s_lstobjects		*new_obj(int type, void *object, float reflective)
@@ -17,7 +18,7 @@ s_lstobjects		*new_obj(int type, void *object, float reflective)
 	s_lstobjects *obj;
 
 	if (!(obj = malloc(sizeof(s_lstobjects))))
-		return (NULL);
+		print_error_and_exit(-7);
 	obj->type	= type;
 	obj->object = object;
 	obj->reflective = reflective;

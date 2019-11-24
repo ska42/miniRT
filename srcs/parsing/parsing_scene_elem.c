@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 00:03:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:44:58 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 02:28:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		parsing_resolution(s_scene **scene, char *line)
 	while (line[i] == ' ' || line[i] == '\t')
 		if (line[++i] && line[i] != ' ' && line[i] != '\t')
 			return (-1);
-	printf("viewport_working");
 	return (!((*scene)->viewport = new_canvas(res_x, res_y, 1)) ? -1 : 0);
 }
 
@@ -45,7 +44,7 @@ int		parsing_ambient_light(s_scene **scene, char *line)
 	int		i;
 	int		r;
 	float	intensity;
-	int		color;
+	s_vector *color;
 
 	i = 1;
 	if (line[i] != ' ' && line[i] != '\t')
@@ -65,7 +64,6 @@ int		parsing_ambient_light(s_scene **scene, char *line)
 	while (line[i] == ' ' || line[i] == '\t')
 		if (line[++i] && line[i] != ' ' && line[i] != '\t')
 			return (-1);
-	printf("ambient_light_working");
 	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
 new_default_light(TYPE_AMBIENT, intensity, color), -1))) ? 0 : -1);
@@ -73,7 +71,8 @@ new_default_light(TYPE_AMBIENT, intensity, color), -1))) ? 0 : -1);
 
 int		parsing_point_light(s_scene **scene, char *l)
 {
-	int			i[4];
+	int			i[3];
+	s_vector	*color;
 	s_vector	*pos;
 	float		intensity;
 
@@ -91,15 +90,14 @@ int		parsing_point_light(s_scene **scene, char *l)
 		(i[1] = ft_atof(&l[i[0]], &intensity)) < 0))
 			return (free_and_return_minus_one(pos));
 		if ((i[2]++ == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[1] = ft_atoc(&l[i[0]], &i[3])) < 0))
+		(i[1] = ft_atoc(&l[i[0]], &color)) < 0))
 			return (free_and_return_minus_one(pos));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
 		return (free_and_return_minus_one(pos));
-	printf("point_light_working");
 	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
-new_point_light(pos, intensity, i[3]), -1))) ? 0 : free_and_return_minus_one(pos));
+new_point_light(pos, intensity, color), -1))) ? 0 : -1);
 }
 
 int		parsing_directional_light(s_scene **scene, char *line)
@@ -133,7 +131,6 @@ int		parsing_camera(s_scene **scene, char *line)
 	}
 	if (line[i] && line[i] != ' ' && line[i] != '\t')
 		return (multiple_free_return(vectors, 2));
-	printf("camera_working");
 	return ((!(add_back(&(*scene)->cameras, TYPE_CAMERA, new_camera(
-vectors[0], vectors[1], fov), -1)) ? 0 : multiple_free_return(vectors, 2)));
+vectors[0], vectors[1], fov), -1)) ? 0 : -1));
 }

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:38:50 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/24 00:12:05 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 float		intersect_global(s_vector origin, s_vector direction, s_lstobjects *objects)
 {
 	float	t;
-	
+
 	t = 0;
 	if (objects->type == TYPE_SPHERE)
 		t = intersect_sphere(origin, direction, objects->object);
