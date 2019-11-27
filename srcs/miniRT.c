@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:39:03 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/27 23:51:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,12 @@ int		handle_key(int keycode, s_mlx *my_mlx)
 	return (0);
 }
 
+int		exit_program()
+{
+	exit(0);
+	return (0);
+}
+
 int		main(int argc, char *argv[])
 {
 	s_mlx			*my_mlx;
@@ -231,6 +237,7 @@ int		main(int argc, char *argv[])
 	my_mlx->win_ptr = mlx_new_window(my_mlx->mlx_ptr, my_mlx->scene->viewport->width, my_mlx->scene->viewport->height, "miniRT");
 	create_image(my_mlx);
 	mlx_hook(my_mlx->win_ptr, 2, 1L << 0, handle_key, my_mlx);
+	mlx_hook(my_mlx->win_ptr, 17, 1L << 17, exit_program, 0);
 	mlx_loop(my_mlx->mlx_ptr);
 }
 
