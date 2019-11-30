@@ -6,11 +6,16 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:00:47 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:13:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/30 21:28:49 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+/*
+** FT_ATOI
+** ascii to integer
+*/
 
 int		ft_atoi(char *line, int *nb)
 {
@@ -28,6 +33,11 @@ int		ft_atoi(char *line, int *nb)
 	*nb = (line[0] == '-') ? -nnb : nnb;
 	return (i);
 }
+
+/*
+** FT_ATOF
+** ascii to float
+*/
 
 int		ft_atof(char *line, float *nb)
 {
@@ -48,6 +58,13 @@ int		ft_atof(char *line, float *nb)
 	}
 	return (i);
 }
+
+/*
+** FT_ATOC
+** ascii to color (s_vector color)
+** Note : The difference with ft_atov is that it check for integer
+** between 0 and 255.
+*/
 
 int		ft_atoc(char *line, s_vector **color)
 {
@@ -74,6 +91,12 @@ int		ft_atoc(char *line, s_vector **color)
 	*color = new_vector(rgb[0], rgb[1], rgb[2]);
 	return (i);
 }
+
+/*
+** FT_ATOV
+** ascii to vector (s_vector vector)
+** Note : The difference with ft_atoc is that it check for float.
+*/
 
 int		ft_atov(char *line, s_vector **vector)
 {

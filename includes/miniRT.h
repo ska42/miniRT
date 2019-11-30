@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:35:58 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/30 23:03:59 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
+# include <pthread.h>
+# include <errno.h>
+# include <stdio.h>
 
 /**
 **	minilibx
 **/
 # include "mlx.h"
+# include "mlx_struct.h"
 
 /**
 **	utils
@@ -43,6 +47,7 @@
 # include "utils.h"
 # include "no_leaks.h"
 # include "error.h"
+# include "export_bmp.h"
 
 /**
 **	parsing
@@ -55,6 +60,8 @@
 # include "scene.h"
 # include "camera.h"
 # include "canvas.h"
+# include "image.h"
+# include "handle_key.h"
 
 /**
 **	objects
@@ -80,17 +87,5 @@
 # include "lightning.h"
 # include "raytracing.h"
 # include "reflect.h"
-
-typedef	struct	t_mlx
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*mlx_img;
-	char	*data;
-	int		bpp;
-	int		size_line;
-	int		endian;
-	s_scene *scene;
-}				s_mlx;
 
 #endif

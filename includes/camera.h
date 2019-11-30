@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 03:56:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/21 21:41:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/30 17:48:57 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CAMERA_H
 
 # include <stdlib.h>
-#include "miniRT.h"
-#include "vector.h"
+# include "miniRT.h"
+# include "vector.h"
 
 typedef struct 	t_camera
 {
