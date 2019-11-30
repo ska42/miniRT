@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 23:59:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:28:34 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:20:16 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,16 @@ int		parsing_sphere(s_scene **scene, char *l)
 		if (!i[1] && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-')
 		|| (i[2] = ft_atov(&l[i[0]], &center)) < 0))
 			return (-1);
-		if ((i[1] == 1) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atof(&l[i[0]], &radius)) < 0))
-			return (free_and_return_minus_one(center));
-		if ((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &color)) < 0))
+		if (((i[1] == 1) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[2] = ft_atof(&l[i[0]], &radius)) < 0)) ||
+		((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[2] = ft_atoc(&l[i[0]], &color)) < 0)))
 			return (free_and_return_minus_one(center));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
 		return (free_and_return_minus_one(center));
 	return (!l[i[0]] && (!(add_back(&(*scene)->objects, TYPE_SPHERE, new_sphere(
 radius, color, 10, center), 0.5)) ? 0 : -1));
-	return (0);
 }
 
 int		parsing_plan(s_scene **scene, char *line)
@@ -85,14 +83,13 @@ int		parsing_square(s_scene **scene, char *l)
 	{
 		while (l[i[0]] == ' ' || l[i[0]] == '\t')
 			i[0]++;
-		if ((i[1] < 2) && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-') ||
-		(i[2] = ft_atov(&l[i[0]], &vectors[i[1]])) < 0))
+		if ((i[1] < 2) && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-')
+		|| (i[2] = ft_atov(&l[i[0]], &vectors[i[1]])) < 0))
 			return (multiple_free_return(vectors, i[1] - 1));
-		if ((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atof(&l[i[0]], &size)) < 0))
-			return (multiple_free_return(vectors, 2));
-		if ((i[1] == 3) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &color)) < 0))
+		if (((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[2] = ft_atof(&l[i[0]], &size)) < 0)) ||
+		((i[1] == 3) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[2] = ft_atoc(&l[i[0]], &color)) < 0)))
 			return (multiple_free_return(vectors, 2));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
@@ -114,8 +111,8 @@ int		parsing_triangle(s_scene **scene, char *l)
 	{
 		while (l[i[0]] == ' ' || l[i[0]] == '\t')
 			i[0]++;
-		if ((i[1] < 3) && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-') ||
-		(i[2] = ft_atov(&l[i[0]], &vec[i[1]])) < 0))
+		if ((i[1] < 3) && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-')
+		|| (i[2] = ft_atov(&l[i[0]], &vec[i[1]])) < 0))
 			return (multiple_free_return(vec, i[1] - 1));
 		if ((i[1] == 3) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
 		(i[2] = ft_atoc(&l[i[0]], &color)) < 0))
@@ -141,14 +138,13 @@ int		parsing_cylinder(s_scene **scene, char *l)
 	{
 		while (l[i[0]] == ' ' || l[i[0]] == '\t')
 			i[0]++;
-		if ((i[1] < 2) && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-') ||
-		(i[2] = ft_atov(&l[i[0]], &vec[i[1]])) < 0))
+		if ((i[1] < 2) && (((l[i[0]] < '0' || l[i[0]] > '9') && l[i[0]] != '-')
+		|| (i[2] = ft_atov(&l[i[0]], &vec[i[1]])) < 0))
 			return (multiple_free_return(vec, i[1] - 1));
-		if ((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atoc(&l[i[0]], &color)) < 0))
-			return (multiple_free_return(vec, 2));
-		if ((i[1] > 2 && i[1] < 5) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[2] = ft_atof(&l[i[0]], &j[i[1] - 3])) < 0))
+		if (((i[1] == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[2] = ft_atoc(&l[i[0]], &color)) < 0)) ||
+		((i[1] > 2 && i[1] < 5) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[2] = ft_atof(&l[i[0]], &j[i[1] - 3])) < 0)))
 			return (multiple_free_return(vec, 2));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')

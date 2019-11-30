@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:11:17 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:18:51 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:28:29 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void			free_sphere(s_sphere *sphere)
 	if (sphere->prev_origin)
 		free(sphere->prev_origin);
 	free(sphere);
-
 }
 
 s_sphere		*cpy_sphere(s_sphere *sphere)

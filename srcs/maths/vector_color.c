@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 06:45:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/02 05:50:06 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/30 23:52:55 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ s_vector	*color_to_rgb(unsigned int color)
 	return (new_vector((float)red, (float)green, (float)blue));
 }
 
-
 int			rgb_to_color(s_vector *rgb)
 {
 	int color;
@@ -35,7 +34,7 @@ int			rgb_to_color(s_vector *rgb)
 	return (color);
 }
 
-void 		rearrange_rgb(s_vector *color)
+void		rearrange_rgb(s_vector *color)
 {
 	color->x = (color->x > 255) ? 255 : color->x;
 	color->x = (color->x < 0) ? 0 : color->x;

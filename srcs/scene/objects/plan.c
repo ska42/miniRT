@@ -6,14 +6,14 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:25:49 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:18:54 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:22:58 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "plan.h"
 
-s_plan		*new_plan(s_vector *p, s_vector	*v, s_vector *c)
+s_plan		*new_plan(s_vector *p, s_vector *v, s_vector *c)
 {
 	s_plan	*plan;
 

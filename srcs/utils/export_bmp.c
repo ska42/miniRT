@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 20:38:49 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 21:15:20 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/30 23:45:23 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,20 @@ void	export_bmp(char *filename, s_mlx *my_mlx)
 		print_error_and_exit(-8);
 	write(fd, data, (size + HEADER_SIZE));
 	close(fd);
+}
+
+char	*create_bmp_filename(char *file, int i)
+{
+	char		*filename;
+	int			n;
+
+	if (!(filename = malloc(sizeof(char) * (i + 5))))
+		print_error_and_exit(-7);
+	n = -1;
+	while (++n <= i)
+		*(filename + n) = *(file + n);
+	*(unsigned int *)(filename + n) =
+	*(const unsigned int *)(unsigned long)"bmp\0";
+	return (filename);
+
 }

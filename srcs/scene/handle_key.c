@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 23:01:49 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:05:11 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/11/30 23:14:58 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,31 @@ int		exit_program(void)
 	return (0);
 }
 
-int		handle_key(int keycode, s_mlx *my_mlx)
-{
-	s_vector *origin;
-	s_vector *rotation;
+/*
+** Move/Switch camera and quit program with ESC
+*/
 
-	origin = ((s_camera *)my_mlx->scene->cameras->object)->origin;
-	rotation = ((s_camera *)my_mlx->scene->cameras->object)->rotation;
-	if (keycode == 53)
+int		handle_key(int k, s_mlx *my_mlx)
+{
+	s_vector *o;
+	s_vector *r;
+
+	o = ((s_camera *)my_mlx->scene->cameras->object)->origin;
+	r = ((s_camera *)my_mlx->scene->cameras->object)->rotation;
+	if (k == 53)
 		return (exit_program());
-	if (!(keycode >= 0 && keycode <= 3) && !(keycode >= 12 && keycode <= 15) &&
-		!(keycode >= 123 && keycode <= 126) && keycode != 83 && keycode != 84)
+	if (!(k >= 0 && k <= 3) && !(k >= 12 && k <= 15) &&
+		!(k >= 123 && k <= 126) && k != 83 && k != 84)
 		return (0);
-	origin->x -= 0.5 * ((keycode == KEYCODE_A) ? 1 : 0);
-	origin->x += 0.5 * ((keycode == KEYCODE_D) ? 1 : 0);
-	origin->z -= 0.5 * ((keycode == KEYCODE_S) ? 1 : 0);
-	origin->z += 0.5 * ((keycode == KEYCODE_W) ? 1 : 0);
-	origin->y -= 0.5 * ((keycode == KEYCODE_F) ? 1 : 0);
-	origin->y += 0.5 * ((keycode == KEYCODE_R) ? 1 : 0);
-	rotation->y -= 0.1 * ((keycode == KEYCODE_LEFT) ? 1 : 0);
-	rotation->y += 0.1 * ((keycode == KEYCODE_RIGHT) ? 1 : 0);
-	rotation->x -= 0.1 * ((keycode == KEYCODE_DOWN) ? 1 : 0);
-	rotation->x += 0.1 * ((keycode == KEYCODE_UP) ? 1 : 0);
-	rotation->z -= 0.1 * ((keycode == KEYCODE_1) ? 1 : 0);
-	rotation->z += 0.1 * ((keycode == KEYCODE_2) ? 1 : 0);
-	if (keycode == KEYCODE_Q)
+	o->x += ((k == KEYCODE_A) ? -0.5 : 0) + ((k == KEYCODE_D) ? 0.5 : 0);
+	o->y += ((k == KEYCODE_S) ? -0.5 : 0) + ((k == KEYCODE_W) ? 0.5 : 0);
+	o->z += ((k == KEYCODE_F) ? -0.5 : 0) + ((k == KEYCODE_R) ? 0.5 : 0);
+	r->x += ((k == KEYCODE_DOWN) ? -0.1 : 0) + ((k == KEYCODE_UP) ? 0.1 : 0);
+	r->y += ((k == KEYCODE_LEFT) ? -0.1 : 0) + ((k == KEYCODE_RIGHT) ? 0.1 : 0);
+	r->z += ((k == KEYCODE_1) ? -0.1 : 0) + ((k == KEYCODE_2) ? 0.1 : 0);
+	if (k == KEYCODE_Q)
 		my_mlx->scene->cameras = (s_lstobjects *)my_mlx->scene->cameras->prev;
-	if (keycode == KEYCODE_E)
+	if (k == KEYCODE_E)
 		my_mlx->scene->cameras = (s_lstobjects *)my_mlx->scene->cameras->next;
 	create_image(my_mlx);
 	mlx_clear_window(my_mlx->mlx_ptr, my_mlx->win_ptr);

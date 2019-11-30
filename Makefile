@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/30 23:04:15 by lmartin          ###   ########.fr        #
+#    Updated: 2019/11/30 23:56:30 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBMLX =		libmlx.dylib \
 SRC =			maths/rotation.c \
 				maths/vector_calculation.c \
 				maths/vector_color.c \
+				maths/vector_translation.c \
 				maths/vector.c \
 				\
 				parsing/parsing_object.c \
@@ -59,7 +60,7 @@ SRC =			maths/rotation.c \
 				utils/no_leaks.c \
 				utils/utils.c \
 				\
-				miniRT.c
+				minirt.c
 
 SRCS =			$(addprefix $(DIR_SRCS), $(SRC))
 

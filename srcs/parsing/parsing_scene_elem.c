@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 00:03:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:28:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:17:05 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,41 +39,39 @@ int		parsing_resolution(s_scene **scene, char *line)
 	return (!((*scene)->viewport = new_canvas(res_x, res_y, 1)) ? -1 : 0);
 }
 
-int		parsing_ambient_light(s_scene **scene, char *line)
+int		parsing_ambient_light(s_scene **scene, char *l)
 {
-	int		i;
-	int		r;
-	float	intensity;
-	s_vector *color;
+	int			i[2];
+	float		intensity;
+	s_vector	*c;
 
-	i = 1;
-	if (line[i] != ' ' && line[i] != '\t')
+	i[0] = 1;
+	if (l[i[0]] != ' ' && l[i[0]] != '\t')
 		return (-1);
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if ((line[i] < '0' || line[i] > '9') ||
-(r = ft_atof(&line[i], &intensity)) < 0)
+	while (l[i[0]] == ' ' || l[i[0]] == '\t')
+		i[0]++;
+	if ((l[i[0]] < '0' || l[i[0]] > '9') ||
+(i[1] = ft_atof(&l[i[0]], &intensity)) < 0)
 		return (-1);
-	if ((i += r) > 0 && line[i] != ' ' && line[i] != '\t')
+	if ((i[0] += i[1]) > 0 && l[i[0]] != ' ' && l[i[0]] != '\t')
 		return (-1);
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if ((line[i] < '0' || line[i] > '9') || (r = ft_atoc(&line[i], &color)) < 0)
+	while (l[i[0]] == ' ' || l[i[0]] == '\t')
+		i[0]++;
+	if ((l[i[0]] < '0' || l[i[0]] > '9') || (i[1] = ft_atoc(&l[i[0]], &c)) < 0)
 		return (-1);
-	i += r;
-	while (line[i] == ' ' || line[i] == '\t')
-		if (line[++i] && line[i] != ' ' && line[i] != '\t')
+	i[0] += i[1];
+	while (l[i[0]] == ' ' || l[i[0]] == '\t')
+		if (l[++i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
 			return (-1);
 	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
-new_default_light(TYPE_AMBIENT, intensity, color), -1))) ? 0 : -1);
+new_default_light(TYPE_AMBIENT, intensity, c), -1))) ? 0 : -1);
 }
 
 int		parsing_point_light(s_scene **scene, char *l)
 {
 	int			i[3];
-	s_vector	*color;
-	s_vector	*pos;
+	s_vector	*v[2];
 	float		intensity;
 
 	i[0] = 1;
@@ -84,20 +82,19 @@ int		parsing_point_light(s_scene **scene, char *l)
 		while (l[i[0]] == ' ' || l[i[0]] == '\t')
 			i[0]++;
 		if ((i[2] == 0) && (((l[i[0]] < '0' || l[i[0]] > '9')
-	 	&& l[i[0]] != '-') || (i[1] = ft_atov(&l[i[0]], &pos)) < 0))
+		&& l[i[0]] != '-') || (i[1] = ft_atov(&l[i[0]], &v[1])) < 0))
 			return (-1);
-		if ((i[2] == 1) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[1] = ft_atof(&l[i[0]], &intensity)) < 0))
-			return (free_and_return_minus_one(pos));
-		if ((i[2]++ == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
-		(i[1] = ft_atoc(&l[i[0]], &color)) < 0))
-			return (free_and_return_minus_one(pos));
+		if (((i[2] == 1) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[1] = ft_atof(&l[i[0]], &intensity)) < 0)) ||
+		((i[2]++ == 2) && ((l[i[0]] < '0' || l[i[0]] > '9') ||
+		(i[1] = ft_atoc(&l[i[0]], &v[0])) < 0)))
+			return (free_and_return_minus_one(v[1]));
 	}
 	if (l[i[0]] && l[i[0]] != ' ' && l[i[0]] != '\t')
-		return (free_and_return_minus_one(pos));
+		return (free_and_return_minus_one(v[1]));
 	(*scene)->total_intensity += intensity;
 	return ((!(add_back(&(*scene)->lights, TYPE_LIGHT,
-new_point_light(pos, intensity, color), -1))) ? 0 : -1);
+new_point_light(v[1], intensity, v[0]), -1))) ? 0 : -1);
 }
 
 int		parsing_directional_light(s_scene **scene, char *line)
@@ -107,7 +104,7 @@ int		parsing_directional_light(s_scene **scene, char *line)
 	return (0);
 }
 
-int		parsing_camera(s_scene **scene, char *line)
+int		parsing_camera(s_scene **scene, char *l)
 {
 	int			i;
 	int			r;
@@ -118,18 +115,18 @@ int		parsing_camera(s_scene **scene, char *line)
 	i = 1;
 	r = 0;
 	n = -1;
-	while (++n < 4 && (i += r) && line[i] && (line[i] == ' ' || line[i] == '\t'))
+	while (++n < 4 && (i += r) && l[i] && (l[i] == ' ' || l[i] == '\t'))
 	{
-		while (line[i] == ' ' || line[i] == '\t')
+		while (l[i] == ' ' || l[i] == '\t')
 			i++;
-		if ((n < 2) && (((line[i] < '0' || line[i] > '9') && line[i] != '-') ||
-		(r = ft_atov(&line[i], &vectors[n])) < 0))
+		if ((n < 2) && (((l[i] < '0' || l[i] > '9') && l[i] != '-') ||
+		(r = ft_atov(&l[i], &vectors[n])) < 0))
 			return (multiple_free_return(vectors, n - 1));
-		if ((n == 2) && ((line[i] < '0' || line[i] > '9') ||
-		(r = ft_atoi(&line[i], &fov)) < 0))
+		if ((n == 2) && ((l[i] < '0' || l[i] > '9') ||
+		(r = ft_atoi(&l[i], &fov)) < 0))
 			return (multiple_free_return(vectors, 2));
 	}
-	if (line[i] && line[i] != ' ' && line[i] != '\t')
+	if (l[i] && l[i] != ' ' && l[i] != '\t')
 		return (multiple_free_return(vectors, 2));
 	return ((!(add_back(&(*scene)->cameras, TYPE_CAMERA, new_camera(
 vectors[0], vectors[1], fov), -1)) ? 0 : -1));

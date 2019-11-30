@@ -6,14 +6,15 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 05:32:43 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:18:44 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:27:51 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "miniRT.h"
 
-s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, s_vector *color)
+s_triangle	*new_triangle(s_vector *a, s_vector *b, s_vector *c,
+s_vector *color)
 {
 	s_triangle *triangle;
 
@@ -31,7 +32,8 @@ s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, s_vector *color)
 	triangle->color = color;
 	triangle->shiny = -1;
 	triangle->calcul_a = 0;
-	triangle->calcul_d = triangle->dot_uv * triangle->dot_uv - triangle->dot_uu * triangle->dot_vv;
+	triangle->calcul_d =
+triangle->dot_uv * triangle->dot_uv - triangle->dot_uu * triangle->dot_vv;
 	triangle->prev_origin = NULL;
 	return (triangle);
 }

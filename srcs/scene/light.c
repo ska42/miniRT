@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:32:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:15:45 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:21:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ s_light			*new_default_light(int type, float intensity, s_vector *color)
 	return (light);
 }
 
-s_light			*new_point_light(s_vector *pos, float intensity, s_vector *color)
+s_light			*new_point_light(s_vector *pos, float intensity,
+s_vector *color)
 {
 	s_light		*light;
 

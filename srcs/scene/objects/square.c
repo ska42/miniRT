@@ -6,18 +6,35 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 05:10:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:18:48 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:34:17 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "miniRT.h"
 
-s_square	*new_square(s_vector *center, s_vector *orientation, float size, s_vector *color)
+void		place_points(s_square **new)
+{
+	s_vector	*vector[4];
+
+	vector[0] = new_vector((*new)->size / 2, (*new)->size / 2, 0);
+	vector[1] = new_vector(-(*new)->size / 2, (*new)->size / 2, 0);
+	vector[2] = new_vector((*new)->size / 2, -(*new)->size / 2, 0);
+	vector[3] = new_vector(-(*new)->size / 2, -(*new)->size / 2, 0);
+	rot(vector[0], (*new)->orientation);
+	rot(vector[1], (*new)->orientation);
+	rot(vector[2], (*new)->orientation);
+	rot(vector[3], (*new)->orientation);
+	(*new)->a = add_vectors(*vector[0], *(*new)->center);
+	(*new)->b = add_vectors(*vector[1], *(*new)->center);
+	(*new)->c = add_vectors(*vector[2], *(*new)->center);
+	(*new)->d = add_vectors(*vector[3], *(*new)->center);
+}
+
+s_square	*new_square(s_vector *center, s_vector *orientation, float size,
+s_vector *color)
 {
 	s_square	*new;
-	//s_vector	*angle;
-	s_vector	*vector[4];
 
 	if (!(new = malloc(sizeof(s_square))))
 		print_error_and_exit(-7);
@@ -25,19 +42,7 @@ s_square	*new_square(s_vector *center, s_vector *orientation, float size, s_vect
 	new->orientation = orientation;
 	new->size = size;
 	new->color = color;
-	//angle = new_vector(orientation->x/1 * 180, orientation->y/1 * 180, orientation->z/1 * 180);
-	vector[0] = new_vector(new->size / 2, new->size / 2, 0);
-	vector[1] = new_vector(- (new->size / 2), (new->size / 2), 0);
-	vector[2] = new_vector( (new->size / 2), - (new->size / 2), 0);
-	vector[3] = new_vector(- (new->size / 2), -(new->size / 2), 0);
-	rot(vector[0], orientation);
-	rot(vector[1], orientation);
-	rot(vector[2], orientation);
-	rot(vector[3], orientation);
-	new->a = add_vectors(*vector[0], *new->center);
-	new->b = add_vectors(*vector[1], *new->center);
-	new->c = add_vectors(*vector[2], *new->center);
-	new->d = add_vectors(*vector[3], *new->center);
+	place_points(&new);
 	new->ab = subtract_vectors(*new->b, *new->a);
 	new->ac = subtract_vectors(*new->c, *new->a);
 	new->normal = cross(*new->ab, *new->ac);

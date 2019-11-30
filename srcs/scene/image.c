@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 21:57:29 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 22:40:54 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 00:27:17 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ s_args	*new_s_args(s_mlx *my_mlx, int i, pthread_mutex_t *lock)
 	args->lock = lock;
 	return (args);
 }
-
 
 /*
 ** Create a new image charging each column by a thread
