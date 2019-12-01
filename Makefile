@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/11/30 23:56:30 by lmartin          ###   ########.fr        #
+#    Updated: 2019/12/01 01:00:16 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC =			maths/rotation.c \
 				scene/handle_key.c \
 				scene/image.c \
 				scene/light.c \
+				scene/scene_cpy.c \
 				scene/scene.c \
 				scene/objects/cylinder.c \
 				scene/objects/lstobjects.c \
