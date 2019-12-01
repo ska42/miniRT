@@ -6,13 +6,14 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 00:12:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 01:22:02 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float		intersect_global(s_vector origin, s_vector direction, s_lstobjects *objects)
+float		intersect_global(s_vector origin, s_vector direction,
+s_lstobjects *objects)
 {
 	float	t;
 
@@ -44,7 +45,8 @@ s_vector direction, s_sphere *object)
 		if (object->prev_origin)
 			free(object->prev_origin);
 		object->difference = subtract_vectors(origin, *object->center);
-		object->calcul_c = product_vectors(*object->difference, *object->difference) - (object->radius * object->radius);
+		object->calcul_c = product_vectors(*object->difference,
+*object->difference) - (object->radius * object->radius);
 		object->prev_origin = cpy_vector(&origin);
 	}
 	k[0] = product_vectors(direction, direction);
@@ -52,8 +54,8 @@ s_vector direction, s_sphere *object)
 	discriminant = k[1] * k[1] - 4 * k[0] * object->calcul_c;
 	if (discriminant < 0)
 		return (0);
-	t[0] = (- k[1] + sqrt(discriminant)) / (2 * k[0]);
-	t[1] = (- k[1] - sqrt(discriminant)) / (2 * k[0]);
+	t[0] = (-k[1] + sqrt(discriminant)) / (2 * k[0]);
+	t[1] = (-k[1] - sqrt(discriminant)) / (2 * k[0]);
 	if (t[0] < t[1])
 		return (t[0]);
 	return (t[1]);
@@ -75,22 +77,41 @@ float		intersect_plan(s_vector origin, s_vector direction, s_plan *object)
 		object->prev_origin = cpy_vector(&origin);
 	}
 	b = product_vectors(direction, *object->normal);
-	t = - (object->calcul_a / b);
+	t = -(object->calcul_a / b);
 	return ((t < 0) ? 0 : t);
+}
+
+float		intersect_square2(float t, s_vector origin, s_vector direction,
+s_square *object)
+{
+	s_vector	*point;
+	s_vector	*temp;
+	s_vector	*ap;
+	float		alpha;
+	float		beta;
+
+	temp = multiply_vectors(t, direction);
+	point = add_vectors(origin, *temp);
+	free(temp);
+	ap = subtract_vectors(*point, *object->a);
+	alpha = product_vectors(*ap, *object->ab) /
+product_vectors(*object->ab, *object->ab);
+	beta = product_vectors(*ap, *object->ac) /
+product_vectors(*object->ac, *object->ac);
+	free(ap);
+	free(point);
+	if (alpha >= 0 && alpha <= 1 && beta >= 0 && beta <= 1)
+		return (t);
+	return (0);
 }
 
 float		intersect_square(s_vector origin, s_vector direction, s_square *object)
 {
-	s_vector *point;
-	s_vector *temp;
 	float denom;
-	float b;
-	float t;
-	s_vector *ap;
 	float alpha;
 	float beta;
 
-	t = 0;
+	beta = 0;
 	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{
 		if (object->prev_origin)
@@ -99,21 +120,11 @@ float		intersect_square(s_vector origin, s_vector direction, s_square *object)
 		object->calcul_a = product_vectors(origin, *object->normal) + denom;
 		object->prev_origin = cpy_vector(&origin);
 	}
-	b = product_vectors(direction, *object->normal);
-	t = - (object->calcul_a / b);
-	if (t <= 0)
+	alpha = product_vectors(direction, *object->normal);
+	beta = -(object->calcul_a / alpha);
+	if (beta <= 0)
 		return (0);
-	temp = multiply_vectors(t, direction);
-	point = add_vectors(origin, *temp);
-	free(temp);
-	ap = subtract_vectors(*point, *object->a);
-	alpha = product_vectors(*ap, *object->ab) / product_vectors(*object->ab, *object->ab);
-	beta = product_vectors(*ap, *object->ac) / product_vectors(*object->ac, *object->ac);
-	free(ap);
-	free(point);
-	if (alpha >= 0 && alpha <= 1 && beta >= 0 && beta <= 1)
-		return (t);
-	return (0);
+	return (intersect_square2(beta, origin, direction, object));
 }
 
 float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *object)
