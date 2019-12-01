@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 19:18:05 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:23:24 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 01:04:52 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		get_next_line(int fd, char **line)
 	if (!line || BUFFER_SIZE <= 0 || (length = check_file(fd, buffer)) < 0)
 		return (-1);
 	if (!((*line) = malloc(sizeof(char))))
-		print_error_and_exit(-7);;
+		print_error_and_exit(-7);
 	if (!length && buffer[length] != '\n')
 		(*line)[0] = '\0';
 	size = 0;

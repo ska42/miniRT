@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:00:47 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 21:28:49 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 01:04:36 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ int		ft_atoc(char *line, s_vector **color)
 
 int		ft_atov(char *line, s_vector **vector)
 {
-	int i;
-	int r;
-	int n;
-	float v[3];
+	int		i;
+	int		r;
+	int		n;
+	float	v[3];
 
 	i = 0;
 	n = 0;

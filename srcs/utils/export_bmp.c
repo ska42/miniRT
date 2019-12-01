@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 20:38:49 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:45:23 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 01:05:15 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,4 @@ char	*create_bmp_filename(char *file, int i)
 	*(unsigned int *)(filename + n) =
 	*(const unsigned int *)(unsigned long)"bmp\0";
 	return (filename);
-
 }

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:41:32 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:36:32 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/01 01:03:37 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ void	print_error_and_exit(int nb_err)
 	if (nb_err == -5)
 		write(STDERR_FILENO, "Error: Resolution not specified\n", 32);
 	if (nb_err == -6)
-		write(STDERR_FILENO, "Error: Cannot create a window with value zero\n", 46);
+		write(STDERR_FILENO, "Error: Cannot create a window with value zero\n",
+46);
 	if (nb_err == -7)
-		write(STDERR_FILENO, "Error: Allocation problem (missing memory ?)\n", 45);
+		write(STDERR_FILENO, "Error: Allocation problem (missing memory ?)\n",
+45);
 	if (nb_err == -8)
-		write(STDERR_FILENO, "Error: Cannot create/Trunc/Write in file .bmp\n", 46);
+		write(STDERR_FILENO, "Error: Cannot create/Trunc/Write in file .bmp\n",
+46);
 	if (nb_err == -9)
 		write(STDERR_FILENO, "Error: Wrong number of arguments\n", 31);
 	if (nb_err == -10)
