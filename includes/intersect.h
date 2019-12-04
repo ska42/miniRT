@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:18:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:37:57 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 13:07:07 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "triangle.h"
 # include "vector.h"
 
+void		init_cylinder_intersect_cylinder(s_vector origin, s_cylinder *object);
 float		intersect_global(s_vector origin, s_vector direction, s_lstobjects *objects);
 float		intersect_sphere(s_vector origin, s_vector direction, s_sphere *object);
 float		intersect_plan(s_vector origin, s_vector direction, s_plan *object);
