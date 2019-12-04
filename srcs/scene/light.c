@@ -13,11 +13,11 @@
 #include "error.h"
 #include "light.h"
 
-s_light			*new_default_light(int type, float intensity, s_vector *color)
+t_light			*new_default_light(int type, float intensity, t_vector *color)
 {
-	s_light		*light;
+	t_light		*light;
 
-	if (!(light = malloc(sizeof(s_light))))
+	if (!(light = malloc(sizeof(t_light))))
 		print_error_and_exit(-7);
 	light->type = type;
 	light->intensity = intensity;
@@ -26,12 +26,12 @@ s_light			*new_default_light(int type, float intensity, s_vector *color)
 	return (light);
 }
 
-s_light			*new_point_light(s_vector *pos, float intensity,
-s_vector *color)
+t_light			*new_point_light(t_vector *pos, float intensity,
+t_vector *color)
 {
-	s_light		*light;
+	t_light		*light;
 
-	if (!(light = malloc(sizeof(s_light))))
+	if (!(light = malloc(sizeof(t_light))))
 		print_error_and_exit(-7);
 	light->type = TYPE_POINT;
 	light->intensity = intensity;

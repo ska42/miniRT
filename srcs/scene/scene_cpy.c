@@ -6,13 +6,13 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 00:59:45 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 01:02:28 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:25 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void		*cpy_object_choice(s_lstobjects *objects)
+void		*cpy_object_choice(t_lstobjects *objects)
 {
 	void			*object;
 
@@ -29,11 +29,11 @@ void		*cpy_object_choice(s_lstobjects *objects)
 	return (object);
 }
 
-void		cpy_cameras_and_objects(s_scene **new, s_scene *scene)
+void		cpy_cameras_and_objects(t_scene **new, t_scene *scene)
 {
 	int				i;
-	s_lstobjects	*cameras;
-	s_lstobjects	*objects;
+	t_lstobjects	*cameras;
+	t_lstobjects	*objects;
 
 	cameras = scene->cameras;
 	(*new)->cameras = NULL;
@@ -41,7 +41,7 @@ void		cpy_cameras_and_objects(s_scene **new, s_scene *scene)
 	cameras = cameras->prev;
 	while (++i < scene->nb_camera && (cameras = cameras->next))
 		add_back(&((*new)->cameras), TYPE_CAMERA,
-cpy_camera(((s_camera *)cameras->object)), -1);
+cpy_camera(((t_camera *)cameras->object)), -1);
 	objects = scene->objects;
 	(*new)->objects = NULL;
 	while (objects)
@@ -52,11 +52,11 @@ cpy_object_choice(objects), objects->reflective);
 	}
 }
 
-s_scene		*cpy_scene(s_scene *scene)
+t_scene		*cpy_scene(t_scene *scene)
 {
-	s_scene			*new;
+	t_scene			*new;
 
-	if (!(new = malloc(sizeof(s_scene))))
+	if (!(new = malloc(sizeof(t_scene))))
 		print_error_and_exit(-7);
 	new->viewport = scene->viewport;
 	new->viewplane = scene->viewplane;
@@ -70,25 +70,25 @@ s_scene		*cpy_scene(s_scene *scene)
 	return (new);
 }
 
-void		free_cpy_scene_choice(s_scene *scene)
+void		free_cpy_scene_choice(t_scene *scene)
 {
 	if (scene->objects->type == TYPE_SPHERE)
-		free_sphere((s_sphere *)scene->objects->object);
+		free_sphere((t_sphere *)scene->objects->object);
 	if (scene->objects->type == TYPE_PLAN)
-		free_plan((s_plan *)scene->objects->object);
+		free_plan((t_plan *)scene->objects->object);
 	if (scene->objects->type == TYPE_SQUARE)
-		free_square((s_square *)scene->objects->object);
+		free_square((t_square *)scene->objects->object);
 	if (scene->objects->type == TYPE_TRIANGLE)
-		free_triangle((s_triangle *)scene->objects->object);
+		free_triangle((t_triangle *)scene->objects->object);
 	if (scene->objects->type == TYPE_CYLINDER)
-		free_cylinder((s_cylinder *)scene->objects->object);
+		free_cylinder((t_cylinder *)scene->objects->object);
 }
 
-int			free_cpy_scene(s_scene *scene)
+int			free_cpy_scene(t_scene *scene)
 {
 	int				i;
-	s_lstobjects	*cameras;
-	s_lstobjects	*objects;
+	t_lstobjects	*cameras;
+	t_lstobjects	*objects;
 
 	i = -1;
 	while (++i < scene->nb_camera)

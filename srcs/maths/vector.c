@@ -13,11 +13,11 @@
 #include "error.h"
 #include "vector.h"
 
-s_vector		*new_vector(float x, float y, float z)
+t_vector		*new_vector(float x, float y, float z)
 {
-	s_vector	*vector;
+	t_vector	*vector;
 
-	if (!(vector = malloc(sizeof(s_vector))))
+	if (!(vector = malloc(sizeof(t_vector))))
 		print_error_and_exit(-7);
 	vector->x = x;
 	vector->y = y;
@@ -25,12 +25,12 @@ s_vector		*new_vector(float x, float y, float z)
 	return (vector);
 }
 
-s_vector		*cpy_vector(s_vector *vector)
+t_vector		*cpy_vector(t_vector *vector)
 {
 	return (new_vector(vector->x, vector->y, vector->z));
 }
 
-int				is_equal(s_vector *a, s_vector *b)
+int				is_equal(t_vector *a, t_vector *b)
 {
 	return ((a->x == b->x && a->y == b->y && a->z == b->z));
 }

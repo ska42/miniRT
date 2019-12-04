@@ -61,12 +61,12 @@ int		ft_atof(char *line, float *nb)
 
 /*
 ** FT_ATOC
-** ascii to color (s_vector color)
+** ascii to color (t_vector color)
 ** Note : The difference with ft_atov is that it check for integer
 ** between 0 and 255.
 */
 
-int		ft_atoc(char *line, s_vector **color)
+int		ft_atoc(char *line, t_vector **color)
 {
 	int i;
 	int r;
@@ -94,11 +94,11 @@ int		ft_atoc(char *line, s_vector **color)
 
 /*
 ** FT_ATOV
-** ascii to vector (s_vector vector)
+** ascii to vector (t_vector vector)
 ** Note : The difference with ft_atoc is that it check for float.
 */
 
-int		ft_atov(char *line, s_vector **vector)
+int		ft_atov(char *line, t_vector **vector)
 {
 	int		i;
 	int		r;

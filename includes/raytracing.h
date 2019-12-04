@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:47:59 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 22:31:23 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:36:53 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,21 @@
 # include "miniRT.h"
 # include "scene.h"
 
-/** INTERSECT **/
-float		intersect_sphere(s_vector origin, s_vector direction, s_sphere *object);
-float		intersect_plan(s_vector origin, s_vector direction, s_plan *object);
+/*
+** Intersect
+*/
+float		intersect_sphere(t_vector origin, t_vector direction,
+t_sphere *object);
+float		intersect_plan(t_vector origin, t_vector direction,
+t_plan *object);
 
-/** RAYTRACING **/
-int			trace_ray(s_vector direction, s_scene *scene);
-float		closest_intersection(s_vector origin, s_vector direction, s_scene *scene, s_lstobjects **closest_object);
-int			setup_l_vectors_and_calculate(s_lstobjects *closest_object, s_vector direction, float closest_t, s_scene *scene);
+/*
+** Raytracing
+*/
+int			trace_ray(t_vector direction, t_scene *scene);
+float		closest_intersection(t_vector origin, t_vector direction,
+t_scene *scene, t_lstobjects **closest_object);
+int			setup_l_vectors_and_calculate(t_lstobjects *closest_object,
+t_vector direction, float closest_t, t_scene *scene);
 
 #endif

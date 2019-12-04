@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 04:57:24 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 23:51:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:40:16 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,27 @@
 # include <stdlib.h>
 # include "vector.h"
 
-typedef struct	t_square
+typedef struct	s_square
 {
-	s_vector	*center;
-	s_vector	*orientation;
-	s_vector	*a;
-	s_vector	*b;
-	s_vector	*c;
-	s_vector	*d;
-	s_vector	*ab;
-	s_vector	*ac;
-	s_vector	*normal;
+	t_vector	*center;
+	t_vector	*orientation;
+	t_vector	*a;
+	t_vector	*b;
+	t_vector	*c;
+	t_vector	*d;
+	t_vector	*ab;
+	t_vector	*ac;
+	t_vector	*normal;
 	float		size;
-	s_vector	*color;
+	t_vector	*color;
 	float		shiny;
 	float		calcul_a;
-	s_vector	*prev_origin;
-}				s_square;
+	t_vector	*prev_origin;
+}				t_square;
 
-s_square	*new_square(s_vector *center, s_vector *orientation, float size, s_vector *color);
-void		free_square(s_square *square);
-s_square	*cpy_square(s_square *square);
+t_square		*new_square(t_vector *center, t_vector *orientation,
+float size, t_vector *color);
+void			free_square(t_square *square);
+t_square		*cpy_square(t_square *square);
 
 #endif

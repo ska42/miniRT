@@ -6,26 +6,26 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 01:10:11 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:20:10 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "miniRT.h"
 
-int			setup_l_vectors_and_calculate(s_lstobjects *closest_object,
-s_vector direction, float closest_t, s_scene *scene)
+int			setup_l_vectors_and_calculate(t_lstobjects *closest_object,
+t_vector direction, float closest_t, t_scene *scene)
 {
 	int						final_color;
-	s_lightning_vectors		*l_vectors;
-	s_vector				*temp;
+	t_lightning_vectors		*l_vectors;
+	t_vector				*temp;
 
 	final_color = 0;
-	if (!(l_vectors = malloc(sizeof(s_lightning_vectors))))
+	if (!(l_vectors = malloc(sizeof(t_lightning_vectors))))
 		print_error_and_exit(-7);
 	temp = multiply_vectors(closest_t, direction);
 	l_vectors->point = add_vectors(*(
-(s_camera *)scene->cameras->object)->origin, *(temp));
+(t_camera *)scene->cameras->object)->origin, *(temp));
 	free(temp);
 	l_vectors->normal = new_vector(0, 0, 0);
 	l_vectors->view = multiply_vectors(-1, direction);
@@ -38,12 +38,12 @@ l_vectors, final_color);
 	return (final_color);
 }
 
-float		closest_intersection(s_vector origin, s_vector direction,
-s_scene *scene, s_lstobjects **closest_object)
+float		closest_intersection(t_vector origin, t_vector direction,
+t_scene *scene, t_lstobjects **closest_object)
 {
 	float					t_temp;
 	float					closest_t;
-	s_lstobjects			*objects;
+	t_lstobjects			*objects;
 
 	*closest_object = NULL;
 	closest_t = -1;
@@ -63,13 +63,13 @@ scene->t_max == -1) && (t_temp < closest_t || closest_t == -1))
 	return (closest_t);
 }
 
-int			trace_ray(s_vector direction, s_scene *scene)
+int			trace_ray(t_vector direction, t_scene *scene)
 {
 	float					closest_t;
-	s_lstobjects			*closest_object;
+	t_lstobjects			*closest_object;
 	int						color;
 
-	closest_t = closest_intersection(*(((s_camera *)scene->cameras->object)
+	closest_t = closest_intersection(*(((t_camera *)scene->cameras->object)
 ->origin), direction, scene, &closest_object);
 	if (!closest_object)
 		return (scene->background_color);

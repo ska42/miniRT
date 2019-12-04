@@ -18,14 +18,14 @@ int		free_and_return_minus_one(void *ptr)
 	return (-1);
 }
 
-int		multiple_free_return(s_vector *ptr[], int size)
+int		multiple_free_return(t_vector *ptr[], int size)
 {
 	while (size--)
 		free(ptr[size]);
 	return (-1);
 }
 
-int		free_l_vectors(s_lightning_vectors *l_vectors)
+int		free_l_vectors(t_lightning_vectors *l_vectors)
 {
 	free(l_vectors->point);
 	free(l_vectors->normal);

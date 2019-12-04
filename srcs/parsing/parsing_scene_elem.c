@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-int		parsing_resolution(s_scene **scene, char *line)
+int		parsing_resolution(t_scene **scene, char *line)
 {
 	int i;
 	int r;
@@ -39,11 +39,11 @@ int		parsing_resolution(s_scene **scene, char *line)
 	return (!((*scene)->viewport = new_canvas(res_x, res_y, 1)) ? -1 : 0);
 }
 
-int		parsing_ambient_light(s_scene **scene, char *l)
+int		parsing_ambient_light(t_scene **scene, char *l)
 {
 	int			i[2];
 	float		intensity;
-	s_vector	*c;
+	t_vector	*c;
 
 	i[0] = 1;
 	if (l[i[0]] != ' ' && l[i[0]] != '\t')
@@ -68,10 +68,10 @@ int		parsing_ambient_light(s_scene **scene, char *l)
 new_default_light(TYPE_AMBIENT, intensity, c), -1))) ? 0 : -1);
 }
 
-int		parsing_point_light(s_scene **scene, char *l)
+int		parsing_point_light(t_scene **scene, char *l)
 {
 	int			i[3];
-	s_vector	*v[2];
+	t_vector	*v[2];
 	float		intensity;
 
 	i[0] = 1;
@@ -97,19 +97,19 @@ int		parsing_point_light(s_scene **scene, char *l)
 new_point_light(v[1], intensity, v[0]), -1))) ? 0 : -1);
 }
 
-int		parsing_directional_light(s_scene **scene, char *line)
+int		parsing_directional_light(t_scene **scene, char *line)
 {
 	(void)scene;
 	(void)line;
 	return (0);
 }
 
-int		parsing_camera(s_scene **scene, char *l)
+int		parsing_camera(t_scene **scene, char *l)
 {
 	int			i;
 	int			r;
 	int			n;
-	s_vector	*vectors[2];
+	t_vector	*vectors[2];
 	int			fov;
 
 	i = 1;

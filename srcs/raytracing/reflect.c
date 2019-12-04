@@ -6,16 +6,16 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 02:37:46 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 00:17:14 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:20:10 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-s_vector	*reflect_ray(s_vector v1, s_vector v2)
+t_vector	*reflect_ray(t_vector v1, t_vector v2)
 {
-	s_vector *v_temp;
-	s_vector *new;
+	t_vector *v_temp;
+	t_vector *new;
 
 	v_temp = multiply_vectors(2 * product_vectors(v1, v2), v2);
 	new = subtract_vectors(*v_temp, v1);
@@ -23,16 +23,16 @@ s_vector	*reflect_ray(s_vector v1, s_vector v2)
 	return (new);
 }
 
-int			color_with_reflect(s_lstobjects *closest_object, s_scene *scene,
-s_lightning_vectors *l_vectors, int color)
+int			color_with_reflect(t_lstobjects *closest_object, t_scene *scene,
+t_lightning_vectors *l_vectors, int color)
 {
-	s_vector				*temp;
-	s_vector				*temp2;
-	s_vector				*reflect_color;
+	t_vector				*temp;
+	t_vector				*temp2;
+	t_vector				*reflect_color;
 
 	temp = reflect_ray(*(l_vectors->view), *(l_vectors->normal));
 	temp2 = color_to_rgb(color);
-	((s_camera *)scene->cameras->object)->origin = l_vectors->point;
+	((t_camera *)scene->cameras->object)->origin = l_vectors->point;
 	scene->depth--;
 	color = trace_ray(*temp, scene);
 	free(temp);

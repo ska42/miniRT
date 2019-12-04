@@ -14,11 +14,11 @@
 #include "camera.h"
 #include "vector.h"
 
-s_camera		*new_camera(s_vector *pos, s_vector *rota, int fov)
+t_camera		*new_camera(t_vector *pos, t_vector *rota, int fov)
 {
-	s_camera	*camera;
+	t_camera	*camera;
 
-	if (!(camera = malloc(sizeof(s_camera))))
+	if (!(camera = malloc(sizeof(t_camera))))
 		print_error_and_exit(-7);
 	camera->rotation = rota;
 	camera->origin = pos;
@@ -26,10 +26,10 @@ s_camera		*new_camera(s_vector *pos, s_vector *rota, int fov)
 	return (camera);
 }
 
-s_camera		*cpy_camera(s_camera *cam)
+t_camera		*cpy_camera(t_camera *cam)
 {
-	s_vector	*pos;
-	s_vector	*rota;
+	t_vector	*pos;
+	t_vector	*rota;
 
 	pos = new_vector(cam->origin->x, cam->origin->y, cam->origin->z);
 	rota = new_vector(cam->rotation->x, cam->rotation->y, cam->rotation->z);

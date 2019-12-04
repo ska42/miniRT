@@ -6,21 +6,21 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:26:01 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "miniRT.h"
 
-s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height,
-s_vector *color)
+t_cylinder	*new_cylinder(t_vector *vectors[2], float diameter, float height,
+t_vector *color)
 {
-	s_cylinder	*new;
-	s_vector	*temp;
+	t_cylinder	*new;
+	t_vector	*temp;
 	float		total;
 
-	if (!(new = malloc(sizeof(s_cylinder))))
+	if (!(new = malloc(sizeof(t_cylinder))))
 		print_error_and_exit(-7);
 	new->center = vectors[0];
 	new->orientation = vectors[1];
@@ -43,7 +43,7 @@ s_vector *color)
 	return (new);
 }
 
-void		free_cylinder(s_cylinder *cylinder)
+void		free_cylinder(t_cylinder *cylinder)
 {
 	free(cylinder->center);
 	free(cylinder->orientation);
@@ -57,11 +57,11 @@ void		free_cylinder(s_cylinder *cylinder)
 	free(cylinder);
 }
 
-s_cylinder	*cpy_cylinder(s_cylinder *cylinder)
+t_cylinder	*cpy_cylinder(t_cylinder *cylinder)
 {
-	s_cylinder *new;
+	t_cylinder *new;
 
-	if (!(new = malloc(sizeof(s_cylinder))))
+	if (!(new = malloc(sizeof(t_cylinder))))
 		print_error_and_exit(-7);
 	new->center = cpy_vector(cylinder->center);
 	new->orientation = cpy_vector(cylinder->orientation);

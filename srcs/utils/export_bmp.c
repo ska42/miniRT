@@ -17,7 +17,7 @@
 ** Note : The file is filled by line, from the last to the first
 */
 
-void	fill_bmp(char **data, s_mlx *my_mlx)
+void	fill_bmp(char **data, t_mlx *my_mlx)
 {
 	int i;
 	int j;
@@ -64,7 +64,7 @@ void	fill_bmp(char **data, s_mlx *my_mlx)
 ** 50		| 32	| NB OF INDEX OF COLOR (0 = ALL)
 */
 
-void	header_bmp(char **data, s_mlx *my_mlx)
+void	header_bmp(char **data, t_mlx *my_mlx)
 {
 	unsigned int size;
 
@@ -91,7 +91,7 @@ void	header_bmp(char **data, s_mlx *my_mlx)
 ** filename (*.bmp).
 */
 
-void	export_bmp(char *filename, s_mlx *my_mlx)
+void	export_bmp(char *filename, t_mlx *my_mlx)
 {
 	int				fd;
 	unsigned int	size;

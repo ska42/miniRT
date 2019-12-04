@@ -13,12 +13,12 @@
 #include "error.h"
 #include "sphere.h"
 
-s_sphere		*new_sphere(float radius, s_vector *color, float shiny,
-s_vector *center)
+t_sphere		*new_sphere(float radius, t_vector *color, float shiny,
+t_vector *center)
 {
-	s_sphere	*sphere;
+	t_sphere	*sphere;
 
-	if (!(sphere = malloc(sizeof(s_sphere))))
+	if (!(sphere = malloc(sizeof(t_sphere))))
 		print_error_and_exit(-7);
 	sphere->radius = radius;
 	sphere->color = color;
@@ -30,7 +30,7 @@ s_vector *center)
 	return (sphere);
 }
 
-void			free_sphere(s_sphere *sphere)
+void			free_sphere(t_sphere *sphere)
 {
 	free(sphere->center);
 	free(sphere->color);
@@ -41,11 +41,11 @@ void			free_sphere(s_sphere *sphere)
 	free(sphere);
 }
 
-s_sphere		*cpy_sphere(s_sphere *sphere)
+t_sphere		*cpy_sphere(t_sphere *sphere)
 {
-	s_sphere	*new;
+	t_sphere	*new;
 
-	if (!(new = malloc(sizeof(s_sphere))))
+	if (!(new = malloc(sizeof(t_sphere))))
 		print_error_and_exit(-7);
 	new->center = cpy_vector(sphere->center);
 	new->color = cpy_vector(sphere->color);

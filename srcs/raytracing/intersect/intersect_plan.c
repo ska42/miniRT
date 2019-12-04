@@ -6,13 +6,13 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:02:36 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 13:02:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float		intersect_plan(s_vector origin, s_vector direction, s_plan *object)
+float		intersect_plan(t_vector origin, t_vector direction, t_plan *object)
 {
 	float denom;
 	float b;

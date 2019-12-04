@@ -13,9 +13,9 @@
 #include "error.h"
 #include "miniRT.h"
 
-void		place_points(s_square **new)
+void		place_points(t_square **new)
 {
-	s_vector	*vector[4];
+	t_vector	*vector[4];
 
 	vector[0] = new_vector((*new)->size / 2, (*new)->size / 2, 0);
 	vector[1] = new_vector(-(*new)->size / 2, (*new)->size / 2, 0);
@@ -31,12 +31,12 @@ void		place_points(s_square **new)
 	(*new)->d = add_vectors(*vector[3], *(*new)->center);
 }
 
-s_square	*new_square(s_vector *center, s_vector *orientation, float size,
-s_vector *color)
+t_square	*new_square(t_vector *center, t_vector *orientation, float size,
+t_vector *color)
 {
-	s_square	*new;
+	t_square	*new;
 
-	if (!(new = malloc(sizeof(s_square))))
+	if (!(new = malloc(sizeof(t_square))))
 		print_error_and_exit(-7);
 	new->center = center;
 	new->orientation = orientation;
@@ -52,7 +52,7 @@ s_vector *color)
 	return (new);
 }
 
-void		free_square(s_square *square)
+void		free_square(t_square *square)
 {
 	free(square->center);
 	free(square->orientation);
@@ -69,11 +69,11 @@ void		free_square(s_square *square)
 	free(square);
 }
 
-s_square	*cpy_square(s_square *square)
+t_square	*cpy_square(t_square *square)
 {
-	s_square *new;
+	t_square *new;
 
-	if (!(new = malloc(sizeof(s_square))))
+	if (!(new = malloc(sizeof(t_square))))
 		print_error_and_exit(-7);
 	new->center = cpy_vector(square->center);
 	new->orientation = cpy_vector(square->orientation);

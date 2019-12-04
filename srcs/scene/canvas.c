@@ -13,11 +13,11 @@
 #include "error.h"
 #include "canvas.h"
 
-s_canvas		*new_canvas(float width, float heigth, float distance)
+t_canvas		*new_canvas(float width, float heigth, float distance)
 {
-	s_canvas	*canvas;
+	t_canvas	*canvas;
 
-	if (!(canvas = malloc(sizeof(s_canvas))))
+	if (!(canvas = malloc(sizeof(t_canvas))))
 		print_error_and_exit(-7);
 	canvas->width = width;
 	canvas->height = heigth;

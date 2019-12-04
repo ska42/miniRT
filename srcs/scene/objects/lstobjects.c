@@ -6,18 +6,18 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:27:21 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:21:58 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:16:55 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "lstobjects.h"
 
-s_lstobjects		*new_obj(int type, void *object, float reflective)
+t_lstobjects		*new_obj(int type, void *object, float reflective)
 {
-	s_lstobjects *obj;
+	t_lstobjects *obj;
 
-	if (!(obj = malloc(sizeof(s_lstobjects))))
+	if (!(obj = malloc(sizeof(t_lstobjects))))
 		print_error_and_exit(-7);
 	obj->type = type;
 	obj->object = object;
@@ -26,10 +26,10 @@ s_lstobjects		*new_obj(int type, void *object, float reflective)
 	return (obj);
 }
 
-int					add_back(s_lstobjects **lst, int type, void *object,
+int					add_back(t_lstobjects **lst, int type, void *object,
 float reflective)
 {
-	s_lstobjects *begin;
+	t_lstobjects *begin;
 
 	if (!object)
 		return (-1);
@@ -49,7 +49,7 @@ float reflective)
 	return (0);
 }
 
-s_lstobjects		*cpy_lstobjects(s_lstobjects *obj)
+t_lstobjects		*cpy_lstobjects(t_lstobjects *obj)
 {
 	return (new_obj(obj->type, obj->object, obj->reflective));
 }

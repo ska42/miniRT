@@ -6,18 +6,18 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:01:49 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 13:02:06 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float		intersect_square2(float t, s_vector origin, s_vector direction,
-s_square *object)
+float		intersect_square2(float t, t_vector origin, t_vector direction,
+t_square *object)
 {
-	s_vector	*point;
-	s_vector	*temp;
-	s_vector	*ap;
+	t_vector	*point;
+	t_vector	*temp;
+	t_vector	*ap;
 	float		alpha;
 	float		beta;
 
@@ -36,8 +36,8 @@ product_vectors(*object->ac, *object->ac);
 	return (0);
 }
 
-float		intersect_square(s_vector origin, s_vector direction,
-s_square *object)
+float		intersect_square(t_vector origin, t_vector direction,
+t_square *object)
 {
 	float denom;
 	float alpha;

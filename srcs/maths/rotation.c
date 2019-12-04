@@ -12,9 +12,9 @@
 
 #include "miniRT.h"
 
-void		rx(s_vector *vect, float x)
+void		rx(t_vector *vect, float x)
 {
-	s_vector	tmp;
+	t_vector	tmp;
 
 	tmp.x = vect->x;
 	tmp.y = vect->y * cos(x) - vect->z * sin(x);
@@ -22,9 +22,9 @@ void		rx(s_vector *vect, float x)
 	*vect = tmp;
 }
 
-void		ry(s_vector *vect, float y)
+void		ry(t_vector *vect, float y)
 {
-	s_vector	tmp;
+	t_vector	tmp;
 
 	tmp.x = vect->x * cos(y) + vect->z * sin(y);
 	tmp.y = vect->y;
@@ -32,9 +32,9 @@ void		ry(s_vector *vect, float y)
 	*vect = tmp;
 }
 
-void		rz(s_vector *vect, float z)
+void		rz(t_vector *vect, float z)
 {
-	s_vector	tmp;
+	t_vector	tmp;
 
 	tmp.x = vect->x * cos(z) - vect->y * sin(z);
 	tmp.y = vect->x * sin(z) + vect->y * cos(z);
@@ -42,14 +42,14 @@ void		rz(s_vector *vect, float z)
 	*vect = tmp;
 }
 
-void		rot(s_vector *vect, s_vector *angle)
+void		rot(t_vector *vect, t_vector *angle)
 {
 	rx(vect, angle->x);
 	ry(vect, angle->y);
 	rz(vect, angle->z);
 }
 
-void		anti_rot(s_vector *vect, s_vector *angle)
+void		anti_rot(t_vector *vect, t_vector *angle)
 {
 	rz(vect, -angle->z);
 	ry(vect, -angle->y);

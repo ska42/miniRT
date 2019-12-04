@@ -6,13 +6,13 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 21:05:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:47:10 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:18:23 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int			choice_parsing(s_scene **scene, char *line)
+int			choice_parsing(t_scene **scene, char *line)
 {
 	if (line[0] != '\0')
 	{
@@ -40,10 +40,10 @@ int			choice_parsing(s_scene **scene, char *line)
 	return (0);
 }
 
-void		setup_cameras(s_scene **scene)
+void		setup_cameras(t_scene **scene)
 {
 	int				nb_cam;
-	s_lstobjects	*cameras;
+	t_lstobjects	*cameras;
 
 	nb_cam = 0;
 	cameras = (*scene)->cameras;
@@ -52,7 +52,7 @@ void		setup_cameras(s_scene **scene)
 		nb_cam = 1;
 		while (cameras->next)
 		{
-			((s_lstobjects *)cameras->next)->prev = cameras;
+			((t_lstobjects *)cameras->next)->prev = cameras;
 			nb_cam++;
 			cameras = cameras->next;
 		}
@@ -62,7 +62,7 @@ void		setup_cameras(s_scene **scene)
 	(*scene)->nb_camera = nb_cam;
 }
 
-void		setup_viewplane(s_scene **scene)
+void		setup_viewplane(t_scene **scene)
 {
 	if (!(*scene)->viewport)
 		print_error_and_exit(-5);
@@ -80,11 +80,11 @@ void		setup_viewplane(s_scene **scene)
 (*scene)->viewport->width, 1);
 }
 
-s_scene		*parsing(int fd)
+t_scene		*parsing(int fd)
 {
 	int				ret;
 	char			*line;
-	s_scene			*scene;
+	t_scene			*scene;
 
 	scene = new_empty_scene(BACKGROUND_COLOR);
 	while ((ret = get_next_line(fd, &line)) > 0)

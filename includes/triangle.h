@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 04:05:15 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 23:51:15 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:44:31 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,27 @@
 # include <stdlib.h>
 # include "vector.h"
 
-typedef struct	t_triangle
+typedef struct	s_triangle
 {
-	s_vector	*a;
-	s_vector	*b;
-	s_vector	*c;
-	s_vector	*u;
-	s_vector	*v;
-	s_vector	*normal;
-	s_vector	*color;
+	t_vector	*a;
+	t_vector	*b;
+	t_vector	*c;
+	t_vector	*u;
+	t_vector	*v;
+	t_vector	*normal;
+	t_vector	*color;
 	float		shiny;
 	float		calcul_a;
 	float		dot_uu;
 	float		dot_uv;
 	float		dot_vv;
 	float		calcul_d;
-	s_vector	*prev_origin;
-}				s_triangle;
+	t_vector	*prev_origin;
+}				t_triangle;
 
-s_triangle	*new_triangle(s_vector* a, s_vector *b, s_vector *c, s_vector *color);
-void		free_triangle(s_triangle *triangle);
-s_triangle	*cpy_triangle(s_triangle *triangle);
+t_triangle		*new_triangle(t_vector *a, t_vector *b, t_vector *c,
+t_vector *color);
+void			free_triangle(t_triangle *triangle);
+t_triangle		*cpy_triangle(t_triangle *triangle);
 
 #endif

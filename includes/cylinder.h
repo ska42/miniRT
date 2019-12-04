@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 18:58:19 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 23:50:29 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:22:31 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@
 # include <stdlib.h>
 # include "vector.h"
 
-typedef struct	t_cylinder
+typedef struct	s_cylinder
 {
-	s_vector	*center;
-	s_vector	*orientation;
-	s_vector	*point1;
-	s_vector	*point2;
+	t_vector	*center;
+	t_vector	*orientation;
+	t_vector	*point1;
+	t_vector	*point2;
 	float		diameter;
 	float		height;
-	s_vector	*color;
+	t_vector	*color;
 	float		shiny;
-	s_vector	*difference;
+	t_vector	*difference;
 	float		calcul_a;
 	float		calcul_c;
 	float		calcul_d;
-	s_vector	*prev_origin;
-}				s_cylinder;
+	t_vector	*prev_origin;
+}				t_cylinder;
 
-s_cylinder	*new_cylinder(s_vector *vectors[2], float diameter, float height, s_vector *color);
-void		free_cylinder(s_cylinder *cylinder);
-s_cylinder	*cpy_cylinder(s_cylinder *cylinder);
+t_cylinder		*new_cylinder(t_vector *vectors[2],
+float diameter, float height, t_vector *color);
+void			free_cylinder(t_cylinder *cylinder);
+t_cylinder		*cpy_cylinder(t_cylinder *cylinder);
 
 #endif

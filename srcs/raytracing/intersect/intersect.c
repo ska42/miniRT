@@ -6,14 +6,14 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:17:57 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 13:06:35 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float		intersect_global(s_vector origin, s_vector direction,
-s_lstobjects *objects)
+float		intersect_global(t_vector origin, t_vector direction,
+t_lstobjects *objects)
 {
 	float	t;
 
@@ -31,8 +31,8 @@ s_lstobjects *objects)
 	return (t);
 }
 
-void		init_cylinder_intersect_cylinder(s_vector origin,
-s_cylinder *object)
+void		init_cylinder_intersect_cylinder(t_vector origin,
+t_cylinder *object)
 {
 	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
 	{

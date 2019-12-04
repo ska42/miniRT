@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 05:18:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 13:07:07 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:25:56 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,19 @@
 # include "triangle.h"
 # include "vector.h"
 
-void		init_cylinder_intersect_cylinder(s_vector origin, s_cylinder *object);
-float		intersect_global(s_vector origin, s_vector direction, s_lstobjects *objects);
-float		intersect_sphere(s_vector origin, s_vector direction, s_sphere *object);
-float		intersect_plan(s_vector origin, s_vector direction, s_plan *object);
-float		intersect_square(s_vector origin, s_vector direction, s_square *object);
-float		intersect_triangle(s_vector origin, s_vector direction, s_triangle *object);
-float		intersect_cylinder(s_vector origin, s_vector direction, s_cylinder *object);
+void		init_cylinder_intersect_cylinder(t_vector origin,
+t_cylinder *object);
+float		intersect_global(t_vector origin, t_vector direction,
+t_lstobjects *objects);
+float		intersect_sphere(t_vector origin, t_vector direction,
+t_sphere *object);
+float		intersect_plan(t_vector origin, t_vector direction,
+t_plan *object);
+float		intersect_square(t_vector origin, t_vector direction,
+t_square *object);
+float		intersect_triangle(t_vector origin, t_vector direction,
+t_triangle *object);
+float		intersect_cylinder(t_vector origin, t_vector direction,
+t_cylinder *object);
 
 #endif

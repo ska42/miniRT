@@ -13,11 +13,11 @@
 #include "error.h"
 #include "plan.h"
 
-s_plan		*new_plan(s_vector *p, s_vector *v, s_vector *c)
+t_plan		*new_plan(t_vector *p, t_vector *v, t_vector *c)
 {
-	s_plan	*plan;
+	t_plan	*plan;
 
-	if (!(plan = malloc(sizeof(s_plan))))
+	if (!(plan = malloc(sizeof(t_plan))))
 		print_error_and_exit(-7);
 	plan->point = p;
 	plan->normal = v;
@@ -28,7 +28,7 @@ s_plan		*new_plan(s_vector *p, s_vector *v, s_vector *c)
 	return (plan);
 }
 
-void		free_plan(s_plan *plan)
+void		free_plan(t_plan *plan)
 {
 	free(plan->point);
 	free(plan->normal);
@@ -38,11 +38,11 @@ void		free_plan(s_plan *plan)
 	free(plan);
 }
 
-s_plan		*cpy_plan(s_plan *plan)
+t_plan		*cpy_plan(t_plan *plan)
 {
-	s_plan	*new;
+	t_plan	*new;
 
-	if (!(new = malloc(sizeof(s_plan))))
+	if (!(new = malloc(sizeof(t_plan))))
 		print_error_and_exit(-7);
 	new->point = cpy_vector(plan->point);
 	new->normal = cpy_vector(plan->normal);

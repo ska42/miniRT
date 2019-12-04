@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 21:20:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 21:21:30 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:18:23 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "scene.h"
 
-typedef	struct	t_mlx
+typedef	struct	s_mlx
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -24,7 +24,7 @@ typedef	struct	t_mlx
 	int		bpp;
 	int		size_line;
 	int		endian;
-	s_scene *scene;
-}				s_mlx;
+	t_scene *scene;
+}				t_mlx;
 
 #endif

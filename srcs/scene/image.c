@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 21:57:29 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:27:17 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** (B) data[i + 2]
 */
 
-void	put_pixel(s_args *args, int y, int color)
+void	put_pixel(t_args *args, int y, int color)
 {
 	int	i;
 
@@ -38,41 +38,41 @@ void	put_pixel(s_args *args, int y, int color)
 
 void	*thread_function(void *arguments)
 {
-	s_vector		*obs;
-	s_vector		*d;
+	t_vector		*obs;
+	t_vector		*d;
 	int				c;
 	int				y;
-	s_args			*args;
+	t_args			*args;
 
-	args = (s_args *)arguments;
-	if (!(s_camera *)args->scene->cameras)
+	args = (t_args *)arguments;
+	if (!(t_camera *)args->scene->cameras)
 		return (free_cpy_scene(args->scene) ? NULL : NULL);
-	obs = ((s_camera *)args->scene->cameras->object)->origin;
+	obs = ((t_camera *)args->scene->cameras->object)->origin;
 	y = -(args->scene->viewport->height / 2) - 1;
 	while (++y <= args->scene->viewport->height / 2)
 	{
 		d = new_vector(
 args->x * (args->scene->viewplane->width / args->scene->viewport->width),
 y * (args->scene->viewplane->height / args->scene->viewport->height), 1);
-		rot(d, ((s_camera *)args->scene->cameras->object)->rotation);
+		rot(d, ((t_camera *)args->scene->cameras->object)->rotation);
 		c = trace_ray(*d, args->scene);
 		put_pixel(args, ((-(y - (args->scene->viewport->height / 2)))), c);
 		free(d);
-		((s_camera *)args->scene->cameras->object)->origin = obs;
+		((t_camera *)args->scene->cameras->object)->origin = obs;
 		args->scene->depth = 3;
 	}
 	return (free_cpy_scene(args->scene) ? NULL : NULL);
 }
 
 /*
-** Init a new s_args with all arguments for thread_function
+** Init a new t_args with all arguments for thread_function
 */
 
-s_args	*new_s_args(s_mlx *my_mlx, int i, pthread_mutex_t *lock)
+t_args	*new_s_args(t_mlx *my_mlx, int i, pthread_mutex_t *lock)
 {
-	s_args			*args;
+	t_args			*args;
 
-	if (!(args = malloc(sizeof(s_args))))
+	if (!(args = malloc(sizeof(t_args))))
 		print_error_and_exit(-7);
 	args->data = my_mlx->data;
 	args->scene = cpy_scene(my_mlx->scene);
@@ -87,10 +87,10 @@ s_args	*new_s_args(s_mlx *my_mlx, int i, pthread_mutex_t *lock)
 ** Create a new image charging each column by a thread
 */
 
-void	create_image(s_mlx *my_mlx)
+void	create_image(t_mlx *my_mlx)
 {
 	int				i;
-	s_args			*args;
+	t_args			*args;
 	pthread_t		*threads;
 	pthread_mutex_t lock;
 

@@ -6,17 +6,17 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:00:17 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 13:06:30 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:27:49 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
-float		intersect_cylinder5(float d[8], s_vector origin, s_vector direction,
-s_cylinder *o)
+float		intersect_cylinder5(float d[8], t_vector origin, t_vector direction,
+t_cylinder *o)
 {
-	s_vector	*temp;
-	s_vector	*point;
+	t_vector	*temp;
+	t_vector	*point;
 	float		denom;
 	float		l[2];
 
@@ -42,11 +42,11 @@ s_cylinder *o)
 	return (d[4]);
 }
 
-float		intersect_cylinder4(float d[8], s_vector origin, s_vector direction,
-s_cylinder *o)
+float		intersect_cylinder4(float d[8], t_vector origin, t_vector direction,
+t_cylinder *o)
 {
-	s_vector	*temp;
-	s_vector	*point;
+	t_vector	*temp;
+	t_vector	*point;
 	float		denom;
 	float		l[2];
 
@@ -70,13 +70,13 @@ s_cylinder *o)
 	return (intersect_cylinder5(d, origin, direction, o));
 }
 
-float		intersect_cylinder3(float d[8], s_vector origin, s_vector direction,
-s_cylinder *o)
+float		intersect_cylinder3(float d[8], t_vector origin, t_vector direction,
+t_cylinder *o)
 {
-	s_vector	*temp[2];
-	s_vector	*point;
+	t_vector	*temp[2];
+	t_vector	*point;
 	float		denom;
-	s_vector	*point_tmp;
+	t_vector	*point_tmp;
 	float		tt;
 
 	temp[0] = multiply_vectors(d[4], direction);
@@ -96,13 +96,13 @@ s_cylinder *o)
 	return (intersect_cylinder4(d, origin, direction, o));
 }
 
-float		intersect_cylinder2(float ret, s_vector origin, s_vector direction,
-s_cylinder *object)
+float		intersect_cylinder2(float ret, t_vector origin, t_vector direction,
+t_cylinder *object)
 {
-	s_vector	*temp;
-	s_vector	*point;
+	t_vector	*temp;
+	t_vector	*point;
 	float		denom;
-	s_vector	*point_tmp;
+	t_vector	*point_tmp;
 	float		d[8];
 
 	d[4] = ret;
@@ -122,8 +122,8 @@ s_cylinder *object)
 	return (intersect_cylinder3(d, origin, direction, object));
 }
 
-float		intersect_cylinder(s_vector origin, s_vector direction,
-s_cylinder *o)
+float		intersect_cylinder(t_vector origin, t_vector direction,
+t_cylinder *o)
 {
 	float calcul_b;
 	float d[6];

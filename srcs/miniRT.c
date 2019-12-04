@@ -6,13 +6,13 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:50:01 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:18:23 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	start_window(s_mlx *my_mlx)
+void	start_window(t_mlx *my_mlx)
 {
 	mlx_clear_window(my_mlx->mlx_ptr, my_mlx->win_ptr);
 	mlx_put_image_to_window(my_mlx->mlx_ptr, my_mlx->win_ptr,
@@ -22,11 +22,11 @@ my_mlx->mlx_img, 0, 0);
 	mlx_loop(my_mlx->mlx_ptr);
 }
 
-s_mlx	*init_my_mlx(s_scene *scene)
+t_mlx	*init_my_mlx(t_scene *scene)
 {
-	s_mlx		*my_mlx;
+	t_mlx		*my_mlx;
 
-	if (!(my_mlx = malloc(sizeof(s_mlx))))
+	if (!(my_mlx = malloc(sizeof(t_mlx))))
 		print_error_and_exit(-7);
 	my_mlx->mlx_ptr = mlx_init();
 	my_mlx->scene = scene;
@@ -41,9 +41,9 @@ my_mlx->scene->viewport->width, my_mlx->scene->viewport->height, "miniRT");
 
 int		main(int argc, char *argv[])
 {
-	s_mlx			*my_mlx;
+	t_mlx			*my_mlx;
 	int				fd;
-	s_scene			*scene;
+	t_scene			*scene;
 	int				i;
 
 	if (argc < 2 || argc > 3)

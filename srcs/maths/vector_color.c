@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-s_vector	*color_to_rgb(unsigned int color)
+t_vector	*color_to_rgb(unsigned int color)
 {
 	int red;
 	int green;
@@ -24,7 +24,7 @@ s_vector	*color_to_rgb(unsigned int color)
 	return (new_vector((float)red, (float)green, (float)blue));
 }
 
-int			rgb_to_color(s_vector *rgb)
+int			rgb_to_color(t_vector *rgb)
 {
 	int color;
 
@@ -34,7 +34,7 @@ int			rgb_to_color(s_vector *rgb)
 	return (color);
 }
 
-void		rearrange_rgb(s_vector *color)
+void		rearrange_rgb(t_vector *color)
 {
 	color->x = (color->x > 255) ? 255 : color->x;
 	color->x = (color->x < 0) ? 0 : color->x;

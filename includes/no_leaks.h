@@ -14,7 +14,7 @@
 # define NO_LEAKS_H
 
 int		free_and_return_minus_one(void *ptr);
-int		multiple_free_return(s_vector *ptr[], int size);
-int		free_l_vectors(s_lightning_vectors *l_vectors);
+int		multiple_free_return(t_vector *ptr[], int size);
+int		free_l_vectors(t_lightning_vectors *l_vectors);
 
 #endif

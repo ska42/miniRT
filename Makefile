@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/12/04 13:04:02 by lmartin          ###   ########.fr        #
+#    Updated: 2019/12/04 16:06:49 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,11 @@ SRC =			maths/rotation.c \
 				raytracing/intersect/intersect_sphere.c \
 				raytracing/intersect/intersect_square.c \
 				raytracing/intersect/intersect_triangle.c \
-				raytracing/lightning.c \
+				raytracing/lightning/lightning.c \
+				raytracing/lightning/check_light_cylinder.c \
+				raytracing/lightning/check_light.c \
+				raytracing/lightning/set_color.c \
+				raytracing/lightning/shiny.c \
 				raytracing/raytracing.c \
 				raytracing/reflect.c \
 				\

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 02:43:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:03:59 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:28:54 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,43 @@
 # include <errno.h>
 # include <stdio.h>
 
-/**
+/*
 **	minilibx
-**/
+*/
+
 # include "mlx.h"
 # include "mlx_struct.h"
 
-/**
+/*
 **	utils
-**/
+*/
+
 # include "get_next_line.h"
 # include "utils.h"
 # include "no_leaks.h"
 # include "error.h"
 # include "export_bmp.h"
 
-/**
+/*
 **	parsing
-**/
+*/
+
 # include "parsing.h"
 
-/**
+/*
 **	scene
-**/
+*/
+
 # include "scene.h"
 # include "camera.h"
 # include "canvas.h"
 # include "image.h"
 # include "handle_key.h"
 
-/**
+/*
 **	objects
-**/
+*/
+
 # include "light.h"
 # include "lstobjects.h"
 # include "cylinder.h"
@@ -74,15 +79,17 @@
 # include "triangle.h"
 # include "sphere.h"
 
-/**
+/*
 **	maths
-**/
+*/
+
 # include "vector.h"
 # include "rotation.h"
 
-/**
+/*
 ** raytracing
-**/
+*/
+
 # include "intersect.h"
 # include "lightning.h"
 # include "raytracing.h"

@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 06:43:09 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 01:00:03 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:18:23 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include "camera.h"
 #include "lstobjects.h"
 
-s_scene		*new_empty_scene(int color)
+t_scene		*new_empty_scene(int color)
 {
-	s_scene	*scene;
+	t_scene	*scene;
 
-	if (!(scene = malloc(sizeof(s_scene))))
+	if (!(scene = malloc(sizeof(t_scene))))
 		print_error_and_exit(-7);
 	scene->viewport = NULL;
 	scene->viewplane = NULL;
@@ -34,12 +34,12 @@ s_scene		*new_empty_scene(int color)
 	return (scene);
 }
 
-s_scene		*new_scene(s_lstobjects *cameras, s_lstobjects *objects,
-s_lstobjects *lights, int color)
+t_scene		*new_scene(t_lstobjects *cameras, t_lstobjects *objects,
+t_lstobjects *lights, int color)
 {
-	s_scene	*scene;
+	t_scene	*scene;
 
-	if (!(scene = malloc(sizeof(s_scene))))
+	if (!(scene = malloc(sizeof(t_scene))))
 		print_error_and_exit(-7);
 	scene->viewport = NULL;
 	scene->viewplane = NULL;

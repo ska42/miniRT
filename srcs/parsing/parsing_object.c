@@ -12,12 +12,12 @@
 
 #include "miniRT.h"
 
-int		parsing_sphere(s_scene **scene, char *l)
+int		parsing_sphere(t_scene **scene, char *l)
 {
 	int			i[3];
-	s_vector	*center;
+	t_vector	*center;
 	float		radius;
-	s_vector	*color;
+	t_vector	*color;
 
 	i[0] = 2;
 	i[2] = 0;
@@ -41,13 +41,13 @@ int		parsing_sphere(s_scene **scene, char *l)
 radius, color, 10, center), 0.5)) ? 0 : -1));
 }
 
-int		parsing_plan(s_scene **scene, char *line)
+int		parsing_plan(t_scene **scene, char *line)
 {
 	int			i;
 	int			r;
 	int			n;
-	s_vector	*vectors[2];
-	s_vector	*color;
+	t_vector	*vectors[2];
+	t_vector	*color;
 
 	i = 2;
 	r = 0;
@@ -69,11 +69,11 @@ int		parsing_plan(s_scene **scene, char *line)
 vectors[0], vectors[1], color), 0.5)) ? 0 : -1));
 }
 
-int		parsing_square(s_scene **scene, char *l)
+int		parsing_square(t_scene **scene, char *l)
 {
 	int			i[3];
-	s_vector	*color;
-	s_vector	*vectors[2];
+	t_vector	*color;
+	t_vector	*vectors[2];
 	float		size;
 
 	i[0] = 2;
@@ -98,11 +98,11 @@ int		parsing_square(s_scene **scene, char *l)
 vectors[0], vectors[1], size, color), -1)) ? 0 : -1));
 }
 
-int		parsing_triangle(s_scene **scene, char *l)
+int		parsing_triangle(t_scene **scene, char *l)
 {
 	int			i[3];
-	s_vector	*color;
-	s_vector	*vec[3];
+	t_vector	*color;
+	t_vector	*vec[3];
 
 	i[0] = 2;
 	i[2] = 0;
@@ -124,11 +124,11 @@ int		parsing_triangle(s_scene **scene, char *l)
 vec[0], vec[1], vec[2], color), -1)) ? 0 : -1));
 }
 
-int		parsing_cylinder(s_scene **scene, char *l)
+int		parsing_cylinder(t_scene **scene, char *l)
 {
 	int			i[3];
-	s_vector	*color;
-	s_vector	*vec[2];
+	t_vector	*color;
+	t_vector	*vec[2];
 	float		j[2];
 
 	i[0] = 2;

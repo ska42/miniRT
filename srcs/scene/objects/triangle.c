@@ -6,19 +6,19 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 05:32:43 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:27:51 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "miniRT.h"
 
-s_triangle	*new_triangle(s_vector *a, s_vector *b, s_vector *c,
-s_vector *color)
+t_triangle	*new_triangle(t_vector *a, t_vector *b, t_vector *c,
+t_vector *color)
 {
-	s_triangle *triangle;
+	t_triangle *triangle;
 
-	if (!(triangle = malloc(sizeof(s_triangle))))
+	if (!(triangle = malloc(sizeof(t_triangle))))
 		print_error_and_exit(-7);
 	triangle->a = a;
 	triangle->b = b;
@@ -38,7 +38,7 @@ triangle->dot_uv * triangle->dot_uv - triangle->dot_uu * triangle->dot_vv;
 	return (triangle);
 }
 
-void		free_triangle(s_triangle *triangle)
+void		free_triangle(t_triangle *triangle)
 {
 	free(triangle->color);
 	free(triangle->a);
@@ -52,11 +52,11 @@ void		free_triangle(s_triangle *triangle)
 	free(triangle);
 }
 
-s_triangle	*cpy_triangle(s_triangle *triangle)
+t_triangle	*cpy_triangle(t_triangle *triangle)
 {
-	s_triangle *new;
+	t_triangle *new;
 
-	if (!(new = malloc(sizeof(s_triangle))))
+	if (!(new = malloc(sizeof(t_triangle))))
 		print_error_and_exit(-7);
 	new->a = cpy_vector(triangle->a);
 	new->b = cpy_vector(triangle->b);

@@ -6,29 +6,30 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:09:23 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/23 23:50:12 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:42:05 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	SPHERE_H
+#ifndef SPHERE_H
 # define SPHERE_H
 
 # include <stdlib.h>
 # include "vector.h"
 
-typedef struct 	t_sphere
+typedef struct	s_sphere
 {
 	float		radius;
-	s_vector	*color;
+	t_vector	*color;
 	float		shiny;
 	float		calcul_c;
-	s_vector	*difference;
-	s_vector	*center;
-	s_vector	*prev_origin;
-}				s_sphere;
+	t_vector	*difference;
+	t_vector	*center;
+	t_vector	*prev_origin;
+}				t_sphere;
 
-s_sphere		*new_sphere(float radius, s_vector *color, float shiny, s_vector *center);
-void			free_sphere(s_sphere *sphere);
-s_sphere		*cpy_sphere(s_sphere *sphere);
+t_sphere		*new_sphere(float radius, t_vector *color,
+float shiny, t_vector *center);
+void			free_sphere(t_sphere *sphere);
+t_sphere		*cpy_sphere(t_sphere *sphere);
 
 #endif

@@ -6,19 +6,19 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:00:45 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 13:02:14 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float		intersect_triangle2(float t, s_vector origin, s_vector direction,
-s_triangle *object)
+float		intersect_triangle2(float t, t_vector origin, t_vector direction,
+t_triangle *object)
 {
-	s_vector		*temp;
-	s_vector		*point;
+	t_vector		*temp;
+	t_vector		*point;
 	float			dot_wv_wu[2];
-	s_vector		*w;
+	t_vector		*w;
 	float			r[2];
 
 	temp = multiply_vectors(t, direction);
@@ -39,8 +39,8 @@ dot_wv_wu[1]) / object->calcul_d;
 	return (t);
 }
 
-float		intersect_triangle(s_vector origin, s_vector direction,
-s_triangle *object)
+float		intersect_triangle(t_vector origin, t_vector direction,
+t_triangle *object)
 {
 	float			denom;
 	float			b;
