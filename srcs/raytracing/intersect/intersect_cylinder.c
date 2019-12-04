@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:00:17 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:27:49 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 18:28:43 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,5 @@ calcul_b * o->calcul_a);
 		ret = d[3];
 	else
 		ret = d[4];
-	if (ret <= 0)
-		return (0);
 	return (intersect_cylinder2(ret, origin, direction, o));
 }

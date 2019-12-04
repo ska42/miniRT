@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/12/04 17:02:20 by lmartin          ###   ########.fr        #
+#    Updated: 2019/12/04 17:28:05 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ DIR_SRCS =		./srcs/
 
 DIR_OBJS =		./
 
-LIBMLX =		libmlx.dylib
+LIBMLX =		libmlx.dylib \
+				libmlx.a
+
+SAVE =			-fsanitize=address
 
 SRC =			maths/rotation.c \
 				maths/vector_calculation.c \
@@ -73,6 +76,8 @@ SRC =			maths/rotation.c \
 
 SRCS =			$(addprefix $(DIR_SRCS), $(SRC))
 
+COMPIL =		$(FLAGS) $(SAVE)
+
 OBJS =			$(SRCS:.c=.o)
 
 NAME =			miniRT
@@ -81,8 +86,10 @@ all:			$(NAME)
 
 $(NAME) :		$(OBJS)
 				@make -C ./minilibx_mms
+				@make -C ./minilibx_opengl
 				@cp ./minilibx_mms/libmlx.dylib libmlx.dylib
-				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
+				@cp ./minilibx_opengl/libmlx.a libmlx.a
+				$(CC) $(COMPIL) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
 				@gcc $(FLAGS) -I $(DIR_HEADERS) -c $< -o $@
@@ -99,7 +106,9 @@ clean:
 
 fclean:			clean
 				@make clean -C ./minilibx_mms
+				@make clean -C ./minilibx_opengl
 				$(RM) libmlx.dylib
+				$(RM) libmlx.a
 				$(RM) $(NAME)
 
 re:				fclean all
