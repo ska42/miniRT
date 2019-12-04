@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/12/04 16:53:34 by lmartin          ###   ########.fr        #
+#    Updated: 2019/12/04 17:02:20 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ DIR_SRCS =		./srcs/
 
 DIR_OBJS =		./
 
-LIBMLX =		libmlx.dylib \
-				libmlx.a
+LIBMLX =		libmlx.dylib
 
 SRC =			maths/rotation.c \
 				maths/vector_calculation.c \
@@ -81,8 +80,8 @@ NAME =			miniRT
 all:			$(NAME)
 
 $(NAME) :		$(OBJS)
-				@make -C ./minilibx_opengl
-				@cp ./minilibx_opengl/libmlx.a libmlx.a
+				@make -C ./minilibx_mms
+				@cp ./minilibx_mms/libmlx.dylib libmlx.dylib
 				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
@@ -99,6 +98,8 @@ clean:
 				$(RM) $(OBJS)
 
 fclean:			clean
+				@make clean -C ./minilibx_mms
+				$(RM) libmlx.dylib
 				$(RM) $(NAME)
 
 re:				fclean all
