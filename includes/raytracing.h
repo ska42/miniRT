@@ -6,14 +6,14 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:47:59 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:36:53 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:54:07 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYTRACING_H
 # define RAYTRACING_H
 
-# include "miniRT.h"
+# include "minirt.h"
 # include "scene.h"
 
 /*

@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:41:32 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 01:03:37 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:50:23 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 void	pthread_error(int nb_err)
 {

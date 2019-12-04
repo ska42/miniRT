@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:00:45 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:37 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 float		intersect_triangle2(float t, t_vector origin, t_vector direction,
 t_triangle *object)

@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:39:39 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:17 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 void	set_color_ambient(t_vector *color[4], float *intensity,
 t_lstobjects *lights)

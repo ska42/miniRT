@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 06:45:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:52:55 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:56:02 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 t_vector	*color_to_rgb(unsigned int color)
 {

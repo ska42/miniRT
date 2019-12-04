@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 23:59:42 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:20:16 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:52 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 int		parsing_sphere(t_scene **scene, char *l)
 {

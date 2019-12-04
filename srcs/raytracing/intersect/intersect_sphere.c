@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 13:02:59 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:32 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 float		intersect_sphere(t_vector origin,
 t_vector direction, t_sphere *object)

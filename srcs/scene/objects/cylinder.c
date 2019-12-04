@@ -6,12 +6,12 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 19:01:25 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:19:47 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:49:35 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
-#include "miniRT.h"
+#include "minirt.h"
 
 t_cylinder	*new_cylinder(t_vector *vectors[2], float diameter, float height,
 t_vector *color)

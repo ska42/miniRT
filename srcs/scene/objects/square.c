@@ -6,12 +6,12 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 05:10:02 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:34:17 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:49:52 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
-#include "miniRT.h"
+#include "minirt.h"
 
 void		place_points(t_square **new)
 {

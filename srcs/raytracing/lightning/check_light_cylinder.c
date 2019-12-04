@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:43:07 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:20:10 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:08 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 void	check(t_lightning_vectors *l_vectors, void *object, t_light *light)
 {

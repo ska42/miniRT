@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 08:03:15 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/24 02:10:03 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:50:37 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 int		free_and_return_minus_one(void *ptr)
 {

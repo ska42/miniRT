@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 09:48:08 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:52:14 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:56 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 void		rx(t_vector *vect, float x)
 {

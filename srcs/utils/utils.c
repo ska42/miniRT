@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 02:00:47 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 01:04:36 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:50:41 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 /*
 ** FT_ATOI

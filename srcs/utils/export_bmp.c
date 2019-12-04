@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 20:38:49 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 01:05:15 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:50:27 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 /*
 ** Fill the bmp file with my_mlx->data previously made

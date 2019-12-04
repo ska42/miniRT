@@ -6,7 +6,7 @@
 #    By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/27 02:42:41 by lmartin           #+#    #+#              #
-#    Updated: 2019/12/04 16:06:49 by lmartin          ###   ########.fr        #
+#    Updated: 2019/12/04 16:53:34 by lmartin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,11 +81,9 @@ NAME =			miniRT
 all:			$(NAME)
 
 $(NAME) :		$(OBJS)
-				@make -C ./minilibx_mms
 				@make -C ./minilibx_opengl
-				@cp ./minilibx_mms/libmlx.dylib libmlx.dylib
 				@cp ./minilibx_opengl/libmlx.a libmlx.a
-				$(CC) $(FLAGS) -g3 -fsanitize=address -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
+				$(CC) $(FLAGS) -I $(DIR_HEADERS) $(LIBMLX) $(OBJS) -o $(NAME)
 
 %.o: %.c
 				@gcc $(FLAGS) -I $(DIR_HEADERS) -c $< -o $@

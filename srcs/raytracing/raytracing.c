@@ -6,12 +6,12 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:13:11 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:20:10 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:03 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
-#include "miniRT.h"
+#include "minirt.h"
 
 int			setup_l_vectors_and_calculate(t_lstobjects *closest_object,
 t_vector direction, float closest_t, t_scene *scene)

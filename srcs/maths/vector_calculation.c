@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 07:46:39 by lmartin           #+#    #+#             */
-/*   Updated: 2019/11/30 23:55:24 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:59 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 float			length_vectors(t_vector v)
 {

@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 00:59:45 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:19:25 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:50:14 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 void		*cpy_object_choice(t_lstobjects *objects)
 {

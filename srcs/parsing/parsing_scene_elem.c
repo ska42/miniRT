@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 00:03:38 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/01 00:17:05 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:50 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 int		parsing_resolution(t_scene **scene, char *line)
 {

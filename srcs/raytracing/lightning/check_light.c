@@ -6,11 +6,11 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:41:28 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 16:20:10 by lmartin          ###   ########.fr       */
+/*   Updated: 2019/12/04 16:55:11 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
 
 void	check_light_intersect_sphere(t_lightning_vectors *l_vectors,
 void *object)
