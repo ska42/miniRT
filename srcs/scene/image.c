@@ -6,7 +6,7 @@
 /*   By: lmartin <lmartin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 21:57:29 by lmartin           #+#    #+#             */
-/*   Updated: 2019/12/04 17:10:07 by lmartin          ###   ########.fr       */
+/*   Updated: 2020/10/28 14:27:48 by lmartin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*thread_function(void *arguments)
 	if (!(t_camera *)args->scene->cameras)
 		return (free_cpy_scene(args->scene) ? NULL : NULL);
 	obs = ((t_camera *)args->scene->cameras->object)->origin;
-	y = -(args->scene->viewport->height / 2) - 1;
+	y = -(args->scene->viewport->height / 2);
 	while (++y <= args->scene->viewport->height / 2)
 	{
 		d = new_vector(
@@ -76,7 +76,7 @@ t_args	*new_s_args(t_mlx *my_mlx, int i, pthread_mutex_t *lock)
 		print_error_and_exit(-7);
 	args->data = my_mlx->data;
 	args->scene = cpy_scene(my_mlx->scene);
-	args->x = -(my_mlx->scene->viewport->width / 2) + 1 + i;
+	args->x = -(my_mlx->scene->viewport->width / 2) + i;
 	args->bpp = my_mlx->bpp;
 	args->size_line = my_mlx->size_line;
 	args->lock = lock;
